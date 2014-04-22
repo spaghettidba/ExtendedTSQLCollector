@@ -1,0 +1,1062 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/28/2013"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="SQLCLP01"
+  DTS:CreatorName="spaghettidba"
+  DTS:DelayValidation="True"
+  DTS:Description="Generic TSQL collector via PowerShell script"
+  DTS:DTSID="{B015DBE6-0B9E-4D12-AF52-9386943332E7}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:FailParentOnFailure="True"
+  DTS:LastModifiedProductVersion="11.0.2100.60"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="GenericTSQLCollect"
+  DTS:PackageType="5"
+  DTS:SuppressConfigurationWarnings="True"
+  DTS:VersionBuild="193"
+  DTS:VersionGUID="{3443E3E2-F2E2-4E98-AA44-1652AABFA840}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ConfigConnection]"
+      DTS:CreationName="OLEDB"
+      DTS:Description="Connection used to get information about collection configuration and for logging purposes."
+      DTS:DTSID="{6BA03DB4-3CC3-45AE-9036-C16CA5B7FF3E}"
+      DTS:ObjectName="ConfigConnection">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::ConfigConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=msdb;Provider=SQLNCLI10;Integrated Security=SSPI;APP=SQL Server Data Collector;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MdwConnection]"
+      DTS:CreationName="OLEDB"
+      DTS:Description="Connection used to upload collected data to a warehouse."
+      DTS:DTSID="{7C123C23-5B66-407D-A23C-2E4433E4A199}"
+      DTS:ObjectName="MdwConnection">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::MDWConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Retain="True"
+          DTS:ConnectionString="Data Source=(local);Initial Catalog=MDW;Provider=SQLNCLI10;Integrated Security=SSPI;APP=SQL Server Data Collector;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Script file]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{0F8911A9-E3A0-401B-A8B1-D5CDC0A87E26}"
+      DTS:ObjectName="Script file">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::CacheDirectory] + "\\collector.ps1"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\sqluser\AppData\Local\Temp\collector.ps1">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="302"
+              DTS:TextQualified="True"
+              DTS:ObjectName="txt"
+              DTS:DTSID="{5560B0E8-624A-4227-8487-DD9EDB0C1030}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[TargetConnection]"
+      DTS:CreationName="OLEDB"
+      DTS:Description="Connection used to get information from the monitored (target) instance."
+      DTS:DTSID="{9C3799B5-AC06-4D3F-B4F1-C39001CF0336}"
+      DTS:ObjectName="TargetConnection">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::TargetConnectionString]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Retain="True"
+          DTS:ConnectionString="Data Source=(local);Provider=SQLNCLI10;Integrated Security=SSPI;APP=SQL Server Data Collector;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="User::CacheDirectory"
+      DTS:ConfigurationVariable="\Package.Variables[User::CacheDirectory].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{57E0DCF6-9F3D-4257-BBE7-C2075C022AAA}"
+      DTS:ObjectName="CacheDirectory" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::CacheWindow"
+      DTS:ConfigurationVariable="\Package.Variables[User::CacheWindow].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{6B73D8FB-6920-46B1-85B5-B686BBD72595}"
+      DTS:ObjectName="CacheWindow" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::InputParameters"
+      DTS:ConfigurationVariable="\Package.Variables[User::InputParameters].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F509D570-4AF5-4BB6-8F7C-768A8ECF4432}"
+      DTS:ObjectName="InputParameters" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::MDWConnectionString"
+      DTS:ConfigurationVariable="\Package.Variables[User::MDWConnectionString].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{EE1392D0-6838-4237-BDB4-A2D4E58932DD}"
+      DTS:ObjectName="MDWConnectionString" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::ConfigConnectionString"
+      DTS:ConfigurationVariable="\Package.Variables[User::ConfigConnectionString].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{F006BE34-1D1F-46C9-9E86-8839DDA26CB4}"
+      DTS:ObjectName="ConfigConnectionString" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::TargetConnectionString"
+      DTS:ConfigurationVariable="\Package.Variables[User::TargetConnectionString].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{6998068D-94BB-494E-A4DB-AB9A3D8D1658}"
+      DTS:ObjectName="TargetConnectionString" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::LoopEventName"
+      DTS:ConfigurationVariable="\Package.Variables[User::LoopEventName].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{A4CF7719-9304-4760-A84F-9B6ACF14F29B}"
+      DTS:ObjectName="LoopEventName" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::ExitEventName"
+      DTS:ConfigurationVariable="\Package.Variables[User::ExitEventName].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{3F817250-73E4-4C1F-9B6F-8C56323957EB}"
+      DTS:ObjectName="ExitEventName" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::CollectorTypeUID"
+      DTS:ConfigurationVariable="\Package.Variables[User::CollectorTypeUID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{634D20B7-87DC-4879-9F0E-C073FC46A1E4}"
+      DTS:ObjectName="CollectorTypeUID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::CollectionSetUID"
+      DTS:ConfigurationVariable="\Package.Variables[User::CollectionSetUID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{81FAF554-5A4E-44CB-BAF9-20BD2A4F2C6D}"
+      DTS:ObjectName="CollectionSetUID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::ItemID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ItemID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{66CD9E72-69B5-46F3-BC12-766F9E20BB5D}"
+      DTS:ObjectName="ItemID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::InstanceID"
+      DTS:ConfigurationVariable="\Package.Variables[User::InstanceID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{A177F94B-BD69-4D07-BF61-7866DCE7E56F}"
+      DTS:ObjectName="InstanceID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::InstanceName"
+      DTS:ConfigurationVariable="\Package.Variables[User::InstanceName].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{4971AAD8-1D8F-47DB-BF6C-0A9F8281D6EB}"
+      DTS:ObjectName="InstanceName" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::LoggingLevel"
+      DTS:ConfigurationVariable="\Package.Variables[User::LoggingLevel].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{E0667FA1-799B-48A9-87B8-81AEE21C733D}"
+      DTS:ObjectName="LoggingLevel" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::LogID"
+      DTS:ConfigurationVariable="\Package.Variables[User::LogID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{5BEEF676-C535-4F66-A161-964CE9D55DAF}"
+      DTS:ObjectName="LogID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="User::ParentLogID"
+      DTS:ConfigurationVariable="\Package.Variables[User::ParentLogID].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{DC355788-EE84-45F7-AE0F-6455E6DA75E4}"
+      DTS:ObjectName="ParentLogID" />
+    <DTS:Configuration
+      DTS:ConfigurationString="ProgramFiles"
+      DTS:ConfigurationType="2"
+      DTS:ConfigurationVariable="\Package.Variables[User::ProgramFiles].Properties[Value]"
+      DTS:CreationName=""
+      DTS:DTSID="{AA47BDBD-1DFE-472B-AF97-E2EDEAF58548}"
+      DTS:ObjectName="ProgramFiles" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0E9EEA1F-2A1C-48D7-9F5F-013375B59BF9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CacheDirectory">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Users\sqluser\AppData\Local\Temp</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6891D816-2D66-4CA2-B606-D0CC2D064ED1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CacheWindow">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{11F2834B-565F-4AB0-91D0-7F19B04F6F85}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CollectionSetUID">
+      <DTS:VariableValue
+        DTS:DataType="8">989413FA-FB42-4B99-A8D1-40C658C8DA6C</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DDB40250-52EE-4CB2-ADC7-2523F1227FD1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CollectorTypeUID">
+      <DTS:VariableValue
+        DTS:DataType="8">8657f26a-ff77-4f54-ab49-781d94b655e1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ED7110EC-CAA6-440E-8D66-3D4E943029E4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ConfigConnectionString">
+      <DTS:VariableValue
+        DTS:DataType="8">Provider=SQLNCLI10;Data Source=(local);Integrated Security=SSPI;Initial Catalog=msdb;APP=SQL Server Data Collector</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C786C8AC-4097-49CB-BD2D-6E349CAC6280}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExitEventName">
+      <DTS:VariableValue
+        DTS:DataType="8">EXITEVENT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB7E4973-6370-4287-948C-8B1AB8760541}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InputParameters">
+      <DTS:VariableValue
+        DTS:DataType="8">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;ns:SqlTraceCollector xmlns:ns="DataCollectorType" normalize_sql="0" normalize_plans="0" normalize_procedures="0" normalize_connections="0" normalize_default="1"&gt;&lt;Events&gt;&lt;EventType id ="6" name="Performance"&gt;&lt;Event id="58" name="Auto Stats"  /&gt;&lt;Event id="165" name="Performance statistics"  /&gt;&lt;Event id="146" name="Showplan XML Statistics Profile"  /&gt;&lt;/EventType&gt;&lt;EventType id="13" name="TSQL"&gt;&lt;Event id="12" name="SQL:BatchCompleted" columnslist="1, 3, 9, 10, 13, 16, 17, 18" /&gt;&lt;Event id="13" name="SQL:BatchStarting"  /&gt;&lt;Event id="41" name="SQL:StmtCompleted"  /&gt;&lt;Event id="166" name="SQL:StmtRecompile"  /&gt;&lt;/EventType&gt;&lt;EventType id="20" name="CLR"&gt;&lt;Event id="196" name="Assembly Load"  /&gt;&lt;/EventType&gt;&lt;EventType id="1" name="Cursors"&gt;&lt;Event id="53" name="CursorOpen"  /&gt;&lt;Event id="75" name="CursorRecompile"  /&gt;&lt;Event id="76" name="CursorImplicitConversion"  /&gt;&lt;Event id="78" name="CursorClose"  /&gt;&lt;/EventType&gt;&lt;/Events&gt;&lt;Filters&gt;&lt;Filter columnid="13" columnname="Duration" logical_operator="AND" comparison_operator="GE" value="1000L"/&gt;&lt;Filter columnid="10" columnname="ApplicationName" logical_operator="AND" comparison_operator="LIKE" value="Data Collector"/&gt;&lt;Filter columnid="10" columnname="ApplicationName" logical_operator="AND" comparison_operator="EQ" value="NULL"/&gt;&lt;Filter columnid="18" columnname="CPU" logical_operator="AND" comparison_operator="EQ" value="20"/&gt;&lt;Filter columnid="14" columnname="StartTime" logical_operator="AND" comparison_operator="GT" value="2007-02-09 13:40:00"/&gt;&lt;/Filters&gt;&lt;/ns:SqlTraceCollector&gt;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{940626A9-1D1A-48D5-BFE0-B58E628D4373}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InstanceID">
+      <DTS:VariableValue
+        DTS:DataType="8">MSSQL.1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{395DCAFD-009C-4C1F-BE80-6C792035F6F3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InstanceName">
+      <DTS:VariableValue
+        DTS:DataType="8">MSSQLSERVER</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{337A8B33-13CC-4CF4-A187-D3F411CF4630}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ItemID">
+      <DTS:VariableValue
+        DTS:DataType="3">11</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{54C3CBB0-16BA-4691-BAE7-073DF4C49095}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LoggingLevel">
+      <DTS:VariableValue
+        DTS:DataType="3">2</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AFC6D81E-4B7C-467C-BC34-3C6EFB7871CC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LogID">
+      <DTS:VariableValue
+        DTS:DataType="20">12388</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7492D5D7-9BD8-4415-A544-5BBBFF6EFA27}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LoopDuration">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AB1E497A-FFE7-4576-B307-53A375BDB805}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LoopEventName">
+      <DTS:VariableValue
+        DTS:DataType="8">LOOPEVENT</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{49509ACD-4729-4550-A992-21349FA3F4C7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="MDWConnectionString">
+      <DTS:VariableValue
+        DTS:DataType="8">Provider=SQLNCLI10;Data Source=(local);Integrated Security=SSPI;Initial Catalog=MDW;APP=SQL Server Data Collector</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA4BBF5D-39DD-46E3-82EE-A24B2EAAADC4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ParentLogID">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2A0D2900-4576-4DB9-BEC2-67A71DB83F5E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProgramFiles">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\Program Files (x86)</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{06A4B0C7-4577-42F5-8CE4-8A05519D20A5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ScriptError">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{97315868-FEB4-4694-A03F-993B0D3D4E21}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ScriptOutput">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A5C9ED2D-F659-436A-A76B-243691BC4439}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ServerInstance">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1BD095FD-134B-402B-A253-ED49A7C4F217}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="TargetConnectionString">
+      <DTS:VariableValue
+        DTS:DataType="8">Provider=SQLNCLI10;Data Source=(local);Integrated Security=SSPI;APP=SQL Server Data Collector</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B28876A6-DE74-4967-B8B9-A28441CB0B98}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="UserTemp">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4D137FF3-F996-48FB-9AC0-174A3A7DA295}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="8">ScriptError</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:LoggingOptions
+    DTS:FilterKind="0"
+    DTS:LoggingMode="1">
+    <DTS:Property
+      DTS:DataType="8"
+      DTS:Name="EventFilter">18,7,OnError,19,OnExecStatusChanged,13,OnInformation,25,OnPipelinePostEndOfRowset,25,OnPipelinePostPrimeOutput,24,OnPipelinePreEndOfRowset,24,OnPipelinePrePrimeOutput,18,OnPipelineRowsSent,13,OnPostExecute,14,OnPostValidate,12,OnPreExecute,13,OnPreValidate,10,OnProgress,13,OnQueryCancel,12,OnTaskFailed,22,OnVariableValueChanged,9,OnWarning,10,Diagnostic</DTS:Property>
+    <DTS:Property
+      DTS:EventName="Diagnostic"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnError"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnExecStatusChanged"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnInformation"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePostEndOfRowset"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePostPrimeOutput"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePreEndOfRowset"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelinePrePrimeOutput"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPipelineRowsSent"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPostValidate"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreExecute"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnPreValidate"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnProgress"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnQueryCancel"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnTaskFailed"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnVariableValueChanged"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+    <DTS:Property
+      DTS:EventName="OnWarning"
+      DTS:Name="ColumnFilter">
+      <DTS:Property
+        DTS:Name="Computer">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="Operator">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceName">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="SourceID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="ExecutionID">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="MessageText">-1</DTS:Property>
+      <DTS:Property
+        DTS:Name="DataBytes">-1</DTS:Property>
+    </DTS:Property>
+  </DTS:LoggingOptions>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:DelayValidation="True"
+      DTS:Description="Foreach Loop - Aquire performance counters snapshot (Collector Item Frequency)"
+      DTS:DTSID="{7AB5996B-B0DA-4E88-8D46-DE7898875562}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:FailParentOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:MaxErrorCount="0"
+      DTS:ObjectName="LOOP - Aquire performance counters @ collection item frequency">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="DC.ForEachEventEnumerator.2"
+        DTS:DTSID="{06B56674-F718-48A3-9BD6-9E57191A26E9}"
+        DTS:ObjectName="{710AEAF2-45BD-4AB2-9EAF-FB6268AD10A2}">
+        <DTS:PropertyExpression
+          DTS:Name="ExitEventName">@[User::ExitEventName]</DTS:PropertyExpression>
+        <DTS:PropertyExpression
+          DTS:Name="LoopEventName">@[User::LoopEventName]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachEventEnumeratorProperties>
+            <FEEEProperty
+              LoopEventName="LOOPEVENT" />
+            <FEEEProperty
+              ExitEventName="EXITEVENT" />
+          </ForEachEventEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:LoggingOptions
+        DTS:FilterKind="0"
+        DTS:LoggingMode="2" />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{428F69F5-7DB1-4CD7-B1CC-9A4542EDAEED}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Sequence Container">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Gather Server Instance"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{5891ABBA-7518-46A7-A8F9-1F173E649C3A}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Gather Server Instance"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{6BA03DB4-3CC3-45AE-9036-C16CA5B7FF3E}"
+                  SQLTask:BypassPrepare="False"
+                  SQLTask:SqlStatementSource="SELECT CAST(SERVERPROPERTY('SERVERNAME') AS sysname) AS ServerName"
+                  SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ResultBinding
+                    SQLTask:ResultName="ServerName"
+                    SQLTask:DtsVariableName="User::ServerInstance" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Invoke Collection Tool"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:Description="Execute Process Task"
+              DTS:DTSID="{DBE9B26C-5D0E-45D4-B3D3-CEB3A6707CD2}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="Invoke Collection Tool"
+              DTS:TaskContact="Execute Process Task;Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0" />
+              <DTS:PropertyExpression
+                DTS:Name="Arguments">" -c " + @[User::CollectionSetUID] + " -i " + (DT_STR,10,1252)@[User::ItemID] + " -l " + (DT_STR,10,1252)@[User::LogID] + " -S " + @[User::ServerInstance] +  ( @[User::LoggingLevel] &gt; 0 ? " -v " : "" )</DTS:PropertyExpression>
+              <DTS:PropertyExpression
+                DTS:Name="Executable">@[User::ProgramFiles] + "\\GenericTSQLCollector\\GenericTSQLUploader.exe"</DTS:PropertyExpression>
+              <DTS:ObjectData>
+                <ExecuteProcessData
+                  Executable="C:\Program Files (x86)\GenericTSQLCollector\GenericTSQLUploader.exe"
+                  Arguments=" -c 989413FA-FB42-4B99-A8D1-40C658C8DA6C -i 11 -l 12388 -S  -v "
+                  StandardOutputVariable="User::ScriptOutput"
+                  StandardErrorVariable="User::ScriptError" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Iteration"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:DelayValidation="True"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{BE57DFD4-C7AC-4888-8796-AA4ABABDDAE1}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:ISOLevel="4096"
+              DTS:LocaleID="-1"
+              DTS:MaxErrorCount="0"
+              DTS:ObjectName="SQL - Log Package Iteration"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; Â© 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0"
+                DTS:LoggingMode="2" />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{6BA03DB4-3CC3-45AE-9036-C16CA5B7FF3E}"
+                  SQLTask:SqlStatementSource="BEGIN TRY&#xA;&#x9;EXEC dbo.sp_syscollector_event_onpackageupdate ?&#xA;END TRY&#xA;BEGIN CATCH&#xA;&#x9;PRINT ''&#xA;END CATCH" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@LogId"
+                    SQLTask:DtsVariableName="User::LogID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="20"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+            <DTS:Executable
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Stats"
+              DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:DelayValidation="True"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{DA0FC155-46D9-417B-8688-E88E575E9435}"
+              DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+              DTS:ISOLevel="4096"
+              DTS:LocaleID="-1"
+              DTS:MaxErrorCount="0"
+              DTS:ObjectName="SQL - Log Package Stats"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server v9; Â© 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:LoggingOptions
+                DTS:FilterKind="0"
+                DTS:LoggingMode="2" />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{6BA03DB4-3CC3-45AE-9036-C16CA5B7FF3E}"
+                  SQLTask:SqlStatementSource="BEGIN TRY&#xA;&#x9;EXEC dbo.sp_syscollector_event_onstatsupdate ?, N'GenericTSQLCollector - Main Collect Loop', 0, 0, 0, ?&#xA;END TRY&#xA;BEGIN CATCH&#xA;&#x9;PRINT ''&#xA;END CATCH" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@LogId"
+                    SQLTask:DtsVariableName="User::LogID"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="20"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="@LoopDuration"
+                    SQLTask:DtsVariableName="User::LoopDuration"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="20"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:PrecedenceConstraints>
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint]"
+              DTS:CreationName=""
+              DTS:DTSID="{2F1B9979-70D1-4E48-912B-107B4EC9A09D}"
+              DTS:From="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Gather Server Instance"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint"
+              DTS:To="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Invoke Collection Tool" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint 1]"
+              DTS:CreationName=""
+              DTS:DTSID="{EE067223-7928-4907-A8F7-46CA83377C61}"
+              DTS:From="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Invoke Collection Tool"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 1"
+              DTS:To="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Stats"
+              DTS:Value="2" />
+            <DTS:PrecedenceConstraint
+              DTS:refId="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint 3]"
+              DTS:CreationName=""
+              DTS:DTSID="{601BFDE5-9F34-4EAE-94A5-1E332CA50DA6}"
+              DTS:From="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Stats"
+              DTS:LogicalAnd="True"
+              DTS:ObjectName="Constraint 3"
+              DTS:To="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Iteration"
+              DTS:Value="2" />
+          </DTS:PrecedenceConstraints>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{02809217-5176-41D8-8FC8-99E765EFF621}"
+          DTS:ObjectName="{02809217-5176-41D8-8FC8-99E765EFF621}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::LoopDuration" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="171,44"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Gather Server Instance"
+          TopLeft="11.5,5.5" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\Invoke Collection Tool"
+          TopLeft="5.50000000000001,109.5" />
+        <NodeLayout
+          Size="171,44"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Iteration"
+          TopLeft="11.5,315.5" />
+        <NodeLayout
+          Size="171,44"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container\SQL - Log Package Stats"
+          TopLeft="11.5,211.5" />
+        <EdgeLayout
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="97,49.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="97,151.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25.304453125,20.4453125,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container.PrecedenceConstraints[Constraint 3]"
+          TopLeft="97,255.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-25.304453125,20.4453125,50.60890625,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43.924528301886795"
+          IsExpanded="True"
+          PanelSize="194,414"
+          Size="194,458"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency\Sequence Container"
+          TopLeft="5.5,7.5" />
+        <ContainerLayout
+          HeaderHeight="43.924528301886795"
+          IsExpanded="True"
+          PanelSize="205,518"
+          Size="205,562"
+          Id="Package\LOOP - Aquire performance counters @ collection item frequency"
+          TopLeft="5.50000000000006,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
