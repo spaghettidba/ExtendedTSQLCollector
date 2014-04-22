@@ -1,0 +1,90 @@
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <?if $(var.Platform) = x64 ?>
+  <?define Win64 = "yes" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+  <?define Win64 = "no" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+  
+  <Product Id="*" Name="GenericTSQLCollector 1.0" Language="1033" Version="1.0.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Property Id="REINSTALLMODE" Value="amus" />
+    <MajorUpgrade AllowDowngrades="yes" />
+
+    <Feature Id="ProductFeature" Title="GenericTSQLCollector" Level="1">
+      <ComponentGroupRef Id="ProductFiles" />
+      <ComponentGroupRef Id="SSIS_Packages" />
+      <ComponentRef Id="ProductStartMenuShortcut" />
+      <ComponentRef Id="LogsFolder" />
+    </Feature>
+
+    <!-- http://stackoverflow.com/a/259685/66629 -->
+    <UI Id="UserInterface">
+      <Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" />
+      <Property Id="WixUI_Mode" Value="Custom" />
+
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="9" Bold="yes" />
+      <TextStyle Id="WixUI_Font_Title"  FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+
+    
+    </UI>
+
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="ProductProgramFilesDirectory" Name="GenericTSQLCollector">
+          <Directory Id="SSIS_Packages" Name="SSIS_Packages" />
+          <Directory Id="Logs" Name="Logs" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ManufacturerProgramMenuDirectory" Name="sqlconsulting.it">
+          <Directory Id="ProductProgramMenuDirectory" Name="GenericTSQLCollector" />
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" />
+    </Directory>
+
+    <Component Id="ProductStartMenuShortcut" Guid="F11F15F7-109E-4188-85D5-10FD01ECCD11" Directory="ProductProgramMenuDirectory">
+      <Shortcut Id="ApplicationStartMenuShortcut" Name="GenericTSQLCollector" Target="[ProductProgramFilesDirectory]CollectionSetManager.exe" WorkingDirectory="ProductProgramFilesDirectory" />
+      <RemoveFolder Id="ManufacturerProgramMenuRemoveFolder" Directory="ManufacturerProgramMenuDirectory" On="uninstall"/>
+      <RemoveFolder Id="ProductProgramMenuDirectoryRemoveFolder" Directory="ProductProgramMenuDirectory" On="uninstall"/>
+      <RegistryValue Root="HKCU" Key="Software\sqlconsulting.it\GenericTSQLCollector" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+    </Component>
+
+
+    <ComponentGroup Id="ProductFiles" Directory="ProductProgramFilesDirectory">
+      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\CommandLine.dll" /></Component>
+      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\Common.dll" /></Component>
+      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\GenericTSQLCollector.exe" /></Component>
+      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\GenericTSQLCollector.exe.config" /></Component>
+      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\GenericTSQLUploader\bin\Release\GenericTSQLUploader.exe" /></Component>
+      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\GenericTSQLUploader\bin\Release\GenericTSQLUploader.exe.config" /></Component>
+      <Component Id="cmp_6" Guid="*"><File Id="file_6" KeyPath="yes" Source="..\InstallCollectorType\bin\Release\InstallCollectorType.exe" /></Component>
+      <Component Id="cmp_7" Guid="*"><File Id="file_7" KeyPath="yes" Source="..\InstallCollectorType\bin\Release\InstallCollectorType.exe.config" /></Component>
+      <Component Id="cmp_8" Guid="*"><File Id="file_8" KeyPath="yes" Source="..\CollectionSetManager\bin\Release\CollectionSetManager.exe" /></Component>
+      <Component Id="cmp_9" Guid="*"><File Id="file_9" KeyPath="yes" Source="..\CollectionSetManager\bin\Release\CollectionSetManager.exe.config" /></Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="SSIS_Packages" Directory="SSIS_Packages">
+      <Component Id="pkg_0" Guid="*"><File Id="pkg_file_0" KeyPath="yes" Source="..\CollectionSet\GenericTSQLCollect.dtsx" /></Component>
+      <Component Id="pkg_1" Guid="*"><File Id="pkg_file_1" KeyPath="yes" Source="..\CollectionSet\GenericTSQLUpload.dtsx" /></Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="LogFolder" Directory="Logs">
+      <Component Id="LogsFolder" Guid="887F5FA4-EB2B-4BB3-80C0-5831F64DBC75">
+         <CreateFolder>
+           <util:PermissionEx User="Users" GenericAll="yes"/>
+         </CreateFolder>
+      </Component>
+    </ComponentGroup>
+  </Product>
+</Wix>
