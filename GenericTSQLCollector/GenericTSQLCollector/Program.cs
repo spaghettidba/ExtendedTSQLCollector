@@ -53,6 +53,7 @@ namespace Sqlconsulting.DataCollector.GenericTSQLCollector
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 if (verbose) logger.logMessage("Ending with failure");
                 if (verbose) logger.logMessage(e.Message);
             }
