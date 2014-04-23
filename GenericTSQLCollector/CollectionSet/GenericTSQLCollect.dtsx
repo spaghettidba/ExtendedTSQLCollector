@@ -702,12 +702,12 @@
 <DTS:LoggingOptions>
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">0</DTS:Property>
-<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions><DTS:PropertyExpression DTS:Name="Arguments">" -c " + @[User::CollectionSetUID] + " -i " + (DT_STR,10,1252)@[User::ItemID] + " -l " + (DT_STR,10,1252)@[User::LogID] + " -S " + @[User::ServerInstance] +  ( @[User::LoggingLevel] &gt; 0 ? " -v " : "" )</DTS:PropertyExpression><DTS:PropertyExpression DTS:Name="Executable">@[User::ProgramFiles] + "\\GenericTSQLCollector\\GenericTSQLUploader.exe"</DTS:PropertyExpression>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions><DTS:PropertyExpression DTS:Name="Arguments">" -c " + @[User::CollectionSetUID] + " -i " + (DT_STR,10,1252)@[User::ItemID] + " -l " + (DT_STR,10,1252)@[User::LogID] + " -S " + @[User::ServerInstance] +  ( @[User::LoggingLevel] &gt; 0 ? " -v " : "" )</DTS:PropertyExpression><DTS:PropertyExpression DTS:Name="Executable">@[User::ProgramFiles] + "\\ExtendedTSQLCollector\\ExtendedTSQLUploader.exe"</DTS:PropertyExpression>
 <DTS:Property DTS:Name="ObjectName">Invoke Collection Tool</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{AABEA12D-FA48-499E-BB1D-F4EA0008BF14}</DTS:Property>
 <DTS:Property DTS:Name="Description">Execute Process Task</DTS:Property>
 <DTS:Property DTS:Name="CreationName">Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</DTS:Property>
-<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><ExecuteProcessData Executable="\GenericTSQLCollector\GenericTSQLUploader.exe" RequireFullFileName="True" Arguments=" -c 989413FA-FB42-4B99-A8D1-40C658C8DA6C -i 11 -l 12388 -S  -v " WorkingDirectory="" TimeOut="0" FailTaskIfReturnCodeIsNotSuccessValue="True" SuccessValue="0" TerminateAfterTimeout="True" StandardInputVariable="" StandardOutputVariable="User::ScriptOutput" StandardErrorVariable="User::ScriptError" WindowStyle="Normal"/></DTS:ObjectData></DTS:Executable>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><ExecuteProcessData Executable="\ExtendedTSQLCollector\ExtendedTSQLUploader.exe" RequireFullFileName="True" Arguments=" -c 989413FA-FB42-4B99-A8D1-40C658C8DA6C -i 11 -l 12388 -S  -v " WorkingDirectory="" TimeOut="0" FailTaskIfReturnCodeIsNotSuccessValue="True" SuccessValue="0" TerminateAfterTimeout="True" StandardInputVariable="" StandardOutputVariable="User::ScriptOutput" StandardErrorVariable="User::ScriptError" WindowStyle="Normal"/></DTS:ObjectData></DTS:Executable>
 <DTS:Executable DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" DTS:ThreadHint="0">
 <DTS:Property DTS:Name="ExecutionLocation">0</DTS:Property>
 <DTS:Property DTS:Name="ExecutionAddress"></DTS:Property>
@@ -800,9 +800,9 @@
 <DTS:Property DTS:Name="DTSID">{717D7C24-EFBA-4600-8785-930311D77959}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:ForEachVariableMapping></DTS:Executable>
-<DTS:Property DTS:Name="ObjectName">GenericTSQLCollect</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">ExtenedTSQLCollect</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{77D28C8D-A529-445B-B5F6-31861D099594}</DTS:Property>
-<DTS:Property DTS:Name="Description">Generic TSQL collector </DTS:Property>
+<DTS:Property DTS:Name="Description">Extended TSQL collector </DTS:Property>
 <DTS:Property DTS:Name="CreationName">SSIS.Package.2</DTS:Property>
 <DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property>
 <DTS:PackageVariable>

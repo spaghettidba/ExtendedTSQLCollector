@@ -6,7 +6,7 @@ using System.Text;
 using Sqlconsulting.DataCollector.Utils;
 using System.IO;
 
-namespace Sqlconsulting.DataCollector.GenericTSQLCollector
+namespace Sqlconsulting.DataCollector.ExtendedTSQLCollector
 {
     public class Collector
     {
@@ -25,7 +25,7 @@ namespace Sqlconsulting.DataCollector.GenericTSQLCollector
             DataTable collectedData = null;
 
             if (verbose) logger.logMessage("--------------------------------");
-            if (verbose) logger.logMessage("      GenericTSQLCollector      ");
+            if (verbose) logger.logMessage("      ExtendedTSQLCollector      ");
             if (verbose) logger.logMessage("--------------------------------");
             if (verbose) logger.logMessage("Copyright© sqlconsulting.it 2014");
             if (verbose) logger.logMessage("-");

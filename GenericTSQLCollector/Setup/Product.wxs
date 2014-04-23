@@ -10,7 +10,7 @@
     <?define PlatformReleaseFolder = "Release" ?>
   <?endif ?>
   
-  <Product Id="*" Name="GenericTSQLCollector 1.0" Language="1033" Version="1.0.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
+  <Product Id="*" Name="ExtendedTSQLCollector 1.0" Language="1033" Version="1.0.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes" />
@@ -18,7 +18,7 @@
     <Property Id="REINSTALLMODE" Value="amus" />
     <MajorUpgrade AllowDowngrades="yes" />
 
-    <Feature Id="ProductFeature" Title="GenericTSQLCollector" Level="1">
+    <Feature Id="ProductFeature" Title="ExtendedTSQLCollector" Level="1">
       <ComponentGroupRef Id="ProductFiles" />
       <ComponentGroupRef Id="SSIS_Packages" />
       <ComponentRef Id="ProductStartMenuShortcut" />
@@ -42,34 +42,34 @@
     
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
-        <Directory Id="ProductProgramFilesDirectory" Name="GenericTSQLCollector">
+        <Directory Id="ProductProgramFilesDirectory" Name="ExtendedTSQLCollector">
           <Directory Id="SSIS_Packages" Name="SSIS_Packages" />
           <Directory Id="Logs" Name="Logs" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ManufacturerProgramMenuDirectory" Name="sqlconsulting.it">
-          <Directory Id="ProductProgramMenuDirectory" Name="GenericTSQLCollector" />
+          <Directory Id="ProductProgramMenuDirectory" Name="ExtendedTSQLCollector" />
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" />
     </Directory>
 
     <Component Id="ProductStartMenuShortcut" Guid="F11F15F7-109E-4188-85D5-10FD01ECCD11" Directory="ProductProgramMenuDirectory">
-      <Shortcut Id="ApplicationStartMenuShortcut" Name="GenericTSQLCollector" Target="[ProductProgramFilesDirectory]CollectionSetManager.exe" WorkingDirectory="ProductProgramFilesDirectory" />
+      <Shortcut Id="ApplicationStartMenuShortcut" Name="ExtendedTSQLCollector" Target="[ProductProgramFilesDirectory]CollectionSetManager.exe" WorkingDirectory="ProductProgramFilesDirectory" />
       <RemoveFolder Id="ManufacturerProgramMenuRemoveFolder" Directory="ManufacturerProgramMenuDirectory" On="uninstall"/>
       <RemoveFolder Id="ProductProgramMenuDirectoryRemoveFolder" Directory="ProductProgramMenuDirectory" On="uninstall"/>
-      <RegistryValue Root="HKCU" Key="Software\sqlconsulting.it\GenericTSQLCollector" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      <RegistryValue Root="HKCU" Key="Software\sqlconsulting.it\ExtendedTSQLCollector" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
     </Component>
 
 
     <ComponentGroup Id="ProductFiles" Directory="ProductProgramFilesDirectory">
-      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\CommandLine.dll" /></Component>
-      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\Common.dll" /></Component>
-      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\GenericTSQLCollector.exe" /></Component>
-      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\GenericTSQLCollector.exe.config" /></Component>
-      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\GenericTSQLUploader\bin\$(var.PlatformReleaseFolder)\GenericTSQLUploader.exe" /></Component>
-      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\GenericTSQLUploader\bin\$(var.PlatformReleaseFolder)\GenericTSQLUploader.exe.config" /></Component>
+      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\CommandLine.dll" /></Component>
+      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\Common.dll" /></Component>
+      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe" /></Component>
+      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe.config" /></Component>
+      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe" /></Component>
+      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe.config" /></Component>
       <Component Id="cmp_6" Guid="*"><File Id="file_6" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
       <Component Id="cmp_7" Guid="*"><File Id="file_7" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
       <Component Id="cmp_8" Guid="*"><File Id="file_8" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
@@ -77,8 +77,8 @@
     </ComponentGroup>
     
     <ComponentGroup Id="SSIS_Packages" Directory="SSIS_Packages">
-      <Component Id="pkg_0" Guid="*"><File Id="pkg_file_0" KeyPath="yes" Source="..\CollectionSet\GenericTSQLCollect.dtsx" /></Component>
-      <Component Id="pkg_1" Guid="*"><File Id="pkg_file_1" KeyPath="yes" Source="..\CollectionSet\GenericTSQLUpload.dtsx" /></Component>
+      <Component Id="pkg_0" Guid="*"><File Id="pkg_file_0" KeyPath="yes" Source="..\CollectionSet\ExtendedTSQLCollect.dtsx" /></Component>
+      <Component Id="pkg_1" Guid="*"><File Id="pkg_file_1" KeyPath="yes" Source="..\CollectionSet\ExtendedTSQLUpload.dtsx" /></Component>
     </ComponentGroup>
 
     <ComponentGroup Id="LogFolder" Directory="Logs">

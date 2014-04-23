@@ -750,12 +750,12 @@
 <DTS:LoggingOptions>
 <DTS:Property DTS:Name="LoggingMode">2</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">0</DTS:Property>
-<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions><DTS:PropertyExpression DTS:Name="Arguments">" -c " + @[User::CollectionSetUID] + " -i " + (DT_STR,10,1252)@[User::ItemID] + " -l " + (DT_STR,10,1252)@[User::LogID] + " -S " + @[User::ServerInstance] + ( @[User::LoggingLevel] &gt; 0 ? " -v " : "" )</DTS:PropertyExpression><DTS:PropertyExpression DTS:Name="Executable">@[User::ProgramFiles] + "\\GenericTSQLCollector\\GenericTSQLCollector.exe"</DTS:PropertyExpression>
+<DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions><DTS:PropertyExpression DTS:Name="Arguments">" -c " + @[User::CollectionSetUID] + " -i " + (DT_STR,10,1252)@[User::ItemID] + " -l " + (DT_STR,10,1252)@[User::LogID] + " -S " + @[User::ServerInstance] + ( @[User::LoggingLevel] &gt; 0 ? " -v " : "" )</DTS:PropertyExpression><DTS:PropertyExpression DTS:Name="Executable">@[User::ProgramFiles] + "\\ExtendedTSQLCollector\\ExtendedTSQLCollector.exe"</DTS:PropertyExpression>
 <DTS:Property DTS:Name="ObjectName">Invoke Upload Tool</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{bbdbd13f-ae80-4f47-9944-600ce1adbf00}</DTS:Property>
 <DTS:Property DTS:Name="Description">Execute Process Task</DTS:Property>
 <DTS:Property DTS:Name="CreationName">Microsoft.SqlServer.Dts.Tasks.ExecuteProcess.ExecuteProcess, Microsoft.SqlServer.ExecProcTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</DTS:Property>
-<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><ExecuteProcessData Executable="\GenericTSQLCollector\GenericTSQLCollector.exe" RequireFullFileName="True" Arguments=" -c 989413FA-FB42-4B99-A8D1-40C658C8DA6C -i 11 -l 12388 -S  -v " WorkingDirectory="" TimeOut="0" FailTaskIfReturnCodeIsNotSuccessValue="True" SuccessValue="0" TerminateAfterTimeout="True" StandardInputVariable="" StandardOutputVariable="User::ScriptOutput" StandardErrorVariable="User::ScriptError" WindowStyle="Normal"/></DTS:ObjectData></DTS:Executable>
+<DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property><DTS:ObjectData><ExecuteProcessData Executable="\ExtendedTSQLCollector\ExtendedTSQLCollector.exe" RequireFullFileName="True" Arguments=" -c 989413FA-FB42-4B99-A8D1-40C658C8DA6C -i 11 -l 12388 -S  -v " WorkingDirectory="" TimeOut="0" FailTaskIfReturnCodeIsNotSuccessValue="True" SuccessValue="0" TerminateAfterTimeout="True" StandardInputVariable="" StandardOutputVariable="User::ScriptOutput" StandardErrorVariable="User::ScriptError" WindowStyle="Normal"/></DTS:ObjectData></DTS:Executable>
 <DTS:Executable DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" DTS:ThreadHint="0">
 <DTS:Property DTS:Name="ExecutionLocation">0</DTS:Property>
 <DTS:Property DTS:Name="ExecutionAddress"></DTS:Property>
@@ -798,9 +798,9 @@
 <DTS:Property DTS:Name="DTSID">{90301014-7F58-4B86-9F28-A422D99920E8}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PrecedenceConstraint>
-<DTS:Property DTS:Name="ObjectName">GenericTSQLUpload</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">ExtendedTSQLUpload</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{F0A974DF-4553-4ACF-AAC3-719246DBF5CF}</DTS:Property>
-<DTS:Property DTS:Name="Description">Generic TSQL upload task</DTS:Property>
+<DTS:Property DTS:Name="Description">Extended TSQL upload task</DTS:Property>
 <DTS:Property DTS:Name="CreationName">SSIS.Package.2</DTS:Property>
 <DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property>
 <DTS:PackageVariable>
@@ -830,7 +830,7 @@
   &lt;layoutmanager&gt;
     &lt;ddsxmlobj /&gt;
   &lt;/layoutmanager&gt;
-  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="File/Process &amp;quot;GenericTSQLCollector.exe&amp;quot; does not exist in directory &amp;quot;\GenericTSQLCollector&amp;quot;. " left="-10478" top="-2307" logicalid="7" controlid="1" masterid="0" hint1="0" hint2="0" width="4630" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="File/Process &amp;quot;ExtendedTSQLCollector.exe&amp;quot; does not exist in directory &amp;quot;\ExtendedTSQLCollector&amp;quot;. " left="-10478" top="-2307" logicalid="7" controlid="1" masterid="0" hint1="0" hint2="0" width="4630" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
     &lt;control&gt;
       &lt;ddsxmlobjectstreaminitwrapper binary="00080000161200008c040000" /&gt;
     &lt;/control&gt;
@@ -934,7 +934,7 @@
   &lt;layoutmanager&gt;
     &lt;ddsxmlobj /&gt;
   &lt;/layoutmanager&gt;
-  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="File/Process &amp;quot;GenericTSQLCollector.exe&amp;quot; does not exist in directory &amp;quot;\GenericTSQLCollector&amp;quot;. " left="-10478" top="-2307" logicalid="7" controlid="1" masterid="0" hint1="0" hint2="0" width="4630" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
+  &lt;ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="File/Process &amp;quot;ExtendedTSQLCollector.exe&amp;quot; does not exist in directory &amp;quot;\ExtendedTSQLCollector&amp;quot;. " left="-10478" top="-2307" logicalid="7" controlid="1" masterid="0" hint1="0" hint2="0" width="4630" height="1164" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0"&gt;
     &lt;control&gt;
       &lt;ddsxmlobjectstreaminitwrapper binary="00080000161200008c040000" /&gt;
     &lt;/control&gt;

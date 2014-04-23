@@ -24,7 +24,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
         public CollectorTypeInstaller(String ServerInstance)
         {
             this.ServerInstance = ServerInstance;
-            installPath = Path.Combine(System.Environment.GetEnvironmentVariable("programfiles"), "GenericTSQLCollector");
+            installPath = Path.Combine(System.Environment.GetEnvironmentVariable("programfiles"), "ExtendedTSQLCollector");
             installPath = Path.Combine(installPath, "SSIS_Packages");
 
             DirectoryInfo di = new DirectoryInfo(installPath);
@@ -37,8 +37,8 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
         public void install()
         {
             CollectorConfig cfg = CollectorUtils.GetCollectorConfig(ServerInstance);
-            putPackage("GenericTSQLCollect", Path.Combine(installPath,"GenericTSQLCollect.dtsx"), CollectorPackageId, CollectorVersionId);
-            putPackage("GenericTSQLUpload", Path.Combine(installPath, "GenericTSQLUpload.dtsx"), UploaderPackageId, UploaderVersionId);
+            putPackage("ExtendedTSQLCollect", Path.Combine(installPath,"ExtendedTSQLCollect.dtsx"), CollectorPackageId, CollectorVersionId);
+            putPackage("ExtendedTSQLUpload", Path.Combine(installPath, "ExtendedTSQLUpload.dtsx"), UploaderPackageId, UploaderVersionId);
             installCollectorType("Extended T-SQL Query Collector Type");
             installCollectorTypeInMDW(cfg);
         }

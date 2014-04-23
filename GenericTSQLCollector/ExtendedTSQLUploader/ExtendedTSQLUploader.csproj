@@ -7,8 +7,8 @@
     <ProjectGuid>{B9187AF8-284C-4F08-B3BA-DD43B93B49CE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GenericTSQLUploader</RootNamespace>
-    <AssemblyName>GenericTSQLUploader</AssemblyName>
+    <RootNamespace>ExtendedTSQLUploader</RootNamespace>
+    <AssemblyName>ExtendedTSQLUploader</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

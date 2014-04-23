@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 
 
-using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Specialized;
 using System.IO;
 using Sqlconsulting.DataCollector.Utils;
-using Sqlconsulting.DataCollector.GenericTSQLCollector;
+using Sqlconsulting.DataCollector.ExtendedTSQLCollector;
 using CommandLine.Text;
 using CommandLine;
 
 
 
 
-namespace Sqlconsulting.DataCollector.GenericTSQLCollector
+namespace Sqlconsulting.DataCollector.ExtendedTSQLCollector
 {
     class Program
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Sqlconsulting.DataCollector.Utils;
 
-namespace Sqlconsulting.DataCollector.GenericTSQLUploader
+namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 {
     class Uploader
     {
@@ -29,7 +29,7 @@ namespace Sqlconsulting.DataCollector.GenericTSQLUploader
             //DataTable collectedData = null;
 
             if (verbose) logger.logMessage("--------------------------------");
-            if (verbose) logger.logMessage("      GenericTSQLUploader       ");
+            if (verbose) logger.logMessage("      ExtendedTSQLUploader       ");
             if (verbose) logger.logMessage("--------------------------------");
             if (verbose) logger.logMessage("Copyright© sqlconsulting.it 2014");
             if (verbose) logger.logMessage("-");
