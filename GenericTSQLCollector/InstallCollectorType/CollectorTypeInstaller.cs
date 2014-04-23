@@ -13,11 +13,11 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
     {
         private String ServerInstance;
 
-        private static readonly Guid CollectorPackageId = new Guid("B015DBE6-0B9E-4D12-AF52-9386943332E7");
-        private static readonly Guid CollectorVersionId = new Guid("6C116DC0-5C2A-43CC-B69F-E36AB8D1250B");
+        private static readonly Guid CollectorPackageId = new Guid("77D28C8D-A529-445B-B5F6-31861D099594");
+        private static readonly Guid CollectorVersionId = new Guid("89C719FC-DDBD-45CA-BB27-5833E89962A9");
 
-        private static readonly Guid UploaderPackageId = new Guid("F2577F08-EED4-40EF-A9B9-46C00CFF86AE");
-        private static readonly Guid UploaderVersionId = new Guid("8A9B1A23-3047-4731-88A5-065408AF75B5");
+        private static readonly Guid UploaderPackageId = new Guid("F0A974DF-4553-4ACF-AAC3-719246DBF5CF");
+        private static readonly Guid UploaderVersionId = new Guid("A7450869-7C6E-427E-8278-F00D79172E38");
 
         private String installPath;
 
