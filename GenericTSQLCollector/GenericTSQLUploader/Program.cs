@@ -13,6 +13,8 @@ namespace Sqlconsulting.DataCollector.GenericTSQLUploader
     {
         static void Main(string[] args)
         {
+
+
             var options = new Options();
             if (!CommandLine.Parser.Default.ParseArguments(args, options))
             {
@@ -42,6 +44,7 @@ namespace Sqlconsulting.DataCollector.GenericTSQLUploader
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 if (verbose) logger.logMessage("Ending with failure");
                 if (verbose) logger.logMessage(e.Message);
             }

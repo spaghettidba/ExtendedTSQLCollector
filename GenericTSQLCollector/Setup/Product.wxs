@@ -1,11 +1,13 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
   <?if $(var.Platform) = x64 ?>
-  <?define Win64 = "yes" ?>
-  <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+    <?define PlatformReleaseFolder = "Release x64" ?>
   <?else ?>
-  <?define Win64 = "no" ?>
-  <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+    <?define PlatformReleaseFolder = "Release" ?>
   <?endif ?>
   
   <Product Id="*" Name="GenericTSQLCollector 1.0" Language="1033" Version="1.0.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
@@ -62,16 +64,16 @@
 
 
     <ComponentGroup Id="ProductFiles" Directory="ProductProgramFilesDirectory">
-      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\CommandLine.dll" /></Component>
-      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\Common.dll" /></Component>
-      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\GenericTSQLCollector.exe" /></Component>
-      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\GenericTSQLCollector\bin\Release\GenericTSQLCollector.exe.config" /></Component>
-      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\GenericTSQLUploader\bin\Release\GenericTSQLUploader.exe" /></Component>
-      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\GenericTSQLUploader\bin\Release\GenericTSQLUploader.exe.config" /></Component>
-      <Component Id="cmp_6" Guid="*"><File Id="file_6" KeyPath="yes" Source="..\InstallCollectorType\bin\Release\InstallCollectorType.exe" /></Component>
-      <Component Id="cmp_7" Guid="*"><File Id="file_7" KeyPath="yes" Source="..\InstallCollectorType\bin\Release\InstallCollectorType.exe.config" /></Component>
-      <Component Id="cmp_8" Guid="*"><File Id="file_8" KeyPath="yes" Source="..\CollectionSetManager\bin\Release\CollectionSetManager.exe" /></Component>
-      <Component Id="cmp_9" Guid="*"><File Id="file_9" KeyPath="yes" Source="..\CollectionSetManager\bin\Release\CollectionSetManager.exe.config" /></Component>
+      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\CommandLine.dll" /></Component>
+      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\Common.dll" /></Component>
+      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\GenericTSQLCollector.exe" /></Component>
+      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\GenericTSQLCollector\bin\$(var.PlatformReleaseFolder)\GenericTSQLCollector.exe.config" /></Component>
+      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\GenericTSQLUploader\bin\$(var.PlatformReleaseFolder)\GenericTSQLUploader.exe" /></Component>
+      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\GenericTSQLUploader\bin\$(var.PlatformReleaseFolder)\GenericTSQLUploader.exe.config" /></Component>
+      <Component Id="cmp_6" Guid="*"><File Id="file_6" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
+      <Component Id="cmp_7" Guid="*"><File Id="file_7" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
+      <Component Id="cmp_8" Guid="*"><File Id="file_8" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
+      <Component Id="cmp_9" Guid="*"><File Id="file_9" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
     </ComponentGroup>
     
     <ComponentGroup Id="SSIS_Packages" Directory="SSIS_Packages">
