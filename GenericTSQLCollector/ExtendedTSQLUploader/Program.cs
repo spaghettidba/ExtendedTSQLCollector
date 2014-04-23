@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Sqlconsulting.DataCollector.GenericTSQLUploader
+namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 {
     class Program
     {
