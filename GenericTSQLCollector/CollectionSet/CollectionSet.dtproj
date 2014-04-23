@@ -28,13 +28,13 @@
   </Configurations>
   <DTSPackages>
     <DtsPackage FormatVersion="3">
-      <Name>GenericTSQLCollect.dtsx</Name>
-      <FullPath>GenericTSQLCollect.dtsx</FullPath>
+      <Name>ExtendedTSQLCollect.dtsx</Name>
+      <FullPath>ExtendedTSQLCollect.dtsx</FullPath>
       <References />
     </DtsPackage>
     <DtsPackage FormatVersion="3">
-      <Name>GenericTSQLUpload.dtsx</Name>
-      <FullPath>GenericTSQLUpload.dtsx</FullPath>
+      <Name>ExtendedTSQLUpload.dtsx</Name>
+      <FullPath>ExtendedTSQLUpload.dtsx</FullPath>
       <References />
     </DtsPackage>
     <DtsPackage FormatVersion="0">

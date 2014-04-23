@@ -7,8 +7,8 @@
     <ProjectGuid>{BEDDC080-7006-4604-A3DF-1DC4F321A692}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GenericTSQLCollector</RootNamespace>
-    <AssemblyName>GenericTSQLCollector</AssemblyName>
+    <RootNamespace>ExtendedTSQLCollector</RootNamespace>
+    <AssemblyName>ExtendedTSQLCollector</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -56,7 +56,7 @@
     <ManifestCertificateThumbprint>EB59E5393DCD7613C7FA02424D5CF6627B4E6D16</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>GenericTSQLCollector_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ExtendedTSQLCollector_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -98,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="GenericTSQLCollector_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>

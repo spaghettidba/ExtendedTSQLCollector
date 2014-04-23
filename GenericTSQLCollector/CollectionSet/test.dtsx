@@ -19,20 +19,20 @@
 <DTS:Property DTS:Name="SuppressConfigurationWarnings">-1</DTS:Property>
 <DTS:ConnectionManager>
 <DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
-<DTS:Property DTS:Name="ObjectName">GenericTSQLCollect.dtsx</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">ExtendedTSQLCollect.dtsx</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{AD38B2B8-00C8-40E4-8783-765076F43C43}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName">FILE</DTS:Property><DTS:ObjectData><DTS:ConnectionManager>
 <DTS:Property DTS:Name="FileUsageType">0</DTS:Property>
-<DTS:Property DTS:Name="ConnectionString">C:\Progetti\DBAdmin_VSS\Data Collector\CollectionSet\CollectionSet\GenericTSQLCollect.dtsx</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
+<DTS:Property DTS:Name="ConnectionString">C:\Progetti\DBAdmin_VSS\Data Collector\CollectionSet\CollectionSet\ExtendedTSQLCollect.dtsx</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:ConnectionManager>
 <DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
-<DTS:Property DTS:Name="ObjectName">GenericTSQLUpload.dtsx</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">ExtendedTSQLUpload.dtsx</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{989C5481-9571-4713-A2B6-D5768B1A541C}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName">FILE</DTS:Property><DTS:ObjectData><DTS:ConnectionManager>
 <DTS:Property DTS:Name="FileUsageType">0</DTS:Property>
-<DTS:Property DTS:Name="ConnectionString">C:\Progetti\DBAdmin_VSS\Data Collector\CollectionSet\CollectionSet\GenericTSQLUpload.dtsx</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
+<DTS:Property DTS:Name="ConnectionString">C:\Progetti\DBAdmin_VSS\Data Collector\CollectionSet\CollectionSet\ExtendedTSQLUpload.dtsx</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:Configuration>
 <DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationString">User::CacheDirectory</DTS:Property>
@@ -601,7 +601,7 @@
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">1</DTS:Property>
 <DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
-<DTS:Property DTS:Name="ObjectName">Execute TSQLGenericCollector</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">Execute TSQLExtendedCollector</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{770DEC8B-B18E-4318-BDCC-C042A9DA08CD}</DTS:Property>
 <DTS:Property DTS:Name="Description">Execute Package Task</DTS:Property>
 <DTS:Property DTS:Name="CreationName">SSIS.ExecutePackageTask.2</DTS:Property>
@@ -625,7 +625,7 @@
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">1</DTS:Property>
 <DTS:Property DTS:Name="EventFilter" DTS:DataType="8"></DTS:Property></DTS:LoggingOptions>
-<DTS:Property DTS:Name="ObjectName">Execute TSQLGenericUploader</DTS:Property>
+<DTS:Property DTS:Name="ObjectName">Execute TSQLExtendedUploader</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{2B0E4C3B-4584-455E-B555-A6F0A12D5A6A}</DTS:Property>
 <DTS:Property DTS:Name="Description">Execute Package Task</DTS:Property>
 <DTS:Property DTS:Name="CreationName">SSIS.ExecutePackageTask.2</DTS:Property>
@@ -641,7 +641,7 @@
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PrecedenceConstraint>
 <DTS:Property DTS:Name="ObjectName">test</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{F20CB614-00DF-46D3-AF50-8C515FADC623}</DTS:Property>
-<DTS:Property DTS:Name="Description">Generic TSQL collector </DTS:Property>
+<DTS:Property DTS:Name="Description">Extended TSQL collector </DTS:Property>
 <DTS:Property DTS:Name="CreationName">SSIS.Package.2</DTS:Property>
 <DTS:Property DTS:Name="DisableEventHandlers">0</DTS:Property>
 <DTS:PackageVariable>

@@ -17,7 +17,7 @@ namespace Sqlconsulting.DataCollector.Utils
         {
             prefix = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId);
             prefix += "_" + DateTime.Now.ToString("yyyyMMdd");
-            outputFolder = Path.Combine(System.Environment.GetEnvironmentVariable("programfiles"), "GenericTSQLCollector");
+            outputFolder = Path.Combine(System.Environment.GetEnvironmentVariable("programfiles"), "ExtendedTSQLCollector");
             outputFolder = Path.Combine(outputFolder, "Logs");
             outputFile = Path.Combine(outputFolder, prefix + "_Collector.log");
 
