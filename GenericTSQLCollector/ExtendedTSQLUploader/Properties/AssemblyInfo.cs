@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GenericTSQLUploader")]
+[assembly: AssemblyTitle("ExtendedTSQLUploader")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GenericTSQLUploader")]
+[assembly: AssemblyProduct("ExtendedTSQLUploader")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4d22abe5-b92d-4c98-ac18-89dcd05b1764")]
+[assembly: Guid("b9572e03-1330-4467-a39c-a18cba234773")]
 
 // Version information for an assembly consists of the following four values:
 //
