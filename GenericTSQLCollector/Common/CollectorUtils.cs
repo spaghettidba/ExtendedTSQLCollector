@@ -381,8 +381,24 @@ namespace Sqlconsulting.DataCollector.Utils
         public static string getCacheFilePrefix(string SourceServerInstance, Guid CollectionSetUid, int ItemId)
         {
             String results = "";
-            Server srv = new Server(SourceServerInstance);
-            results = srv.NetName + "_" + srv.ServiceInstanceId + "_{" + CollectionSetUid.ToString().ToUpper() + "}_" + ItemId.ToString();
+            String qry = @"
+                SELECT MachineName + '_' + 'MSSQL' + Major + CASE Minor WHEN '50' THEN '_' + Minor ELSE '' END + '.' + ServiceName AS prefix
+                FROM (
+                       SELECT LEFT(ProductVersion,ISNULL(NULLIF(CHARINDEX('.',ProductVersion,1)-1,-1),LEN(ProductVersion))) AS Major,
+                              SUBSTRING(ProductVersion,ISNULL(NULLIF(CHARINDEX('.',ProductVersion,4)-2,-2),LEN(ProductVersion)),2) AS Minor,
+                              MachineName,
+                              ServiceName
+                       FROM (
+                              SELECT CAST(SERVERPROPERTY('ProductVersion') AS varchar(50)) AS ProductVersion,
+                                     CAST(SERVERPROPERTY('MachineName') AS nvarchar(128)) AS MachineName,
+                                     @@SERVICENAME AS ServiceName
+                       ) AS V
+                ) AS V
+            ";
+            DataTable data = GetDataTable(SourceServerInstance, "master", qry);
+            DataRow row = data.Rows[0];
+            results = row["prefix"].ToString()  + "_{" + CollectionSetUid.ToString().ToUpper() + "}_" + ItemId.ToString();
+            
             return results;
         }
     }

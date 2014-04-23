@@ -25,20 +25,21 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private void button2_Click(object sender, EventArgs e)
         {
             String serverName = textBox1.Text;
-            installCollectorType(serverName);
+            try
+            {
+                installCollectorType(serverName);
+                MessageBox.Show("Collector type installed successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void installCollectorType(String serverName)
         {
-            try
-            {
-                Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller cti = new Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller(serverName);
-                cti.install();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller cti = new Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller(serverName);
+            cti.install();
         }
     }
 }
