@@ -18,7 +18,7 @@
 <DTS:Property DTS:Name="CheckpointUsage">0</DTS:Property>
 <DTS:Property DTS:Name="SuppressConfigurationWarnings">-1</DTS:Property>
 <DTS:ConnectionManager>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">ConfigConnection</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{9BE08268-DCA3-4834-8711-29EB7B34AC16}</DTS:Property>
 <DTS:Property DTS:Name="Description">Connection used to get information about collection configuration and for logging purposes.</DTS:Property>
@@ -26,7 +26,7 @@
 <DTS:Property DTS:Name="Retain">0</DTS:Property>
 <DTS:Property DTS:Name="ConnectionString">Data Source=(local);Initial Catalog=msdb;Provider=SQLNCLI10;Integrated Security=SSPI;APP=SQL Server Data Collector;</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:ConnectionManager>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">MdwConnection</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{B2336E2F-4946-4B14-9A6C-BF6059132E81}</DTS:Property>
 <DTS:Property DTS:Name="Description">Connection used to upload collected data to a warehouse.</DTS:Property>
@@ -34,7 +34,7 @@
 <DTS:Property DTS:Name="Retain">-1</DTS:Property>
 <DTS:Property DTS:Name="ConnectionString">Data Source=(local);Initial Catalog=MDW;Provider=SQLNCLI10;Integrated Security=SSPI;APP=SQL Server Data Collector;</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:ConnectionManager>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">Script file</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{8CB88ABF-E0CE-4F52-98A2-7753A6776B5E}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
@@ -65,7 +65,7 @@
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:FlatFileColumn>
 <DTS:Property DTS:Name="ConnectionString">C:\Users\sqluser\AppData\Local\Temp\collector.ps1</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:ConnectionManager>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">TargetConnection</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{BDD785A2-1226-44DB-B2B4-9D4AFF9CCB3A}</DTS:Property>
 <DTS:Property DTS:Name="Description">Connection used to get information from the monitored (target) instance.</DTS:Property>
@@ -655,7 +655,7 @@
 <DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
 <DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
 <DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:LoggingOptions>
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">1</DTS:Property>
@@ -674,7 +674,7 @@
 <DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
 <DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
 <DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:LoggingOptions>
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">0</DTS:Property>
@@ -698,7 +698,7 @@
 <DTS:Property DTS:Name="ISOLevel">1048576</DTS:Property>
 <DTS:Property DTS:Name="LocaleID">-1</DTS:Property>
 <DTS:Property DTS:Name="TransactionOption">1</DTS:Property>
-<DTS:Property DTS:Name="DelayValidation">0</DTS:Property>
+<DTS:Property DTS:Name="DelayValidation">-1</DTS:Property>
 <DTS:LoggingOptions>
 <DTS:Property DTS:Name="LoggingMode">0</DTS:Property>
 <DTS:Property DTS:Name="FilterKind">0</DTS:Property>
