@@ -25,21 +25,28 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private void button2_Click(object sender, EventArgs e)
         {
             String serverName = textBox1.Text;
-            try
-            {
-                installCollectorType(serverName);
-                MessageBox.Show("Collector type installed successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            installCollectorType(serverName);
         }
 
         private void installCollectorType(String serverName)
         {
             Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller cti = new Sqlconsulting.DataCollector.InstallCollectorType.CollectorTypeInstaller(serverName);
-            cti.install();
+            try
+            {
+                if (!cti.checkPermissions())
+                {
+                    MessageBox.Show("Permission denied. The collector type can be installed only by a member of the 'sysadmin' fixed server role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    cti.install();
+                    MessageBox.Show("Collector type installed successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

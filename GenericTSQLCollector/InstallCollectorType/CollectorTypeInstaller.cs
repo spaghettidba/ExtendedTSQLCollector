@@ -34,13 +34,64 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             }
         }
 
+        public Boolean checkPermissions()
+        {
+            int ConnectionTimeout = 15;
+            int QueryTimeout = 600;
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "master", ConnectionTimeout);
+
+            String tsql;
+            Boolean result;
+
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConnectionString;
+
+            try
+            {
+                conn.Open();
+
+                tsql = @"
+                    SELECT is_sysadmin = CAST(IS_SRVROLEMEMBER('sysadmin', ORIGINAL_LOGIN()) AS bit)
+                ";
+
+                SqlCommand cmd = new SqlCommand(tsql, conn);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandTimeout = QueryTimeout;
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+
+                    if (reader.Read())
+                    {
+                        result = reader.GetBoolean(0);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Unable to query permissions.");
+                    }
+                }
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return result;
+        }
+
+
+
         public void install()
         {
             CollectorConfig cfg = CollectorUtils.GetCollectorConfig(ServerInstance);
             putPackage("ExtendedTSQLCollect", Path.Combine(installPath,"ExtendedTSQLCollect.dtsx"), CollectorPackageId, CollectorVersionId);
             putPackage("ExtendedTSQLUpload", Path.Combine(installPath, "ExtendedTSQLUpload.dtsx"), UploaderPackageId, UploaderVersionId);
             installCollectorType("Extended T-SQL Query Collector Type");
-            installCollectorTypeInMDW(cfg);
+            if (!String.IsNullOrEmpty(cfg.MDWDatabase))
+            {
+                installCollectorTypeInMDW(cfg);
+            }
         }
 
 
@@ -114,18 +165,19 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.CommandTimeout = QueryTimeout;
 
-                SqlDataReader reader = cmd.ExecuteReader();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
 
-                if (reader.Read())
-                {
-                    paramSchema = reader.GetString(0);
-                    formatter = reader.GetString(1);
+                    if (reader.Read())
+                    {
+                        paramSchema = reader.GetString(0);
+                        formatter = reader.GetString(1);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Missing information from the collector types table.");
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("Missing information from the collector types table.");
-                }
-                
             }
             finally
             {
