@@ -46,7 +46,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             //
             // Update Source Info
             //
-            int source_id = updateDataSource(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, SourceServerInstance, cfg.DaysUntilExpiration);
+            int source_id = updateDataSource(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, cfg.MachineName, cfg.InstanceName, cfg.DaysUntilExpiration);
 
 
             if (verbose) logger.logMessage("Creating snapshot");
@@ -124,6 +124,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             String TargetServerInstance,
             String TargetDatabase,
             Guid collection_set_uid,
+            String machine_name,
             String named_instance,
             int days_until_expiration
 )
@@ -139,9 +140,8 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 		        SELECT @src_id AS src_id;
 	        ";
 
-            String computerName = System.Environment.GetEnvironmentVariable("ComputerName");
-
-            qry = String.Format(qry, collection_set_uid, computerName, named_instance, days_until_expiration);
+           
+            qry = String.Format(qry, collection_set_uid, machine_name, named_instance, days_until_expiration);
 
             DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
             return Convert.ToInt32(data.Rows[0]["src_id"]);
