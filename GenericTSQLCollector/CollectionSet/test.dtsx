@@ -10,8 +10,8 @@
 <DTS:Property DTS:Name="PackagePriorityClass">0</DTS:Property>
 <DTS:Property DTS:Name="VersionMajor">1</DTS:Property>
 <DTS:Property DTS:Name="VersionMinor">0</DTS:Property>
-<DTS:Property DTS:Name="VersionBuild">181</DTS:Property>
-<DTS:Property DTS:Name="VersionGUID">{495CC32A-BB6A-4258-9CC6-EE1D339DDBC2}</DTS:Property>
+<DTS:Property DTS:Name="VersionBuild">182</DTS:Property>
+<DTS:Property DTS:Name="VersionGUID">{876151EE-68CC-422B-9351-30A4991CE579}</DTS:Property>
 <DTS:Property DTS:Name="EnableConfig">-1</DTS:Property>
 <DTS:Property DTS:Name="CheckpointFileName"></DTS:Property>
 <DTS:Property DTS:Name="SaveCheckpoints">0</DTS:Property>
@@ -34,128 +34,128 @@
 <DTS:Property DTS:Name="FileUsageType">0</DTS:Property>
 <DTS:Property DTS:Name="ConnectionString">C:\Progetti\DBAdmin_VSS\Data Collector\CollectionSet\CollectionSet\ExtendedTSQLUpload.dtsx</DTS:Property></DTS:ConnectionManager></DTS:ObjectData></DTS:ConnectionManager>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::CacheDirectory</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">2</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">TEMP</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::CacheDirectory].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">CacheDirectory</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{72F1EE8A-126D-4918-8358-55FD82DCDA58}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::CacheWindow</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::CacheWindow].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">CacheWindow</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{5EF6C061-FFAD-45CF-BEDC-170C206A9774}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::InputParameters</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::InputParameters].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">InputParameters</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{62E3B07F-C5B7-4897-B347-74EF91DE84EA}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::MDWConnectionString</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::MDWConnectionString].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">MDWConnectionString</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{EBB9F538-F06D-4E25-803F-DA3786931A72}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::ConfigConnectionString</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::ConfigConnectionString].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">ConfigConnectionString</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{D435F04D-45EE-4705-9F59-37B75F4695BB}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::TargetConnectionString</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::TargetConnectionString].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">TargetConnectionString</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{175B22A1-7B3C-4C7C-9F27-8BA255CE806D}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::LoopEventName</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::LoopEventName].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">LoopEventName</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{349BCBAD-ABF2-4639-93A2-E7E6474E2C69}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::ExitEventName</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::ExitEventName].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">ExitEventName</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{264D4120-D107-4880-A7FA-5BEAE2BB05B8}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::CollectorTypeUID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::CollectorTypeUID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">CollectorTypeUID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{E46A25A3-1DB8-4F06-93F5-700D9FF3D8DB}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::CollectionSetUID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::CollectionSetUID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">CollectionSetUID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{DA667ED7-E83E-4E8F-AF0B-90B784E51E4D}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::ItemID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::ItemID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">ItemID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{4D42DA00-DC8B-442A-AE96-18DB1C38D3E7}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::InstanceID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::InstanceID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">InstanceID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{8AFB1B11-7206-4A95-AED3-631969E75CE9}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::InstanceName</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::InstanceName].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">InstanceName</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{7B439C62-C6E2-4961-B885-8F19CA71B18B}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::LoggingLevel</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::LoggingLevel].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">LoggingLevel</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{3FB4BC97-FCA6-457F-BEFA-A22645B7824C}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::LogID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::LogID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">LogID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{C5B0F2F8-E34E-41C6-879A-85CAD34E4ED8}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:Configuration>
 <DTS:Configuration>
-<DTS:Property DTS:Name="ConfigurationType">0</DTS:Property>
-<DTS:Property DTS:Name="ConfigurationString">User::ParentLogID</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationType">1</DTS:Property>
+<DTS:Property DTS:Name="ConfigurationString">E:\Progetti\GenericTSQLCollector\CollectionSet\test.dtsconfig</DTS:Property>
 <DTS:Property DTS:Name="ConfigurationVariable">\Package.Variables[User::ParentLogID].Properties[Value]</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">ParentLogID</DTS:Property>
 <DTS:Property DTS:Name="DTSID">{2DF60C47-E413-4E07-9EC1-F06F888B6143}</DTS:Property>
@@ -648,12 +648,12 @@
 <DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;PrecedenceConstraint xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:EvalOp&gt;Constraint&lt;/dwd:EvalOp&gt;&lt;/PrecedenceConstraint&gt;</DTS:Property>
 <DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">{D20659A3-BD40-4127-98CA-9C21B53E9C33}</DTS:Property>
-<DTS:Property DTS:Name="DTSID">{D1F3810E-1720-4DF2-970F-0610AD9F820F}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{C7DEAD77-5CF4-4C14-8757-CC9E008698A7}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
 <DTS:PackageVariable>
 <DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;-10223&lt;/dwd:BoundingLeft&gt;&lt;dwd:BoundingTop&gt;-106&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;
-  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="10" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-10223" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="16669" y="14896" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
+  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="10" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-10223" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="23019" y="15690" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
     &lt;font&gt;
       &lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;
     &lt;/font&gt;
@@ -709,12 +709,12 @@
 &lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortLeft&gt;-10223&lt;/dwd:PersistedViewPortLeft&gt;&lt;dwd:PersistedViewPortTop&gt;-1000&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
 <DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">{F20CB614-00DF-46D3-AF50-8C515FADC623}</DTS:Property>
-<DTS:Property DTS:Name="DTSID">{87199A51-1A54-4520-A41C-1BAF0D7826E6}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{E6851622-57AB-40F8-82A5-56905BEA4DE1}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable>
 <DTS:PackageVariable>
 <DTS:Property DTS:Name="PackageVariableValue" DTS:DataType="8">&lt;Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0"&gt;&lt;dwd:DtsControlFlowDiagram&gt;&lt;dwd:BoundingLeft&gt;-10223&lt;/dwd:BoundingLeft&gt;&lt;dwd:BoundingTop&gt;-106&lt;/dwd:BoundingTop&gt;&lt;dwd:Layout&gt;&lt;dds&gt;
-  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="10" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-10223" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="16669" y="14896" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
+  &lt;diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="Microsoft.DataWarehouse.Layout.GraphLayout100" defaultlineroute="Microsoft.DataWarehouse.Layout.GraphLayout100" version="7" nextobject="10" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-10223" scrolltop="-1000" gridx="150" gridy="150" marginx="1000" marginy="1000" zoom="100" x="23019" y="15690" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="1" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}"&gt;
     &lt;font&gt;
       &lt;ddsxmlobjectstreamwrapper binary="01010000900180380100065461686f6d61" /&gt;
     &lt;/font&gt;
@@ -770,6 +770,6 @@
 &lt;/dds&gt;&lt;/dwd:Layout&gt;&lt;dwd:PersistedViewPortLeft&gt;-10223&lt;/dwd:PersistedViewPortLeft&gt;&lt;dwd:PersistedViewPortTop&gt;-1000&lt;/dwd:PersistedViewPortTop&gt;&lt;/dwd:DtsControlFlowDiagram&gt;&lt;/Package&gt;</DTS:Property>
 <DTS:Property DTS:Name="Namespace">dts-designer-1.0</DTS:Property>
 <DTS:Property DTS:Name="ObjectName">package-diagram</DTS:Property>
-<DTS:Property DTS:Name="DTSID">{E1753AE9-EC59-46A2-AED2-3C78CEB2A8C3}</DTS:Property>
+<DTS:Property DTS:Name="DTSID">{D1E3AE2D-19B5-4F09-B678-ACF2A583F7AE}</DTS:Property>
 <DTS:Property DTS:Name="Description"></DTS:Property>
 <DTS:Property DTS:Name="CreationName"></DTS:Property></DTS:PackageVariable></DTS:Executable>
