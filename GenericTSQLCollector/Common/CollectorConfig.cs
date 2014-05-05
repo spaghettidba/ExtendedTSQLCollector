@@ -15,6 +15,7 @@ namespace Sqlconsulting.DataCollector.Utils
         public int DaysUntilExpiration { get; set; }
         public List<String> Databases = new List<String>();
         public List<CollectionItemConfig> collectionItems = new List<CollectionItemConfig>();
-
+        public String MachineName { get; set; }
+        public String InstanceName { get; set; }
     }
 }

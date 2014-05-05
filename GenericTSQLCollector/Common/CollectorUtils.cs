@@ -143,6 +143,17 @@ namespace Sqlconsulting.DataCollector.Utils
                 cfg.CacheDirectory = System.Environment.GetEnvironmentVariable("temp");
             }
 
+            qry = @"
+		        SELECT CAST(SERVERPROPERTY('MachineName') AS NVARCHAR(128)) AS MachineName
+	                  ,ISNULL(CAST(SERVERPROPERTY('InstanceName') AS NVARCHAR(128)),'') AS InstanceName
+	        ";
+
+            data = GetDataTable(ServerInstance, "msdb", qry);
+            row = data.Rows[0];
+
+            cfg.MachineName = row["MachineName"].ToString();
+            cfg.InstanceName = row["InstanceName"].ToString();
+
             return cfg;
         }
 
@@ -401,5 +412,7 @@ namespace Sqlconsulting.DataCollector.Utils
             
             return results;
         }
+
+
     }
 }
