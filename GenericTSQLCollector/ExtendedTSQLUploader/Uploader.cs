@@ -53,7 +53,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             //
             // Load the snapshot_id
             //
-            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorUtils.collectorTypeUid, SourceServerInstance, LogId);
+            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorUtils.collectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
 
 
             
@@ -155,7 +155,8 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             String TargetDatabase,
             Guid collection_set_uid,
             Guid collector_type_uid,
-            String named_instance,
+            String machine_name,
+            String instance_name,
             int log_id
         )
         {
@@ -171,7 +172,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 		        SELECT @snapshot_id AS snapshot_id;
 	        ";
 
-            qry = String.Format(qry, collection_set_uid, collector_type_uid, System.Environment.GetEnvironmentVariable("ComputerName"), named_instance, log_id);
+            qry = String.Format(qry, collection_set_uid, collector_type_uid, machine_name, instance_name, log_id);
 
             DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
             return Convert.ToInt32(data.Rows[0]["snapshot_id"]);
