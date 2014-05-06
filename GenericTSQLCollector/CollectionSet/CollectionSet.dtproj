@@ -37,7 +37,7 @@
       <FullPath>ExtendedTSQLUpload.dtsx</FullPath>
       <References />
     </DtsPackage>
-    <DtsPackage FormatVersion="0">
+    <DtsPackage FormatVersion="3">
       <Name>test.dtsx</Name>
       <FullPath>test.dtsx</FullPath>
       <References />
