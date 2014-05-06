@@ -48,5 +48,24 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 MessageBox.Show("Error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                String serverName = textBox1.Text;
+                installCollectorType(serverName);
+            }
+        }
+
+        private void Manager_Shown(object sender, EventArgs e)
+        {
+            this.textBox1.Focus();
+        }
+
+
+
     }
 }
