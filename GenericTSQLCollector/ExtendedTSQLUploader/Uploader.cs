@@ -60,7 +60,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             foreach (CollectionItemConfig itm in cfg.collectionItems)
             {
 
-                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId); 
+                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index; 
 
                 if (verbose) logger.logMessage("Creating target table " + itm.OutputTable);
                 //
@@ -75,7 +75,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
                     //if (verbose) logger.logMessage("Processing " + destFile.FullName);
                     //if (verbose) logger.logMessage("Searching " + collectorId);
 
-                    if (destFile.Name.Contains(collectorId) && destFile.Extension.ToLowerInvariant().Equals(".cache"))
+                    if (destFile.Name.Contains(collectorId + "_") && destFile.Extension.ToLowerInvariant().Equals(".cache"))
                     {
                         if (verbose) logger.logMessage("Uploading " + destFile.FullName);
 
