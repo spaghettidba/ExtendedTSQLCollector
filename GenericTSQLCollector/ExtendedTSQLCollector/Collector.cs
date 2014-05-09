@@ -46,7 +46,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLCollector
                 collectedData = null;
 
                 String ts = DateTime.Now.ToString("yyyyMMddHHmmss");
-                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId); 
+                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index; 
 
                 String destFile = Path.Combine(cfg.CacheDirectory, collectorId + "_" + ts + ".cache");
 
