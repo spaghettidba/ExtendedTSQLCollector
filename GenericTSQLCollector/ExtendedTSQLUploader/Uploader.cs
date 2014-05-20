@@ -66,7 +66,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
                 //
                 // Create the target table
                 //
-                createTargetTable(cfg.MDWInstance, cfg.MDWDatabase, itm.OutputTable, SourceServerInstance, itm.Query, collectorId);
+                String targetTable = createTargetTable(cfg.MDWInstance, cfg.MDWDatabase, itm.OutputTable, SourceServerInstance, itm.Query, collectorId);
 
 
                 foreach (String fileName in System.IO.Directory.GetFiles(cfg.CacheDirectory))
@@ -105,7 +105,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
                         //Write-Host "SourceFile: $destFile"
 
                         if (verbose) logger.logMessage("Writing to server");
-                        CollectorUtils.WriteDataTable(cfg.MDWInstance, cfg.MDWDatabase, "[custom_snapshots].[" + itm.OutputTable + "]", collectedData);
+                        CollectorUtils.WriteDataTable(cfg.MDWInstance, cfg.MDWDatabase, targetTable, collectedData);
 
                         if (verbose) logger.logMessage("Deleting file");
                         destFile.Delete();
@@ -184,7 +184,7 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
          * Creates the target table from the 
          * output definition of the query
          */
-        private void createTargetTable(
+        private String createTargetTable(
                 String TargetServerInstance,
                 String TargetDatabase,
                 String TableName,
@@ -196,19 +196,23 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 
 
             String sqlCheck = @"
-                SELECT COUNT(*) AS cnt 
+                SELECT QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(name)  AS targetTable
                 FROM [{0}].sys.tables 
                 WHERE name = '{1}' 
-                    AND schema_id = SCHEMA_ID('custom_snapshots')";
+                    AND schema_id IN (SCHEMA_ID('custom_snapshots'), SCHEMA_ID('snapshots'))
+                ORDER BY CASE SCHEMA_NAME(schema_id) 
+                        WHEN 'custome_snapshots' THEN 1
+                        WHEN 'snapshots' THEN 2 
+                    END ";
 
             sqlCheck = String.Format(sqlCheck, TargetDatabase, TableName);
 
             DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, sqlCheck);
 
             // table is not missing
-            if (Convert.ToInt32(data.Rows[0]["cnt"]) > 0)
+            if (data.Rows.Count > 0)
             {
-                return;
+                return data.Rows[0]["targetTable"].ToString();
             }
 
 
@@ -318,6 +322,8 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             String scriptText = CollectorUtils.ScriptTable(SourceServerInstance, "tempdb", TableName);
 
             CollectorUtils.InvokeSqlCmd(TargetServerInstance, TargetDatabase, scriptText);
+
+            return "[custom_snapshots].["+ TableName +"]";
         }
 
     }
