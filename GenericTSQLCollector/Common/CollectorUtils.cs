@@ -328,6 +328,28 @@ namespace Sqlconsulting.DataCollector.Utils
                 bulkCopy.DestinationTableName = TableName;
                 bulkCopy.BatchSize = BatchSize;
                 bulkCopy.BulkCopyTimeout = QueryTimeout;
+
+                // enters this code block when using this collector type for system collection sets
+                // the database_name column is not added automatically by the "Generic T-SQL Query Collector"
+                // so we have to ignore its "__database_name" counterpart
+                // added automatically when the "database_name" column (no underscores) already exists
+                if(TableName.StartsWith("[snapshots].")) 
+                {
+                    
+                    foreach(string dbcol in getColumns(ServerInstance, Database, TableName))
+                    {
+                        if (Data.Columns.Contains("__" + dbcol))
+                        {
+                            bulkCopy.ColumnMappings.Add("__" + dbcol, dbcol);
+                        }
+                        else if (Data.Columns.Contains(dbcol))
+                        {
+                            bulkCopy.ColumnMappings.Add(dbcol,dbcol);
+                        }
+                    }
+                    
+                }
+
                 bulkCopy.WriteToServer(Data);
             }
         }
@@ -413,6 +435,23 @@ namespace Sqlconsulting.DataCollector.Utils
             return results;
         }
 
+
+        public static IEnumerable<string> getColumns(string SourceServerInstance, string DatabaseName, string TableName)
+        {
+            string qry = @"
+                SELECT name
+                FROM sys.columns
+                WHERE object_id = OBJECT_ID('{0}')
+                ORDER BY column_id
+            ";
+            qry = String.Format(qry, TableName);
+            DataTable data = GetDataTable(SourceServerInstance, DatabaseName, qry);
+            List<string> results = new List<string>();
+            foreach(DataRow row in data.Rows){
+                results.Add(row["name"].ToString());
+            }
+            return results;
+        }
 
     }
 }
