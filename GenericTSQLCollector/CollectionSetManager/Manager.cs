@@ -62,7 +62,9 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
         private void Manager_Shown(object sender, EventArgs e)
         {
+            this.textBox1.SelectAll();
             this.textBox1.Focus();
+            this.textBox3.Text = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         }
 
 
