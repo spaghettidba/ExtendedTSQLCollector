@@ -52,9 +52,9 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLCollector
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
                 if (verbose) logger.logMessage("Ending with failure");
-                if (verbose) logger.logMessage(e.Message);
+                if (verbose) logger.logMessage(e.StackTrace.ToString());
             }
         }
 

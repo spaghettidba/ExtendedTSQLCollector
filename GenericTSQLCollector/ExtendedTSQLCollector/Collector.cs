@@ -34,12 +34,14 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLCollector
             //
             // Load Configuration
             //
-            CollectorConfig cfg = CollectorUtils.GetCollectorConfig(SourceServerInstance, CollectionSetUid, ItemId);
+            TSQLCollectorConfig cfg = new TSQLCollectorConfig();
+            cfg.readFromDatabase(SourceServerInstance, CollectionSetUid, ItemId);
 
 
             if (verbose) logger.logMessage("Entering collection items loop");
-            foreach (CollectionItemConfig itm in cfg.collectionItems)
+            foreach (CollectionItemConfig item in cfg.collectionItems)
             {
+                TSQLCollectionItemConfig itm = (TSQLCollectionItemConfig)item;
                 if (verbose) logger.logMessage("Processing item n. " + itm.Index);
                 if (verbose) logger.logMessage("Processing query " + itm.Query);
 

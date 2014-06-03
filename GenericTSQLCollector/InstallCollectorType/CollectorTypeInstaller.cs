@@ -13,12 +13,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
     {
         private String ServerInstance;
 
-        private static readonly Guid CollectorPackageId = new Guid("77D28C8D-A529-445B-B5F6-31861D099594");
-        private static readonly Guid CollectorVersionId = new Guid("89C719FC-DDBD-45CA-BB27-5833E89962A9");
-
-        private static readonly Guid UploaderPackageId = new Guid("F0A974DF-4553-4ACF-AAC3-719246DBF5CF");
-        private static readonly Guid UploaderVersionId = new Guid("A7450869-7C6E-427E-8278-F00D79172E38");
-
+ 
         private String installPath;
 
         public CollectorTypeInstaller(String ServerInstance)
@@ -84,9 +79,10 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
         public void install()
         {
-            CollectorConfig cfg = CollectorUtils.GetCollectorConfig(ServerInstance);
-            putPackage("ExtendedTSQLCollect", Path.Combine(installPath,"ExtendedTSQLCollect.dtsx"), CollectorPackageId, CollectorVersionId);
-            putPackage("ExtendedTSQLUpload", Path.Combine(installPath, "ExtendedTSQLUpload.dtsx"), UploaderPackageId, UploaderVersionId);
+            TSQLCollectorConfig cfg = new TSQLCollectorConfig();
+            cfg.readFromDatabase(ServerInstance);
+            putPackage("ExtendedTSQLCollect", Path.Combine(installPath, "ExtendedTSQLCollect.dtsx"), TSQLCollectorConfig.CollectorPackageId, TSQLCollectorConfig.CollectorVersionId);
+            putPackage("ExtendedTSQLUpload", Path.Combine(installPath, "ExtendedTSQLUpload.dtsx"), TSQLCollectorConfig.UploaderPackageId, TSQLCollectorConfig.UploaderVersionId);
             installCollectorType("Extended T-SQL Query Collector Type");
             if (!String.IsNullOrEmpty(cfg.MDWDatabase))
             {
@@ -207,7 +203,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                         PRINT '' --IGNORE
                     END CATCH;
                 ";
-                tsql = String.Format(tsql, name, CollectorUtils.collectorTypeUid.ToString());
+                tsql = String.Format(tsql, name, TSQLCollectionItemConfig.CollectorTypeUid.ToString());
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
                 cmd.CommandType = System.Data.CommandType.Text;
@@ -235,12 +231,12 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandTimeout = QueryTimeout;
 
-                cmd.Parameters.AddWithValue("@collector_type_uid", CollectorUtils.collectorTypeUid);
+                cmd.Parameters.AddWithValue("@collector_type_uid", TSQLCollectionItemConfig.CollectorTypeUid);
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@parameter_schema", paramSchema);
                 cmd.Parameters.AddWithValue("@parameter_formatter", formatter);
-                cmd.Parameters.AddWithValue("@collection_package_id", CollectorPackageId);
-                cmd.Parameters.AddWithValue("@upload_package_id", UploaderPackageId);
+                cmd.Parameters.AddWithValue("@collection_package_id", TSQLCollectorConfig.CollectorPackageId);
+                cmd.Parameters.AddWithValue("@upload_package_id", TSQLCollectorConfig.UploaderPackageId);
 
                 cmd.ExecuteNonQuery();
             }
@@ -272,7 +268,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandTimeout = QueryTimeout;
 
-                cmd.Parameters.AddWithValue("@collector_type_uid", CollectorUtils.collectorTypeUid);
+                cmd.Parameters.AddWithValue("@collector_type_uid", TSQLCollectionItemConfig.CollectorTypeUid);
 
                 cmd.ExecuteNonQuery();
             }
