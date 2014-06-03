@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedTSQLCollector", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedTSQLUploader", "ExtendedTSQLUploader\ExtendedTSQLUploader.csproj", "{C37400D5-C60B-4BE1-B748-D220CC2361A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedXEReaderCollector", "ExtendedXEReaderCollector\ExtendedXEReaderCollector.csproj", "{67AB0707-6745-48BC-8E86-1EC2AC024816}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 6
@@ -200,6 +202,24 @@ Global
 		{C37400D5-C60B-4BE1-B748-D220CC2361A7}.Release|x64.Build.0 = Release|Any CPU
 		{C37400D5-C60B-4BE1-B748-D220CC2361A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{C37400D5-C60B-4BE1-B748-D220CC2361A7}.Release|x86.Build.0 = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|Any CPU.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|Any CPU.Build.0 = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|Mixed Platforms.Build.0 = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|x64.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release x64|x86.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|x64.ActiveCfg = Release|Any CPU
+		{67AB0707-6745-48BC-8E86-1EC2AC024816}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

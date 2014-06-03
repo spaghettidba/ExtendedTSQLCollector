@@ -38,7 +38,8 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             //
             // Load Configuration
             //
-            CollectorConfig cfg = CollectorUtils.GetCollectorConfig(SourceServerInstance, CollectionSetUid, ItemId);
+            TSQLCollectorConfig cfg = new TSQLCollectorConfig();
+            cfg.readFromDatabase(SourceServerInstance, CollectionSetUid, ItemId);
 
             //String collectorId = CollectionSetUid + "_" + ItemId.ToString();
 
@@ -53,13 +54,13 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
             //
             // Load the snapshot_id
             //
-            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorUtils.collectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
+            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, TSQLCollectionItemConfig.CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
 
 
             
-            foreach (CollectionItemConfig itm in cfg.collectionItems)
+            foreach (CollectionItemConfig item in cfg.collectionItems)
             {
-
+                TSQLCollectionItemConfig itm = (TSQLCollectionItemConfig)item;
                 String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index; 
 
                 if (verbose) logger.logMessage("Creating target table " + itm.OutputTable);
