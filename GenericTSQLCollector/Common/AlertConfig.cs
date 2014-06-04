@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sqlconsulting.DataCollector.Utils
 {
-    class Alert
+    public class AlertConfig
     {
 
         public enum ImportanceLevel
@@ -15,20 +15,22 @@ namespace Sqlconsulting.DataCollector.Utils
             High
         };
 
-        public enum GroupingLevel
+        public enum AlertMode
         {
-            Event,
-            CollectionInterval
+            Grouped,
+            Atomic
         };
 
 
-        public String Operator { get; set; }
+        public String Recipient { get; set; }
         public int Delay { get; set; }
         public Boolean WriteToWindowsLog { get; set; }
         public Boolean WriteToErrorLog { get; set; }
         public String Subject { get; set; }
         public String Filter { get; set; }
-        public GroupingLevel Grouping { get; set; }
+        public List<String> Columns = new List<String>();
+        public AlertMode Mode { get; set; }
+        public ImportanceLevel Importance { get; set; }
     }
 }
 
