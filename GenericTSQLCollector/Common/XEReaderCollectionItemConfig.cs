@@ -19,6 +19,6 @@ namespace Sqlconsulting.DataCollector.Utils
         public String Filter { get; set; }
         public List<String> Columns = new List<String>();
 
-        public Boolean FireAlert { get; set; }
+        public List<AlertConfig> Alerts = new List<AlertConfig>();
     }
 }
