@@ -64,6 +64,11 @@ namespace Sqlconsulting.DataCollector.Utils
 
         }
 
+        public abstract void readFromDatabase(
+                   String ServerInstance,
+                   Guid CollectionSetUid,
+                   int ItemId
+               );
 
     }
 }
