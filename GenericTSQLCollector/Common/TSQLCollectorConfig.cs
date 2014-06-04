@@ -16,7 +16,7 @@ namespace Sqlconsulting.DataCollector.Utils
         public static readonly Guid UploaderVersionId = new Guid("A7450869-7C6E-427E-8278-F00D79172E38");
 
 
-        public void readFromDatabase(
+        public override void readFromDatabase(
             String ServerInstance,
             Guid CollectionSetUid,
             int ItemId
