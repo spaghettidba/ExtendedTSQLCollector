@@ -7,194 +7,36 @@ using Sqlconsulting.DataCollector.Utils;
 
 namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 {
-    class Uploader
+    class Uploader : Sqlconsulting.DataCollector.Utils.Uploader
     {
 
         public Boolean verbose { get; set; }
 
 
-        /*
-         * Execute the data upload process
-         */
-        public void UploadData(
-                String SourceServerInstance,
-                Guid CollectionSetUid,
-                int ItemId,
-                int LogId
-            )
+        public Uploader(
+                               String SourceServerInstance,
+                               Guid CollectionSetUid,
+                               int ItemId,
+                               int LogId
+                           ) : base(SourceServerInstance, CollectionSetUid, ItemId, LogId)
         {
-
-            CollectorLogger logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
-
-            //DataTable collectedData = null;
-
-            if (verbose) logger.logMessage("--------------------------------");
-            if (verbose) logger.logMessage("      ExtendedTSQLUploader       ");
-            if (verbose) logger.logMessage("--------------------------------");
-            if (verbose) logger.logMessage("Copyright© sqlconsulting.it 2014");
-            if (verbose) logger.logMessage("-");
-
-            if (verbose) logger.logMessage("Loading configuration");
-            //
-            // Load Configuration
-            //
-            TSQLCollectorConfig cfg = new TSQLCollectorConfig();
-            cfg.readFromDatabase(SourceServerInstance, CollectionSetUid, ItemId);
-
-            //String collectorId = CollectionSetUid + "_" + ItemId.ToString();
-
-            if (verbose) logger.logMessage("Updating source info");
-            //
-            // Update Source Info
-            //
-            int source_id = updateDataSource(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, cfg.MachineName, cfg.InstanceName, cfg.DaysUntilExpiration);
-
-
-            if (verbose) logger.logMessage("Creating snapshot");
-            //
-            // Load the snapshot_id
-            //
-            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, TSQLCollectionItemConfig.CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
-
-
             
-            foreach (CollectionItemConfig item in cfg.collectionItems)
-            {
-                TSQLCollectionItemConfig itm = (TSQLCollectionItemConfig)item;
-                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index; 
-
-                if (verbose) logger.logMessage("Creating target table " + itm.OutputTable);
-                //
-                // Create the target table
-                //
-                String targetTable = createTargetTable(cfg.MDWInstance, cfg.MDWDatabase, itm.OutputTable, SourceServerInstance, itm.Query, collectorId);
-
-
-                foreach (String fileName in System.IO.Directory.GetFiles(cfg.CacheDirectory))
-                {
-                    System.IO.FileInfo destFile = new System.IO.FileInfo(fileName);
-                    //if (verbose) logger.logMessage("Processing " + destFile.FullName);
-                    //if (verbose) logger.logMessage("Searching " + collectorId);
-
-                    if (destFile.Name.Contains(collectorId + "_") && destFile.Extension.ToLowerInvariant().Equals(".cache"))
-                    {
-                        if (verbose) logger.logMessage("Uploading " + destFile.FullName);
-
-                        DataTable collectedData = null;
-
-                        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter fm = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-                        //
-                        // Deserialize from the binary file
-                        //
-                        using (System.IO.FileStream fs = new System.IO.FileStream(destFile.FullName, System.IO.FileMode.Open))
-                        {
-                            collectedData = (DataTable)fm.Deserialize(fs);
-                            fs.Close();
-                        }
-
-
-
-                        //
-                        // Add the snapshot_id column to the DataTable
-                        //
-                        DataColumn cl_sn = new DataColumn("snapshot_id", typeof(Int32));
-                        cl_sn.DefaultValue = snapshot_id;
-                        collectedData.Columns.Add(cl_sn);
-
-                        //Write-Host "TargetTable: $targetTable"
-                        //Write-Host "SourceFile: $destFile"
-
-                        if (verbose) logger.logMessage("Writing to server");
-                        CollectorUtils.WriteDataTable(cfg.MDWInstance, cfg.MDWDatabase, targetTable, collectedData);
-
-                        if (verbose) logger.logMessage("Deleting file");
-                        destFile.Delete();
-                    }
-
-                }
-
-            }
-
-            logger.cleanupLogFiles(cfg.DaysUntilExpiration);
-
         }
-
-
-        private int updateDataSource(
-            String TargetServerInstance,
-            String TargetDatabase,
-            Guid collection_set_uid,
-            String machine_name,
-            String named_instance,
-            int days_until_expiration
-)
-        {
-            String qry = @"
-		        DECLARE @src_id int;
-		        EXEC [core].[sp_update_data_source] 
-			        @collection_set_uid = '{0}',
-			        @machine_name = '{1}',
-			        @named_instance = '{2}',
-			        @days_until_expiration = {3},
-			        @source_id = @src_id OUTPUT;
-		        SELECT @src_id AS src_id;
-	        ";
-
-           
-            qry = String.Format(qry, collection_set_uid, machine_name, named_instance, days_until_expiration);
-
-            DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
-            return Convert.ToInt32(data.Rows[0]["src_id"]);
-        }
-
-
-
-
-        private int createSnapshot(
-            String TargetServerInstance,
-            String TargetDatabase,
-            Guid collection_set_uid,
-            Guid collector_type_uid,
-            String machine_name,
-            String instance_name,
-            int log_id
-        )
-        {
-            String qry = @"
-		        DECLARE @snapshot_id int;
-		        EXEC [core].[sp_create_snapshot] 
-			        @collection_set_uid = '{0}',
-			        @collector_type_uid = '{1}',
-			        @machine_name = '{2}',
-			        @named_instance = '{3}',
-			        @log_id = {4},
-			        @snapshot_id = @snapshot_id OUTPUT;
-		        SELECT @snapshot_id AS snapshot_id;
-	        ";
-
-            qry = String.Format(qry, collection_set_uid, collector_type_uid, machine_name, instance_name, log_id);
-
-            DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
-            return Convert.ToInt32(data.Rows[0]["snapshot_id"]);
-        }
-
-
+        
 
         /*
          * Creates the target table from the 
          * output definition of the query
          */
-        private String createTargetTable(
-                String TargetServerInstance,
-                String TargetDatabase,
-                String TableName,
-                String SourceServerInstance,
-                String SourceQuery,
-                String CollectorId
+        protected override String createTargetTable(
+                CollectorConfig cfg,
+                CollectionItemConfig itm
             )
         {
+            String TableName = itm.OutputTable;
+            TSQLCollectionItemConfig itemCfg = (TSQLCollectionItemConfig)itm;
 
+            String CollectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index;
 
             String sqlCheck = @"
                 SELECT QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(name)  AS targetTable
@@ -206,9 +48,9 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
                         WHEN 'snapshots' THEN 2 
                     END ";
 
-            sqlCheck = String.Format(sqlCheck, TargetDatabase, TableName);
+            sqlCheck = String.Format(sqlCheck, cfg.MDWInstance, itm.OutputTable);
 
-            DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, sqlCheck);
+            DataTable data = CollectorUtils.GetDataTable(cfg.MDWInstance, cfg.MDWDatabase, sqlCheck);
 
             // table is not missing
             if (data.Rows.Count > 0)
@@ -316,15 +158,15 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 
 	        ";
 
-            statement = String.Format(statement, CollectorId, SourceQuery, TableName);
+            statement = String.Format(statement, CollectorId, itemCfg.Query, itm.OutputTable);
 
             CollectorUtils.InvokeSqlBatch(SourceServerInstance, "tempdb", statement);
 
             String scriptText = CollectorUtils.ScriptTable(SourceServerInstance, "tempdb", TableName);
 
-            CollectorUtils.InvokeSqlCmd(TargetServerInstance, TargetDatabase, scriptText);
+            CollectorUtils.InvokeSqlCmd(cfg.MDWInstance, cfg.MDWDatabase, scriptText);
 
-            return "[custom_snapshots].["+ TableName +"]";
+            return "[custom_snapshots].[" + TableName + "]";
         }
 
     }

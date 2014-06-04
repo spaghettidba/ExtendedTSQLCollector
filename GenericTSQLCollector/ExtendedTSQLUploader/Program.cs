@@ -36,9 +36,9 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 
                 if (verbose) logger.logMessage("Starting");
 
-                Uploader uploader = new Uploader();
+                Uploader uploader = new Uploader(SourceServerInstance, CollectionSetUid, ItemId, LogId);
                 uploader.verbose = verbose;
-                uploader.UploadData(SourceServerInstance, CollectionSetUid, ItemId, LogId);
+                uploader.UploadData();
 
                 if (verbose) logger.logMessage("Ending with success");
             }

@@ -12,7 +12,7 @@ using Sqlconsulting.DataCollector.Utils;
 using CommandLine.Text; 
 using CommandLine;
 
-namespace ExtendedXEReaderCollector
+namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 {
     class Program
     {
@@ -39,9 +39,9 @@ namespace ExtendedXEReaderCollector
 
                 if (verbose) logger.logMessage("Starting");
 
-                Collector collector = new Collector();
+                Collector collector = new Collector(SourceServerInstance, CollectionSetUid, ItemId);
                 collector.verbose = verbose;
-                collector.CollectData(SourceServerInstance, CollectionSetUid, ItemId);
+                collector.CollectData();
 
 
                 if (verbose) logger.logMessage("Ending with success");
