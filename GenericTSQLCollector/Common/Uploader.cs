@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -41,10 +42,12 @@ namespace Sqlconsulting.DataCollector.Utils
 
             CollectorLogger logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
 
-            //DataTable collectedData = null;
+            String displayName;
+            String[] names = this.GetType().Namespace.Split('.');
+            displayName = names[names.Length - 1];
 
             if (verbose) logger.logMessage("--------------------------------");
-            if (verbose) logger.logMessage(this.GetType().Name);
+            if (verbose) logger.logMessage("   " + displayName);
             if (verbose) logger.logMessage("--------------------------------");
             if (verbose) logger.logMessage("Copyright© sqlconsulting.it 2014");
             if (verbose) logger.logMessage("-");
@@ -83,14 +86,14 @@ namespace Sqlconsulting.DataCollector.Utils
             
             foreach (CollectionItemConfig item in cfg.collectionItems)
             {
-                XEReaderCollectionItemConfig itm = (XEReaderCollectionItemConfig)item;
-                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index; 
+                String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + item.Index; 
 
-                if (verbose) logger.logMessage("Creating target table " + itm.OutputTable);
+                if (verbose) logger.logMessage("Creating target table " + item.OutputTable);
                 //
                 // Create the target table
                 //
-                String targetTable = createTargetTable(cfg, itm);
+                String targetTable = createTargetTable(cfg, item);
+                Boolean tableCreated = (targetTable != null);
 
 
                 foreach (String fileName in System.IO.Directory.GetFiles(cfg.CacheDirectory))
@@ -125,8 +128,14 @@ namespace Sqlconsulting.DataCollector.Utils
                         cl_sn.DefaultValue = snapshot_id;
                         collectedData.Columns.Add(cl_sn);
 
-                        //Write-Host "TargetTable: $targetTable"
-                        //Write-Host "SourceFile: $destFile"
+                        //
+                        // Check again if table needs to be created
+                        //
+                        if (!tableCreated)
+                        {
+                            createTargetTable(cfg, item, collectedData);
+                            tableCreated = true;
+                        }
 
                         if (verbose) logger.logMessage("Writing to server");
                         CollectorUtils.WriteDataTable(cfg.MDWInstance, cfg.MDWDatabase, targetTable, collectedData);
@@ -164,7 +173,10 @@ namespace Sqlconsulting.DataCollector.Utils
 		        SELECT @src_id AS src_id;
 	        ";
 
-           
+            if (named_instance.Trim().Equals(""))
+            {
+                named_instance = "MSSQLSERVER";
+            }
             qry = String.Format(qry, collection_set_uid, machine_name, named_instance, days_until_expiration);
 
             DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
@@ -196,6 +208,11 @@ namespace Sqlconsulting.DataCollector.Utils
 		        SELECT @snapshot_id AS snapshot_id;
 	        ";
 
+            if (instance_name.Trim().Equals(""))
+            {
+                instance_name = "MSSQLSERVER";
+            }
+
             qry = String.Format(qry, collection_set_uid, collector_type_uid, machine_name, instance_name, log_id);
 
             DataTable data = CollectorUtils.GetDataTable(TargetServerInstance, TargetDatabase, qry);
@@ -213,6 +230,55 @@ namespace Sqlconsulting.DataCollector.Utils
                 CollectionItemConfig itm
             );
 
+        
+        protected String createTargetTable(
+                CollectorConfig cfg,
+                CollectionItemConfig itm,
+                DataTable data
+            )
+        {
+            int ConnectionTimeout = 15;
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", cfg.MDWInstance, cfg.MDWDatabase, ConnectionTimeout);
 
+            using(SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = ConnectionString;
+                conn.Open();
+
+                DataTableTSQLAdapter adapter = new DataTableTSQLAdapter(conn);
+                adapter.DestinationTableName = "[custom_snapshots].[" + itm.OutputTable + "]";
+                adapter.CreateFromDataTable(data);
+
+            }
+            return "[custom_snapshots].[" + itm.OutputTable + "]";
+        }
+
+
+        protected String checkTable(CollectorConfig cfg, CollectionItemConfig itm)
+        {
+            String sqlCheck = @"
+                SELECT QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(name)  AS targetTable
+                FROM [{0}].sys.tables 
+                WHERE name = '{1}' 
+                    AND schema_id IN (SCHEMA_ID('custom_snapshots'), SCHEMA_ID('snapshots'))
+                ORDER BY CASE SCHEMA_NAME(schema_id) 
+                        WHEN 'custome_snapshots' THEN 1
+                        WHEN 'snapshots' THEN 2 
+                    END ";
+
+            sqlCheck = String.Format(sqlCheck, cfg.MDWDatabase, itm.OutputTable);
+
+            DataTable data = CollectorUtils.GetDataTable(cfg.MDWInstance, cfg.MDWDatabase, sqlCheck);
+
+            // table is not missing
+            if (data.Rows.Count > 0)
+            {
+                return data.Rows[0]["targetTable"].ToString();
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

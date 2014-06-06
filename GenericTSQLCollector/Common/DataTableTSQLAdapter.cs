@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace Common
+namespace Sqlconsulting.DataCollector.Utils
 {
 
     public class DataTableTSQLAdapter
@@ -88,7 +88,11 @@ namespace Common
 
         public static string GetCreateSQL(string tableName, DataTable schema, int[] primaryKeys)
         {
-            string sql = "CREATE TABLE [" + tableName + "] (\n";
+            if (tableName.IndexOf('[') < 0)
+            {
+                tableName = "[" + tableName + "]";
+            }
+            string sql = "CREATE TABLE " + tableName + " (\n";
 
             // columns
             foreach (DataRow column in schema.Rows)
@@ -133,7 +137,11 @@ namespace Common
 
         public static string GetCreateFromDataTableSQL(string tableName, DataTable table)
         {
-            string sql = "CREATE TABLE [" + tableName + "] (\n";
+            if (tableName.IndexOf('[') < 0)
+            {
+                tableName = "[" + tableName + "]";
+            }
+            string sql = "CREATE TABLE " + tableName + " (\n";
             // columns
             foreach (DataColumn column in table.Columns)
             {
@@ -148,8 +156,9 @@ namespace Common
                 {
                     sql += "[" + column.ColumnName + "],";
                 }
-                sql = sql.TrimEnd(new char[] { ',' }) + "))\n";
+                sql = sql.TrimEnd(new char[] { ',' }) + ")";
             }
+            sql += ")\n";
 
             return sql;
         }
@@ -171,6 +180,7 @@ namespace Common
         // Based off of http://msdn.microsoft.com/en-us/library/ms131092.aspx
         public static string SQLGetType(object type, int columnSize, int numericPrecision, int numericScale)
         {
+            
             switch (type.ToString())
             {
                 case "System.Byte[]":
@@ -191,6 +201,9 @@ namespace Common
                     else
                         return "DECIMAL";
 
+                case "System.UInt64":
+                    return "DECIMAL(20)";
+
                 case "System.Double":
                     return "FLOAT";
 
@@ -198,12 +211,15 @@ namespace Common
                     return "REAL";
 
                 case "System.Int64":
+                case "System.UInt32":
                     return "BIGINT";
 
                 case "System.Int32":
+                case "System.UInt16":
                     return "INT";
 
                 case "System.Int16":
+                case "System.SByte":
                     return "SMALLINT";
 
                 case "System.String":

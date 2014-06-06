@@ -85,16 +85,22 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                         DataTable dt = ReadEvent(evt);
 
                         //
+                        // Apply filter
+                        //
+                        DataView dw = new DataView(dt);
+                        dw.RowFilter = itm.Filter;
+                        dt = dw.ToTable();
+
+                        //
                         // Merge collected data in a single DataTable
                         //
-                        if (collectedData != null)
+                        if (collectedData != null && dt.Rows.Count > 0)
                         {
                             collectedData.Merge(dt);
                         }
                         else
                         {
                             collectedData = dt;
-                            collectedData.DataSet.RemotingFormat = System.Data.SerializationFormat.Binary;
                             collectedData.RemotingFormat = System.Data.SerializationFormat.Binary;
                         }
 
@@ -103,10 +109,14 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                         //
                         // Process rows to fire alerts if needed
                         //
-                        foreach (DataRow currentRow in dt.Select(itm.Filter))
+                        foreach (AlertConfig currentAlert in itm.Alerts)
                         {
-                            //TODO: Process alerts
+                            foreach (DataRow currentRow in dt.Select(currentAlert.Filter))
+                            {
+                                //TODO: Process alerts
+                            }
                         }
+                        
 
 
                         // 
@@ -118,10 +128,10 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                             lastEventFlush = DateTime.Now;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        // TODO: capture the session related events
-                        throw;
+                        // TODO: capture the session related exceptions
+                        throw e;
                     }
 
                     
@@ -159,15 +169,26 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
             if (sess.Rows.Count <= 0)
             {
-                // TODO: create the session
+                // create the session
+                CollectorUtils.InvokeSqlCmd(SourceServerInstance, "master", itm.SessionDefinition);
+                // repeat the check to see if 
+                // the session has been started
+                sess = CollectorUtils.GetDataTable(SourceServerInstance, "master", sql_check_session);
             }
-            else
+
+            if (sess.Rows[0]["state"].ToString().Equals("OFF"))
             {
-                if (sess.Rows[0]["xe_session_name"].ToString().Equals("OFF"))
-                {
-                    // TODO: start the session
-                }
+                // TODO: start the session
+                String sql_startSession = @"
+                    ALTER EVENT SESSION [{0}] 
+                    ON SERVER
+                    STATE = start;
+                    GO
+                ";
+                sql_startSession = String.Format(sql_startSession, itm.SessionName);
+                CollectorUtils.InvokeSqlCmd(SourceServerInstance, "master", sql_startSession);
             }
+
         }
 
 
@@ -233,7 +254,15 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
             //
             foreach (PublishedEventField fld in evt.Fields)
             {
-                DataColumn dc = dt.Columns.Add(fld.Name, fld.Type);
+                DataColumn dc = null;
+                if (fld.Type.IsSerializable)
+                {
+                    dc = dt.Columns.Add(fld.Name, fld.Type);
+                }
+                else
+                {
+                    dc = dt.Columns.Add(fld.Name, typeof(String));
+                }
                 dc.ExtendedProperties.Add("subtype", "field");
             }
 
@@ -248,7 +277,14 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
             foreach (PublishedEventField fld in evt.Fields)
             {
-                row.SetField(fld.Name, fld.Value);
+                if (fld.Type.IsSerializable)
+                {
+                    row.SetField(fld.Name, fld.Value);
+                }
+                else
+                {
+                    row.SetField(fld.Name, fld.Value.ToString());
+                }
             }
 
             foreach (PublishedAction act in evt.Actions)

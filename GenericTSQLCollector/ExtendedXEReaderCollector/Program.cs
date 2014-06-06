@@ -51,6 +51,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                 Console.WriteLine(e.ToString());
                 if (verbose) logger.logMessage("Ending with failure");
                 if (verbose) logger.logMessage(e.Message);
+                if (verbose) logger.logMessage(e.StackTrace.ToString());
             }
         }
 
