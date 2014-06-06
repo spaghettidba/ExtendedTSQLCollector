@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 //using System.Threading.Tasks;
 
@@ -83,10 +84,14 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             cfg.readFromDatabase(ServerInstance);
             putPackage("ExtendedTSQLCollect", Path.Combine(installPath, "ExtendedTSQLCollect.dtsx"), TSQLCollectorConfig.CollectorPackageId, TSQLCollectorConfig.CollectorVersionId);
             putPackage("ExtendedTSQLUpload", Path.Combine(installPath, "ExtendedTSQLUpload.dtsx"), TSQLCollectorConfig.UploaderPackageId, TSQLCollectorConfig.UploaderVersionId);
-            installCollectorType("Extended T-SQL Query Collector Type");
+            putPackage("ExtendedXEReaderCollect", Path.Combine(installPath, "ExtendedXEReaderCollect.dtsx"), XEReaderCollectorConfig.CollectorPackageId, XEReaderCollectorConfig.CollectorVersionId);
+            putPackage("ExtendedXEReaderUpload", Path.Combine(installPath, "ExtendedXEReaderUpload.dtsx"), XEReaderCollectorConfig.UploaderPackageId, XEReaderCollectorConfig.UploaderVersionId);
+            installTSQLCollectorType();
+            installXEReaderCollectorType();
             if (!String.IsNullOrEmpty(cfg.MDWDatabase))
             {
-                installCollectorTypeInMDW(cfg);
+                installCollectorTypeInMDW(cfg, TSQLCollectionItemConfig.CollectorTypeUid);
+                installCollectorTypeInMDW(cfg, XEReaderCollectionItemConfig.CollectorTypeUid);
             }
         }
 
@@ -131,8 +136,9 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
         }
 
 
-        private void installCollectorType(String name)
+        private void installTSQLCollectorType()
         {
+            String name = "Extended T-SQL Query Collector Type";
             int ConnectionTimeout = 15;
             int QueryTimeout = 600;
             String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
@@ -142,7 +148,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             String tsql;
 
 
-            // 1. READ PARAMTERS FROM EXISTING TSQL COLLECTOR
+            // 1. READ PARAMETERS FROM EXISTING TSQL COLLECTOR
 
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
@@ -251,7 +257,92 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
         }
 
 
-        private void installCollectorTypeInMDW(CollectorConfig cfg)
+
+        private void installXEReaderCollectorType()
+        {
+            String name = "Extended XE Reader Query Collector Type";
+            int ConnectionTimeout = 15;
+            int QueryTimeout = 600;
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
+
+            String paramSchema;
+            String formatter;
+            String tsql;
+
+            paramSchema = Properties.Resources.XEReaderParamSchema;
+            formatter = Properties.Resources.XEReaderParamFormatter;
+
+
+            // 2. DELETE EXISTING COLLECTOR TYPE
+
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConnectionString;
+
+            try
+            {
+                conn.Open();
+
+                tsql = @"
+                    IF EXISTS (SELECT * FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}')
+                    BEGIN TRY
+                        
+                        EXEC msdb.dbo.sp_syscollector_delete_collector_type 
+                            @collector_type_uid = '{1}', 
+                            @name = '{0}';
+                    END TRY
+                    BEGIN CATCH
+                        PRINT '' --IGNORE
+                    END CATCH;
+                ";
+                tsql = String.Format(tsql, name, XEReaderCollectionItemConfig.CollectorTypeUid.ToString());
+
+                SqlCommand cmd = new SqlCommand(tsql, conn);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandTimeout = QueryTimeout;
+
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
+
+            // 3. CREATE COLLECTOR TYPE
+
+            conn = new SqlConnection();
+            conn.ConnectionString = ConnectionString;
+
+            try
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandTimeout = QueryTimeout;
+
+                cmd.Parameters.AddWithValue("@collector_type_uid", XEReaderCollectionItemConfig.CollectorTypeUid);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@parameter_schema", paramSchema);
+                cmd.Parameters.AddWithValue("@parameter_formatter", formatter);
+                cmd.Parameters.AddWithValue("@collection_package_id", TSQLCollectorConfig.CollectorPackageId);
+                cmd.Parameters.AddWithValue("@upload_package_id", TSQLCollectorConfig.UploaderPackageId);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException)
+            {
+                //ignore: it means that the collector type is already installed
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        private void installCollectorTypeInMDW(CollectorConfig cfg, Guid CollectorTypeGuid)
         {
             int ConnectionTimeout = 15;
             int QueryTimeout = 600;
@@ -268,7 +359,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandTimeout = QueryTimeout;
 
-                cmd.Parameters.AddWithValue("@collector_type_uid", TSQLCollectionItemConfig.CollectorTypeUid);
+                cmd.Parameters.AddWithValue("@collector_type_uid", CollectorTypeGuid);
 
                 cmd.ExecuteNonQuery();
             }

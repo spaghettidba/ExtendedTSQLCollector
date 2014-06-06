@@ -42,5 +42,15 @@
       <FullPath>test.dtsx</FullPath>
       <References />
     </DtsPackage>
+	<DtsPackage FormatVersion="3">
+      <Name>ExtendedXEReaderUpload.dtsx</Name>
+      <FullPath>ExtendedXEReaderUpload.dtsx</FullPath>
+      <References />
+    </DtsPackage>
+	<DtsPackage FormatVersion="3">
+      <Name>ExtendedXEReaderCollect.dtsx</Name>
+      <FullPath>ExtendedXEReaderCollect.dtsx</FullPath>
+      <References />
+    </DtsPackage>
   </DTSPackages>
 </Project>
