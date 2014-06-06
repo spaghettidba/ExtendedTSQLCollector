@@ -99,8 +99,8 @@ namespace Sqlconsulting.DataCollector.Utils
                     x.value('Importance[1]', 'varchar(max)')   AS alert_importance_level,
                     x.value('Delay[1]', 'varchar(max)')             AS alert_delay,
                     x.value('Subject[1]', 'varchar(max)')           AS alert_subject,
-                    x.value('WriteToERRORLOG[1]', 'varchar(max)')   AS alert_write_to_errorlog,
-                    x.value('WriteToWindowsLog[1]', 'varchar(max)') AS alert_write_to_windowslog
+                    x.value('@WriteToERRORLOG[1]', 'varchar(max)')   AS alert_write_to_errorlog,
+                    x.value('@WriteToWindowsLog[1]', 'varchar(max)') AS alert_write_to_windowslog
                 FROM @x.nodes('/ns:ExtendedXEReaderCollector/Alert') Q(x);
 
 
@@ -123,7 +123,7 @@ namespace Sqlconsulting.DataCollector.Utils
                     Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.AlertConfig.AlertMode), currentRow["alert_mode"].ToString());
                 a.Importance = (Sqlconsulting.DataCollector.Utils.AlertConfig.ImportanceLevel)
                     Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.AlertConfig.ImportanceLevel), currentRow["alert_importance_level"].ToString());
-                a.Delay = Int32.Parse(currentRow["alert_importance_level"].ToString());
+                a.Delay = Int32.Parse(currentRow["alert_delay"].ToString());
                 a.WriteToErrorLog = Boolean.Parse(currentRow["alert_write_to_errorlog"].ToString());
                 a.WriteToWindowsLog = Boolean.Parse(currentRow["alert_write_to_windowslog"].ToString());
             }

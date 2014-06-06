@@ -10,15 +10,13 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
     class Uploader : Sqlconsulting.DataCollector.Utils.Uploader
     {
 
-        public Boolean verbose { get; set; }
-
 
         public Uploader(
-                               String SourceServerInstance,
-                               Guid CollectionSetUid,
-                               int ItemId,
-                               int LogId
-                           ) : base(SourceServerInstance, CollectionSetUid, ItemId, LogId)
+                String SourceServerInstance,
+                Guid CollectionSetUid,
+                int ItemId,
+                int LogId
+            ) : base(SourceServerInstance, CollectionSetUid, ItemId, LogId)
         {
             
         }
@@ -38,26 +36,14 @@ namespace Sqlconsulting.DataCollector.ExtendedTSQLUploader
 
             String CollectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + itm.Index;
 
-            String sqlCheck = @"
-                SELECT QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(name)  AS targetTable
-                FROM [{0}].sys.tables 
-                WHERE name = '{1}' 
-                    AND schema_id IN (SCHEMA_ID('custom_snapshots'), SCHEMA_ID('snapshots'))
-                ORDER BY CASE SCHEMA_NAME(schema_id) 
-                        WHEN 'custome_snapshots' THEN 1
-                        WHEN 'snapshots' THEN 2 
-                    END ";
-
-            sqlCheck = String.Format(sqlCheck, cfg.MDWInstance, itm.OutputTable);
-
-            DataTable data = CollectorUtils.GetDataTable(cfg.MDWInstance, cfg.MDWDatabase, sqlCheck);
-
-            // table is not missing
-            if (data.Rows.Count > 0)
+            //
+            // checks if the table exists and which schema it belongs
+            //
+            String checkedTableName = checkTable(cfg, itm);
+            if (checkedTableName != null)
             {
-                return data.Rows[0]["targetTable"].ToString();
+                return checkedTableName;
             }
-
 
             String statement = @"
 
