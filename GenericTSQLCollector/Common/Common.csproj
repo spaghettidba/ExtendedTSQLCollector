@@ -69,6 +69,7 @@
     <Compile Include="CollectorConfig.cs" />
     <Compile Include="CollectorLogger.cs" />
     <Compile Include="CollectorUtils.cs" />
+    <Compile Include="DataTableTSQLAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TSQLCollectionItemConfig.cs" />
     <Compile Include="TSQLCollectorConfig.cs" />
