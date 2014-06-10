@@ -10,7 +10,7 @@
     <?define PlatformReleaseFolder = "Release" ?>
   <?endif ?>
   
-  <Product Id="*" Name="ExtendedTSQLCollector 1.2" Language="1033" Version="1.2.1.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
+  <Product Id="*" Name="ExtendedTSQLCollector 1.3" Language="1033" Version="1.3.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes" />
@@ -64,21 +64,27 @@
 
 
     <ComponentGroup Id="ProductFiles" Directory="ProductProgramFilesDirectory">
-      <Component Id="cmp_0" Guid="*"><File Id="file_0" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\CommandLine.dll" /></Component>
-      <Component Id="cmp_1" Guid="*"><File Id="file_1" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\Common.dll" /></Component>
-      <Component Id="cmp_2" Guid="*"><File Id="file_2" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe" /></Component>
-      <Component Id="cmp_3" Guid="*"><File Id="file_3" KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe.config" /></Component>
-      <Component Id="cmp_4" Guid="*"><File Id="file_4" KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe" /></Component>
-      <Component Id="cmp_5" Guid="*"><File Id="file_5" KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe.config" /></Component>
-      <Component Id="cmp_6" Guid="*"><File Id="file_6" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
-      <Component Id="cmp_7" Guid="*"><File Id="file_7" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
-      <Component Id="cmp_8" Guid="*"><File Id="file_8" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
-      <Component Id="cmp_9" Guid="*"><File Id="file_9" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
+      <Component Id="cmp_0"  Guid="*"><File Id="file_0"  KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\CommandLine.dll" /></Component>
+      <Component Id="cmp_1"  Guid="*"><File Id="file_1"  KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\Common.dll" /></Component>
+      <Component Id="cmp_2"  Guid="*"><File Id="file_2"  KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe" /></Component>
+      <Component Id="cmp_3"  Guid="*"><File Id="file_3"  KeyPath="yes" Source="..\ExtendedTSQLCollector\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLCollector.exe.config" /></Component>
+      <Component Id="cmp_4"  Guid="*"><File Id="file_4"  KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe" /></Component>
+      <Component Id="cmp_5"  Guid="*"><File Id="file_5"  KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe.config" /></Component>
+      <Component Id="cmp_6"  Guid="*"><File Id="file_6"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollector.exe" /></Component>
+      <Component Id="cmp_7"  Guid="*"><File Id="file_7"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollector.exe.config" /></Component>
+      <Component Id="cmp_8"  Guid="*"><File Id="file_8"  KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe" /></Component>
+      <Component Id="cmp_9"  Guid="*"><File Id="file_9"  KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe.config" /></Component>
+      <Component Id="cmp_10" Guid="*"><File Id="file_10" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
+      <Component Id="cmp_11" Guid="*"><File Id="file_11" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
+      <Component Id="cmp_12" Guid="*"><File Id="file_12" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
+      <Component Id="cmp_13" Guid="*"><File Id="file_13" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
     </ComponentGroup>
     
     <ComponentGroup Id="SSIS_Packages" Directory="SSIS_Packages">
       <Component Id="pkg_0" Guid="*"><File Id="pkg_file_0" KeyPath="yes" Source="..\CollectionSet\ExtendedTSQLCollect.dtsx" /></Component>
       <Component Id="pkg_1" Guid="*"><File Id="pkg_file_1" KeyPath="yes" Source="..\CollectionSet\ExtendedTSQLUpload.dtsx" /></Component>
+      <Component Id="pkg_2" Guid="*"><File Id="pkg_file_2" KeyPath="yes" Source="..\CollectionSet\ExtendedXEReaderCollect.dtsx" /></Component>
+      <Component Id="pkg_3" Guid="*"><File Id="pkg_file_3" KeyPath="yes" Source="..\CollectionSet\ExtendedXEReaderUpload.dtsx" /></Component>
     </ComponentGroup>
 
     <ComponentGroup Id="LogFolder" Directory="Logs">
@@ -88,5 +94,6 @@
          </CreateFolder>
       </Component>
     </ComponentGroup>
+
   </Product>
 </Wix>
