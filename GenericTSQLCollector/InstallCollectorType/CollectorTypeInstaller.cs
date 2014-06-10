@@ -39,15 +39,16 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             String tsql;
             Boolean result;
 
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = ConnectionString;
+            
+            
 
-            try
+            using(SqlConnection conn = new SqlConnection())
             {
+                conn.ConnectionString = ConnectionString;
                 conn.Open();
 
                 tsql = @"
-                    SELECT is_sysadmin = CAST(IS_SRVROLEMEMBER('sysadmin', ORIGINAL_LOGIN()) AS bit)
+                    SELECT is_sysadmin = CAST(ISNULL(IS_SRVROLEMEMBER('sysadmin', SUSER_SNAME()),0) AS bit)
                 ";
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
@@ -67,10 +68,6 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                     }
                 }
 
-            }
-            finally
-            {
-                conn.Close();
             }
 
             return result;
@@ -260,7 +257,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
         private void installXEReaderCollectorType()
         {
-            String name = "Extended XE Reader Query Collector Type";
+            String name = "Extended XE Reader Collector Type";
             int ConnectionTimeout = 15;
             int QueryTimeout = 600;
             String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
@@ -326,8 +323,8 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@parameter_schema", paramSchema);
                 cmd.Parameters.AddWithValue("@parameter_formatter", formatter);
-                cmd.Parameters.AddWithValue("@collection_package_id", TSQLCollectorConfig.CollectorPackageId);
-                cmd.Parameters.AddWithValue("@upload_package_id", TSQLCollectorConfig.UploaderPackageId);
+                cmd.Parameters.AddWithValue("@collection_package_id", XEReaderCollectorConfig.CollectorPackageId);
+                cmd.Parameters.AddWithValue("@upload_package_id", XEReaderCollectorConfig.UploaderPackageId);
 
                 cmd.ExecuteNonQuery();
             }

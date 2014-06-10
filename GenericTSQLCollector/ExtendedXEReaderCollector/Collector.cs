@@ -6,6 +6,7 @@ using System.Text;
 using Sqlconsulting.DataCollector.Utils;
 using System.Data;
 using System.IO;
+using System.Reflection;
 
 namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 {
@@ -68,6 +69,19 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                 DateTime lastEventFlush = new DateTime(1900, 1, 1);
 
                 CheckSession(itm);
+
+
+                //object[] pars = new object[4];
+                //pars[0] = connectionString;
+                //pars[1] = itm.SessionName;
+                //pars[2] = "";
+                //pars[2] = "";
+
+                //Assembly assembly = Assembly.LoadFrom("Microsoft.SqlServer.XEvent.Linq.dll");
+                //Type t = assembly.GetType("QueryableXEventData");
+                //object events = Activator.CreateInstance(t,pars);
+
+                
 
 
                 // Queries an existing session
