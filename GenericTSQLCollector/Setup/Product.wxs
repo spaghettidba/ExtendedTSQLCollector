@@ -72,12 +72,15 @@
       <Component Id="cmp_5"  Guid="*"><File Id="file_5"  KeyPath="yes" Source="..\ExtendedTSQLUploader\bin\$(var.PlatformReleaseFolder)\ExtendedTSQLUploader.exe.config" /></Component>
       <Component Id="cmp_6"  Guid="*"><File Id="file_6"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollector.exe" /></Component>
       <Component Id="cmp_7"  Guid="*"><File Id="file_7"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollector.exe.config" /></Component>
-      <Component Id="cmp_8"  Guid="*"><File Id="file_8"  KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe" /></Component>
-      <Component Id="cmp_9"  Guid="*"><File Id="file_9"  KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe.config" /></Component>
-      <Component Id="cmp_10" Guid="*"><File Id="file_10" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
-      <Component Id="cmp_11" Guid="*"><File Id="file_11" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
-      <Component Id="cmp_12" Guid="*"><File Id="file_12" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
-      <Component Id="cmp_13" Guid="*"><File Id="file_13" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
+      <Component Id="cmp_8"  Guid="*"><File Id="file_8"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\Microsoft.SqlServer.XE.Core.dll" /></Component>
+      <Component Id="cmp_9"  Guid="*"><File Id="file_9"  KeyPath="yes" Source="..\ExtendedXEReaderCollector\bin\$(var.PlatformReleaseFolder)\Microsoft.SqlServer.XEvent.Linq.dll" /></Component>
+      <Component Id="cmp_10" Guid="*"><File Id="file_10" KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe" /></Component>
+      <Component Id="cmp_11" Guid="*"><File Id="file_11" KeyPath="yes" Source="..\ExtendedXEReaderUploader\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderUploader.exe.config" /></Component>
+      <Component Id="cmp_12" Guid="*"><File Id="file_12" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe" /></Component>
+      <Component Id="cmp_13" Guid="*"><File Id="file_13" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
+      <Component Id="cmp_14" Guid="*"><File Id="file_14" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
+      <Component Id="cmp_15" Guid="*"><File Id="file_15" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
+      
     </ComponentGroup>
     
     <ComponentGroup Id="SSIS_Packages" Directory="SSIS_Packages">
