@@ -197,7 +197,6 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                     ALTER EVENT SESSION [{0}] 
                     ON SERVER
                     STATE = start;
-                    GO
                 ";
                 sql_startSession = String.Format(sql_startSession, itm.SessionName);
                 CollectorUtils.InvokeSqlCmd(SourceServerInstance, "master", sql_startSession);

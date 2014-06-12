@@ -57,13 +57,16 @@ namespace Sqlconsulting.DataCollector.Utils
             // Load Configuration
             //
             CollectorConfig cfg = null;
+            Guid CollectorTypeUid = new Guid("00000000-0000-0000-0000-000000000000");
             if(this.GetType().Namespace.Equals("Sqlconsulting.DataCollector.ExtendedXEReaderUploader"))
             {
                 cfg = new XEReaderCollectorConfig();
+                CollectorTypeUid = XEReaderCollectionItemConfig.CollectorTypeUid;
             }
             else if(this.GetType().Namespace.Equals("Sqlconsulting.DataCollector.ExtendedTSQLUploader"))
             {
                 cfg = new TSQLCollectorConfig();
+                CollectorTypeUid = TSQLCollectionItemConfig.CollectorTypeUid;
             }
             cfg.readFromDatabase(SourceServerInstance, CollectionSetUid, ItemId);
 
@@ -80,7 +83,7 @@ namespace Sqlconsulting.DataCollector.Utils
             //
             // Load the snapshot_id
             //
-            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, TSQLCollectionItemConfig.CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
+            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
 
 
             
