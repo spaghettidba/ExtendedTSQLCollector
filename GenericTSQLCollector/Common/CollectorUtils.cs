@@ -110,6 +110,26 @@ namespace Sqlconsulting.DataCollector.Utils
 
 
 
+        public static object GetScalar(
+            String ServerInstance,
+            String Database,
+            String Query
+        )
+        {
+            DataTable dt = GetDataTable(ServerInstance, Database, Query);
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0][0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+
         public static void WriteDataTable(
            String ServerInstance,
            String Database,
