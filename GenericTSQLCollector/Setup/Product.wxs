@@ -80,6 +80,8 @@
       <Component Id="cmp_13" Guid="*"><File Id="file_13" KeyPath="yes" Source="..\InstallCollectorType\bin\$(var.PlatformReleaseFolder)\InstallCollectorType.exe.config" /></Component>
       <Component Id="cmp_14" Guid="*"><File Id="file_14" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe" /></Component>
       <Component Id="cmp_15" Guid="*"><File Id="file_15" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\CollectionSetManager.exe.config" /></Component>
+      <Component Id="cmp_16" Guid="*"><File Id="file_16" KeyPath="yes" Source="..\ExtendedXEReaderCollectorTrigger\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollectorTrigger.exe" /></Component>
+      <Component Id="cmp_17" Guid="*"><File Id="file_17" KeyPath="yes" Source="..\ExtendedXEReaderCollectorTrigger\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollectorTrigger.exe.config" /></Component>
       
     </ComponentGroup>
     

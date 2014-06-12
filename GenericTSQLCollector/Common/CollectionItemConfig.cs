@@ -14,7 +14,7 @@ namespace Sqlconsulting.DataCollector.Utils
         public String OutputTable { get; set; }
         public int Frequency { get; set; }
         public int Index { get; set; }
-
+        public Boolean Enabled { get; set; }
 
     }
 

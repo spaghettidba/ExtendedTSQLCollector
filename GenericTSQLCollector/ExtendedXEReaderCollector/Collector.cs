@@ -7,6 +7,8 @@ using Sqlconsulting.DataCollector.Utils;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 {
@@ -22,6 +24,8 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
         private CollectorLogger logger;
         XEReaderCollectorConfig cfg = new XEReaderCollectorConfig();
 
+
+        private Thread collectorThread;
 
 
         public Collector(String sourceServerInstance, 
@@ -57,6 +61,9 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
             String connectionString = String.Format(@"Data Source = {0}; Initial Catalog = master; Integrated Security = SSPI",SourceServerInstance);
 
+            collectorThread = Thread.CurrentThread;
+            Task.Factory.StartNew(() => checkCollectionSetEnabled());
+
             if (verbose) logger.logMessage("Entering collection items loop");
             foreach (CollectionItemConfig item in cfg.collectionItems)
             {
@@ -66,22 +73,8 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
                 collectedData = null;
 
-                DateTime lastEventFlush = new DateTime(1900, 1, 1);
 
                 CheckSession(itm);
-
-
-                //object[] pars = new object[4];
-                //pars[0] = connectionString;
-                //pars[1] = itm.SessionName;
-                //pars[2] = "";
-                //pars[2] = "";
-
-                //Assembly assembly = Assembly.LoadFrom("Microsoft.SqlServer.XEvent.Linq.dll");
-                //Type t = assembly.GetType("QueryableXEventData");
-                //object events = Activator.CreateInstance(t,pars);
-
-                
 
 
                 // Queries an existing session
@@ -134,13 +127,12 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
 
                         // 
-                        // After the collection frequency has expired, write to a cache file
+                        // Write to a cache file
                         //
-                        if (lastEventFlush.AddSeconds(itm.Frequency) <= DateTime.Now)
-                        {
+                        if(collectedData.Rows.Count > 0)
                             WriteCacheFile(collectedData, itm);
-                            lastEventFlush = DateTime.Now;
-                        }
+
+
                     }
                     catch (Exception e)
                     {
@@ -237,6 +229,8 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                 fs.Close();
             }
             if (verbose) logger.logMessage("File saved successfully");
+
+            collectedData.Rows.Clear();
         }
 
 
@@ -308,6 +302,39 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
             dt.Rows.Add(row);
 
             return dt;
+        }
+
+
+
+        private void checkCollectionSetEnabled()
+        {
+            String sql = @"
+                SELECT is_running
+                FROM msdb.dbo.syscollector_collection_sets
+                WHERE collection_set_uid = '{0}'
+            ";
+            sql = String.Format(sql,this.CollectionSetUid);
+
+            while (true)
+            {
+                Boolean is_running = (Boolean)CollectorUtils.GetScalar(SourceServerInstance, "master", sql);
+
+                if (!is_running)
+                {
+                    stopCollector();
+                }
+                else
+                {
+                    Thread.Sleep(60000);
+                }
+            }
+        }
+
+
+
+        private void stopCollector()
+        {
+            collectorThread.Abort();
         }
 
     }

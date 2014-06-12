@@ -27,15 +27,18 @@ namespace Sqlconsulting.DataCollector.Utils
             String qry = @"
 		        DECLARE @x xml;
                 DECLARE @fre int;
+                DECLARE @is_running bit;
 
                 SELECT @x = parameters,
-	                @fre = frequency
-                FROM msdb.dbo.syscollector_collection_items
-                WHERE collection_set_id = (
-		                SELECT collection_set_id
-		                FROM msdb.dbo.syscollector_collection_sets
-		                WHERE collection_set_uid = '{0}'
-	                )
+	                @fre = frequency,
+	                @is_running = is_running
+                FROM msdb.dbo.syscollector_collection_items AS ci
+                CROSS APPLY (
+	                SELECT collection_set_id, is_running
+	                FROM msdb.dbo.syscollector_collection_sets
+	                WHERE collection_set_uid = '{0}'
+                ) AS cs
+                WHERE ci.collection_set_id = cs.collection_set_id
                 AND collection_item_id = {1}
                 AND collector_type_uid = '{2}';
 
@@ -46,7 +49,8 @@ namespace Sqlconsulting.DataCollector.Utils
 	                x.value('Definition[1]', 'varchar(max)')  AS xe_session_definition,
 	                x.value('Filter[1]', 'varchar(max)')      AS xe_session_filter,
 	                x.value('ColumnsList[1]', 'varchar(max)') AS xe_session_columnslist,
-	                @fre AS frequency
+	                @fre AS frequency,
+                    @is_running AS is_enabled
                 FROM @x.nodes('/ns:ExtendedXEReaderCollector/Session') Q(x)
                 ORDER BY outputTable;
 	        ";
@@ -68,6 +72,7 @@ namespace Sqlconsulting.DataCollector.Utils
                 cic.SessionDefinition = currentRow["xe_session_definition"].ToString();
                 cic.Filter = currentRow["xe_session_filter"].ToString();
                 cic.Columns = new List<String>(currentRow["xe_session_columnslist"].ToString().Split(','));
+                cic.Enabled = Boolean.Parse(currentRow["is_enabled"].ToString());
 
                 cic.Index = i;
                 i++;

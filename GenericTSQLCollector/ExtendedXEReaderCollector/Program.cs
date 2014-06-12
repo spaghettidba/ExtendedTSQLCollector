@@ -11,49 +11,173 @@ using System.IO;
 using Sqlconsulting.DataCollector.Utils;
 using CommandLine.Text; 
 using CommandLine;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 {
     class Program
     {
+
+        private static ConcurrentDictionary<String, CollectionItemTask> runningTasks = new ConcurrentDictionary<String, CollectionItemTask>();
+
+
+
         static void Main(string[] args)
         {
 
-            var options = new Options();
-            if (!CommandLine.Parser.Default.ParseArguments(args, options))
+            string mutex_id = "Global\\ExtendedXEReaderCollector";
+            using (Mutex mutex = new Mutex(false, mutex_id))
             {
-                return;
-            }
-
-            bool verbose = options.Verbose;
-            CollectorLogger logger = null;
-
-            try
-            {
-                String SourceServerInstance = options.ServerInstance;
-                Guid CollectionSetUid = new Guid(options.CollectionSetUID);
-                int ItemId = options.CollectionItemID;
-                int LogId = options.LogId;
-
-                logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
-
-                if (verbose) logger.logMessage("Starting");
-
-                Collector collector = new Collector(SourceServerInstance, CollectionSetUid, ItemId);
-                collector.verbose = verbose;
-                collector.CollectData();
+                if (!mutex.WaitOne(0, false))
+                {
+                    return;
+                }
+                // Do stuff
 
 
-                if (verbose) logger.logMessage("Ending with success");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                if (verbose) logger.logMessage("Ending with failure");
-                if (verbose) logger.logMessage(e.Message);
-                if (verbose) logger.logMessage(e.StackTrace.ToString());
+                var options = new Options();
+                if (!CommandLine.Parser.Default.ParseArguments(args, options))
+                {
+                    return;
+                }
+
+                bool verbose = options.Verbose;
+                CollectorLogger logger = null;
+
+                try
+                {
+                    String SourceServerInstance = options.ServerInstance;
+
+
+                    logger = new CollectorLogger(SourceServerInstance);
+
+                    if (verbose) logger.logMessage("Starting");
+
+                    // Instantiate a task that loads Collection Items from the database
+                    Task.Factory.StartNew(() => loadXECollectionItems(SourceServerInstance, verbose));
+
+                    Thread.Sleep(1000);
+
+                    while (runningTasks.Count > 0)
+                    {
+                        foreach (CollectionItemTask currentTask in runningTasks.Values)
+                        {
+                            if (currentTask.IsCompleted)
+                            {
+                                CollectionItemTask v = null;
+                                runningTasks.TryRemove(currentTask.GetKey(), out v);
+                            }
+                        }
+                        Thread.Sleep(100);
+                    }
+
+                    if (verbose) logger.logMessage("Ending with success");
+
+                    System.Environment.Exit(0);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    if (verbose) logger.logMessage("Ending with failure");
+                    if (verbose) logger.logMessage(e.Message);
+                    if (verbose) logger.logMessage(e.StackTrace.ToString());
+                }
             }
         }
+
+        private static void loadXECollectionItems(String ServerInstance, Boolean Verbose)
+        {
+            String sql = @"
+                SELECT cs.collection_set_uid, 
+	                ci.collection_item_id
+                FROM msdb.dbo.syscollector_collection_items AS ci
+                INNER JOIN msdb.dbo.syscollector_collection_sets AS cs
+	                ON ci.collection_set_id = cs.collection_set_id 
+                WHERE is_running = 1
+	                AND collector_type_uid = '{0}';
+                ";
+            sql = String.Format(sql, XEReaderCollectionItemConfig.CollectorTypeUid);
+
+            Boolean keepLooping = true;
+
+            while (keepLooping)
+            {
+
+                DataTable dt = CollectorUtils.GetDataTable(ServerInstance, "master", sql);
+
+                if (dt.Rows.Count == 0)
+                {
+                    keepLooping = false;
+                    break;
+                }
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Guid CollectionSetUid = new Guid(dr["collection_set_uid"].ToString());
+                    int ItemId = Int32.Parse(dr["collection_item_id"].ToString());
+                    CollectionItemTask t = CollectionItemTask.Create(ServerInstance, CollectionSetUid, ItemId, Verbose);
+                    if (!runningTasks.ContainsKey(t.GetKey()))
+                    {
+                        t.Start();
+                        runningTasks.TryAdd(t.GetKey(), t);
+                    }
+                }
+
+                Thread.Sleep(60000);
+
+            }
+
+        }
+
+
+        
+
+
+    }
+
+
+    class CollectionItemTask : Task
+    {
+        public String SourceServerInstance { get; set; }
+        public Guid CollectionSetUid { get; set; }
+        public int ItemId { get; set; }
+        public Boolean Verbose { get; set; }
+
+
+        protected CollectionItemTask(Action action) : base(action)
+        {
+        }
+
+
+        public String GetKey()
+        {
+            return CollectionSetUid + "_" + ItemId;
+        }
+
+        public static CollectionItemTask Create(String SourceServerInstance, Guid CollectionSetUid, int ItemId, Boolean Verbose)
+        {
+            CollectionItemTask task = new CollectionItemTask(() =>
+            {
+                try
+                {
+                    Collector collector = new Collector(SourceServerInstance, CollectionSetUid, ItemId);
+                    collector.verbose = Verbose;
+                    collector.CollectData();
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e.StackTrace);
+                }
+            });
+            task.SourceServerInstance = SourceServerInstance;
+            task.CollectionSetUid = CollectionSetUid;
+            task.ItemId = ItemId;
+
+            return task;
+        }
+
 
     }
 
@@ -64,15 +188,6 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
     {
         [Option('S', "ServerInstance", DefaultValue = "(local)", HelpText = "SQL Server Instance.")]
         public string ServerInstance { get; set; }
-
-        [Option('c', "CollectionSetUID", Required = true, HelpText = "Collection set UID.")]
-        public String CollectionSetUID { get; set; }
-
-        [Option('i', "ItemID", Required = true, HelpText = "Collection item UID.")]
-        public Int32 CollectionItemID { get; set; }
-
-        [Option('l', "LogId", Required = true, HelpText = "Log Id in the DCEXEC logging tables.")]
-        public Int32 LogId { get; set; }
 
         [Option('v', "Verbose", DefaultValue = false, HelpText = "Enable logging to an output file.")]
         public bool Verbose { get; set; }
