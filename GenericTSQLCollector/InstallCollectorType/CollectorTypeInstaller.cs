@@ -48,7 +48,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 conn.Open();
 
                 tsql = @"
-                    SELECT is_sysadmin = CAST(ISNULL(IS_SRVROLEMEMBER('sysadmin', SUSER_SNAME()),0) AS bit)
+                    SELECT is_sysadmin = CAST(ISNULL(IS_SRVROLEMEMBER('sysadmin'),0) AS bit)
                 ";
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
