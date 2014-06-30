@@ -73,9 +73,11 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
                 collectedData = null;
 
+                DateTime lastEventFlush = new DateTime(1900, 1, 1);
 
                 CheckSession(itm);
 
+                Task.Factory.StartNew(() => PerformWrite(collectedData, itm));
 
                 // Queries an existing session
                 Microsoft.SqlServer.XEvent.Linq.QueryableXEventData events = new QueryableXEventData(
@@ -127,11 +129,11 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
 
                         // 
-                        // Write to a cache file
+                        // Write to a cache file: moved to a separate thread
                         //
-                        if(collectedData.Rows.Count > 0)
-                            WriteCacheFile(collectedData, itm);
-
+                        //if ((collectedData.Rows.Count > 0) && (lastEventFlush.AddSeconds(itm.Frequency) <= DateTime.Now))
+                        //    WriteCacheFile(collectedData.Copy(), itm);
+                        //    lastEventFlush = DateTime.Now;
 
                     }
                     catch (Exception e)
@@ -335,6 +337,23 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
         private void stopCollector()
         {
             collectorThread.Abort();
+        }
+
+
+
+        private void PerformWrite(DataTable collectedData, CollectionItemConfig itm)
+        {
+
+            while (true)
+            {
+
+                if (collectedData != null && collectedData.Rows.Count > 0)
+                {
+                    WriteCacheFile(collectedData.Copy(), itm);
+                }
+                Thread.Sleep(itm.Frequency);
+
+            }
         }
 
     }
