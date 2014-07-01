@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Sqlconsulting.DataCollector.Utils;
 
 namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollectorTrigger
 {
@@ -20,14 +21,24 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollectorTrigger
                 return;
             }
 
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
+            CollectorLogger logger = new CollectorLogger(options.ServerInstance);
 
-            String targetProcess = Path.Combine(Path.GetDirectoryName(path),"ExtendedXEReaderCollector.exe");
-            String arguments = "-S " + options.ServerInstance + " -v " + options.Verbose;
+            try
+            {
 
-            Process.Start(targetProcess, arguments);
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+
+                String targetProcess = Path.Combine(Path.GetDirectoryName(path), "ExtendedXEReaderCollector.exe");
+                String arguments = "-S " + options.ServerInstance + " -v " + options.Verbose;
+
+                Process.Start(targetProcess, arguments);
+            }
+            catch(Exception e)
+            {
+                logger.logMessage(e.StackTrace);
+            }
         }
     }
 

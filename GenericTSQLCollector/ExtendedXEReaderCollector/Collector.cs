@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 {
@@ -44,7 +45,6 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
         {
             logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
 
-            DataTable collectedData = null;
 
             if (verbose) logger.logMessage("--------------------------------");
             if (verbose) logger.logMessage("    ExtendedXEReaderCollector   ");
@@ -71,13 +71,16 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                 if (verbose) logger.logMessage("Processing item n. " + itm.Index);
                 if (verbose) logger.logMessage("Processing session " + itm.SessionDefinition);
 
-                collectedData = null;
+
+                var dataQueue = new ConcurrentQueue<DataTable>();
+
+
 
                 DateTime lastEventFlush = new DateTime(1900, 1, 1);
 
                 CheckSession(itm);
 
-                Task.Factory.StartNew(() => PerformWrite(collectedData, itm));
+                Task.Factory.StartNew(() => PerformWrite(dataQueue, itm));
 
                 // Queries an existing session
                 Microsoft.SqlServer.XEvent.Linq.QueryableXEventData events = new QueryableXEventData(
@@ -101,18 +104,10 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                         dt = dw.ToTable();
 
                         //
-                        // Merge collected data in a single DataTable
+                        // Enqueue the collected data for the consumer thread
                         //
-                        if (collectedData != null && dt.Rows.Count > 0)
-                        {
-                            collectedData.Merge(dt);
-                        }
-                        else
-                        {
-                            collectedData = dt;
-                            collectedData.RemotingFormat = System.Data.SerializationFormat.Binary;
-                        }
-
+                        if(dt != null && dt.Rows.Count > 0)
+                            dataQueue.Enqueue(dt);
 
 
                         //
@@ -126,15 +121,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                             }
                         }
                         
-
-
-                        // 
-                        // Write to a cache file: moved to a separate thread
-                        //
-                        //if ((collectedData.Rows.Count > 0) && (lastEventFlush.AddSeconds(itm.Frequency) <= DateTime.Now))
-                        //    WriteCacheFile(collectedData.Copy(), itm);
-                        //    lastEventFlush = DateTime.Now;
-
+                        
                     }
                     catch (Exception e)
                     {
@@ -341,17 +328,39 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
 
 
-        private void PerformWrite(DataTable collectedData, CollectionItemConfig itm)
+        private void PerformWrite(ConcurrentQueue<DataTable> dataQueue, CollectionItemConfig itm)
         {
 
             while (true)
             {
-
+                DataTable collectedData = null;
+                while(dataQueue.Count > 0)
+                {
+                    //
+                    // Merge collected data in a single DataTable
+                    //
+                    DataTable dt = null;
+                    dataQueue.TryDequeue(out dt);
+                    if (collectedData == null)
+                    {
+                        collectedData = dt;
+                    }
+                    else
+                    {
+                        collectedData.Merge(dt);
+                        
+                    }
+                    collectedData.RemotingFormat = System.Data.SerializationFormat.Binary;
+                }
+                //
+                // Write to the cache file
+                //
                 if (collectedData != null && collectedData.Rows.Count > 0)
                 {
-                    WriteCacheFile(collectedData.Copy(), itm);
+                    WriteCacheFile(collectedData, itm);
                 }
-                Thread.Sleep(itm.Frequency);
+                
+                Thread.Sleep(itm.Frequency * 1000);
 
             }
         }
