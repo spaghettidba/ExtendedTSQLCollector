@@ -131,6 +131,9 @@ namespace Sqlconsulting.DataCollector.Utils
                 a.Delay = Int32.Parse(currentRow["alert_delay"].ToString());
                 a.WriteToErrorLog = Boolean.Parse(currentRow["alert_write_to_errorlog"].ToString());
                 a.WriteToWindowsLog = Boolean.Parse(currentRow["alert_write_to_windowslog"].ToString());
+
+                XEReaderCollectionItemConfig itmcfg = (XEReaderCollectionItemConfig)collectionItems[0];
+                itmcfg.Alerts.Add(a);
             }
 
 
