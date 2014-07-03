@@ -237,13 +237,15 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
             }
             DataColumn cl_dt = new DataColumn("collection_time", typeof(DateTime));
             cl_dt.DefaultValue = DateTime.Now;
+            cl_dt.ExtendedProperties.Add("auto_column", true);
             dt.Columns.Add(cl_dt);
+            
 
             //
             // Add Name column
             //
             dt.Columns.Add("Name", typeof(String));
-
+            dt.Columns["Name"].ExtendedProperties.Add("auto_column", true);
 
             //
             // Read event data
@@ -328,7 +330,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
 
 
-        private void PerformWrite(ConcurrentQueue<DataTable> dataQueue, CollectionItemConfig itm)
+        private void PerformWrite(ConcurrentQueue<DataTable> dataQueue, XEReaderCollectionItemConfig itm)
         {
 
             while (true)
@@ -357,6 +359,19 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                 //
                 if (collectedData != null && collectedData.Rows.Count > 0)
                 {
+                    // Remove the columns not included in the output
+                    List<String> columnsToRemove = new List<String>();
+                    foreach(DataColumn dc in collectedData.Columns)
+                    {
+                        if (!itm.Columns.Contains(dc.ColumnName) && !dc.ColumnName.Equals("collection_time"))
+                        {
+                            columnsToRemove.Add(dc.ColumnName);
+                        }
+                    }
+                    foreach (String colName in columnsToRemove)
+                    {
+                        collectedData.Columns.Remove(colName);
+                    }
                     WriteCacheFile(collectedData, itm);
                 }
                 
