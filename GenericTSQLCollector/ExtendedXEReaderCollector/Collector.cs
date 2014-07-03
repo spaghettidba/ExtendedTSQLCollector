@@ -118,6 +118,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                             foreach (DataRow currentRow in dt.Select(currentAlert.Filter))
                             {
                                 //TODO: Process alerts
+                                //ProcessAlert(currentAlert, currentRow);
                             }
                         }
                         
