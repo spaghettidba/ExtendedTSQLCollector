@@ -18,6 +18,8 @@ namespace Sqlconsulting.DataCollector.Utils
         protected String SourceServerInstance { get; set; }
         protected int LogId { get; set; }
 
+        protected CollectorLogger logger;
+
 
         public Uploader(
                 String SourceServerInstance,
@@ -40,7 +42,7 @@ namespace Sqlconsulting.DataCollector.Utils
         public void UploadData()
         {
 
-            CollectorLogger logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
+            logger = new CollectorLogger(SourceServerInstance, CollectionSetUid, ItemId);
 
             String displayName;
             String[] names = this.GetType().Namespace.Split('.');
@@ -91,7 +93,6 @@ namespace Sqlconsulting.DataCollector.Utils
             {
                 String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + item.Index; 
 
-                if (verbose) logger.logMessage("Creating target table " + item.OutputTable);
                 //
                 // Create the target table
                 //
@@ -280,6 +281,7 @@ namespace Sqlconsulting.DataCollector.Utils
             }
             else
             {
+                if (verbose) logger.logMessage("Creating target table " + itm.OutputTable);
                 return null;
             }
         }
