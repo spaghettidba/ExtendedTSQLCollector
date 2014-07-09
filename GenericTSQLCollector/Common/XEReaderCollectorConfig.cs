@@ -97,15 +97,20 @@ namespace Sqlconsulting.DataCollector.Utils
 
 		        
                 ;WITH XMLNAMESPACES('DataCollectorType' AS ns)
-                SELECT x.value('Recipient[1]','varchar(max)') AS alert_recipient,
-	                x.value('Filter[1]', 'varchar(max)')      AS alert_filter,
-	                x.value('ColumnsList[1]', 'varchar(max)') AS alert_columnslist,
-	                x.value('Mode[1]', 'varchar(max)')        AS alert_mode,
-                    x.value('Importance[1]', 'varchar(max)')   AS alert_importance_level,
-                    x.value('Delay[1]', 'varchar(max)')             AS alert_delay,
-                    x.value('Subject[1]', 'varchar(max)')           AS alert_subject,
+                SELECT 
+					x.value('Sender[1]','varchar(max)')              AS alert_sender,
+					x.value('Recipient[1]','varchar(max)')           AS alert_recipient,
+	                x.value('Filter[1]', 'varchar(max)')             AS alert_filter,
+	                x.value('ColumnsList[1]', 'varchar(max)')        AS alert_columnslist,
+	                x.value('Mode[1]', 'varchar(max)')               AS alert_mode,
+                    x.value('Importance[1]', 'varchar(max)')         AS alert_importance_level,
+                    x.value('Delay[1]', 'varchar(max)')              AS alert_delay,
+                    x.value('Subject[1]', 'varchar(max)')            AS alert_subject,
+					x.value('Body[1]', 'varchar(max)')               AS alert_body,
+					x.value('AttachmentFileName[1]', 'varchar(max)') AS alert_attachment_filename,
                     x.value('@WriteToERRORLOG[1]', 'varchar(max)')   AS alert_write_to_errorlog,
-                    x.value('@WriteToWindowsLog[1]', 'varchar(max)') AS alert_write_to_windowslog
+                    x.value('@WriteToWindowsLog[1]', 'varchar(max)') AS alert_write_to_windowslog,
+					x.value('@Enabled[1]', 'varchar(max)')           AS alert_enabled
                 FROM @x.nodes('/ns:ExtendedXEReaderCollector/Alert') Q(x);
 
 
@@ -120,17 +125,19 @@ namespace Sqlconsulting.DataCollector.Utils
             foreach (DataRow currentRow in data.Rows)
             {
                 AlertConfig a = new AlertConfig();
+                a.Sender = currentRow["alert_sender"].ToString();
                 a.Recipient = currentRow["alert_recipient"].ToString();
-                a.Subject = currentRow["alert_subject"].ToString();
                 a.Filter = currentRow["alert_filter"].ToString();
                 a.Columns = new List<String>(currentRow["alert_columnslist"].ToString().Split(','));
-                a.Mode = (Sqlconsulting.DataCollector.Utils.AlertConfig.AlertMode)
-                    Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.AlertConfig.AlertMode), currentRow["alert_mode"].ToString());
-                a.Importance = (Sqlconsulting.DataCollector.Utils.AlertConfig.ImportanceLevel)
-                    Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.AlertConfig.ImportanceLevel), currentRow["alert_importance_level"].ToString());
+                a.Mode = (Sqlconsulting.DataCollector.Utils.AlertMode)
+                    Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.AlertMode), currentRow["alert_mode"].ToString());
+                a.Importance = (Sqlconsulting.DataCollector.Utils.ImportanceLevel)
+                    Enum.Parse(typeof(Sqlconsulting.DataCollector.Utils.ImportanceLevel), currentRow["alert_importance_level"].ToString());
                 a.Delay = Int32.Parse(currentRow["alert_delay"].ToString());
+                a.Subject = currentRow["alert_subject"].ToString();
                 a.WriteToErrorLog = Boolean.Parse(currentRow["alert_write_to_errorlog"].ToString());
                 a.WriteToWindowsLog = Boolean.Parse(currentRow["alert_write_to_windowslog"].ToString());
+                a.Enabled = Boolean.Parse(currentRow["alert_enabled"].ToString());
 
                 XEReaderCollectionItemConfig itmcfg = (XEReaderCollectionItemConfig)collectionItems[0];
                 itmcfg.Alerts.Add(a);
