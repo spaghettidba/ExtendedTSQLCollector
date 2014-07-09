@@ -118,7 +118,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                             foreach (DataRow currentRow in dt.Select(currentAlert.Filter))
                             {
                                 //TODO: Process alerts
-                                //ProcessAlert(currentAlert, currentRow);
+                                ProcessAlert(currentAlert, currentRow);
                             }
                         }
                         
@@ -126,8 +126,24 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                     }
                     catch (Exception e)
                     {
-                        // TODO: capture the session related exceptions
-                        throw e;
+                        // capture the session related exceptions
+                        logger.logMessage(e.StackTrace);
+
+                        // try restarting the session event stream
+                        try
+                        {
+                            events = new QueryableXEventData(
+                                                               connectionString,
+                                                               itm.SessionName,
+                                                               EventStreamSourceOptions.EventStream,
+                                                               EventStreamCacheOptions.DoNotCache);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Unable to restart the events stream
+                            logger.logMessage(ex.StackTrace);
+                            throw ex;
+                        }
                     }
 
                     
@@ -137,6 +153,15 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
 
             logger.cleanupLogFiles(cfg.DaysUntilExpiration);
+        }
+
+        private void ProcessAlert(AlertConfig currentAlert, DataRow currentRow)
+        {
+            if (!currentAlert.Enabled)
+                return;
+
+            EmailAlertDispatcher dispatcher = new EmailAlertDispatcher(SourceServerInstance, currentAlert, currentRow);
+            dispatcher.dispatch();
         }
 
 

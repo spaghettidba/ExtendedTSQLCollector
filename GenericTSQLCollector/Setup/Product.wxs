@@ -10,7 +10,7 @@
     <?define PlatformReleaseFolder = "Release" ?>
   <?endif ?>
   
-  <Product Id="*" Name="ExtendedTSQLCollector 1.4" Language="1033" Version="1.4.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
+  <Product Id="*" Name="ExtendedTSQLCollector 1.5" Language="1033" Version="1.5.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes" />
