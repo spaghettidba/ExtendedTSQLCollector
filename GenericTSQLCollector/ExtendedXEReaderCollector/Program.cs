@@ -22,7 +22,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
         private static ConcurrentDictionary<String, CollectionItemTask> runningTasks = new ConcurrentDictionary<String, CollectionItemTask>();
 
-
+        private static Boolean initializing = true;
 
         static void Main(string[] args)
         {
@@ -60,7 +60,7 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
                     Thread.Sleep(1000);
 
-                    while (runningTasks.Count > 0)
+                    while (runningTasks.Count > 0 || initializing)
                     {
                         foreach (CollectionItemTask currentTask in runningTasks.Values)
                         {
@@ -102,31 +102,41 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
 
             Boolean keepLooping = true;
 
-            while (keepLooping)
+
+            try
             {
-
-                DataTable dt = CollectorUtils.GetDataTable(ServerInstance, "master", sql);
-
-                if (dt.Rows.Count == 0)
+                while (keepLooping)
                 {
-                    keepLooping = false;
-                    break;
-                }
 
-                foreach (DataRow dr in dt.Rows)
-                {
-                    Guid CollectionSetUid = new Guid(dr["collection_set_uid"].ToString());
-                    int ItemId = Int32.Parse(dr["collection_item_id"].ToString());
-                    CollectionItemTask t = CollectionItemTask.Create(ServerInstance, CollectionSetUid, ItemId, Verbose);
-                    if (!runningTasks.ContainsKey(t.GetKey()))
+                    DataTable dt = CollectorUtils.GetDataTable(ServerInstance, "master", sql);
+
+                    if (dt.Rows.Count == 0)
                     {
-                        t.Start();
-                        runningTasks.TryAdd(t.GetKey(), t);
+                        keepLooping = false;
+                        break;
                     }
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Guid CollectionSetUid = new Guid(dr["collection_set_uid"].ToString());
+                        int ItemId = Int32.Parse(dr["collection_item_id"].ToString());
+                        CollectionItemTask t = CollectionItemTask.Create(ServerInstance, CollectionSetUid, ItemId, Verbose);
+                        if (!runningTasks.ContainsKey(t.GetKey()))
+                        {
+                            t.Start();
+                            runningTasks.TryAdd(t.GetKey(), t);
+                            initializing = false;
+                        }
+                    }
+
+                    Thread.Sleep(60000);
+
                 }
-
-                Thread.Sleep(60000);
-
+            }
+            catch (Exception e)
+            {
+                initializing = false;
+                throw e;
             }
 
         }

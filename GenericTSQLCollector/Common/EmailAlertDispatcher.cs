@@ -17,13 +17,14 @@ namespace Sqlconsulting.DataCollector.Utils
         public String Sender { get; set; }
         public String Recipient { get; set; }
         public String Subject { get; set; }
-        public String Body { get; set; }
-        public String AttachmentFileName { get; set; }
+
         public Sqlconsulting.DataCollector.Utils.ImportanceLevel Importance { get; set; }
 
         public EmailAlertDispatcher(String serverName, AlertConfig cfg, DataRow row) : base(serverName, cfg, row)
         {
-
+            Sender = cfg.Sender;
+            Recipient = cfg.Recipient;
+            Subject = cfg.Subject;
         }
 
 
@@ -31,7 +32,7 @@ namespace Sqlconsulting.DataCollector.Utils
         {
             // Create empty DataTable and add the row to process
             DataTable table = _row.Table.Clone();
-            table.Rows.Add(_row);
+            table.Rows.Add(_row.ItemArray);
 
             // Remove the columns not included in the output
             List<String> columnsToRemove = new List<String>();
@@ -93,6 +94,7 @@ namespace Sqlconsulting.DataCollector.Utils
                     cmd.Parameters["@recipients"].Value = Recipient;
                     cmd.Parameters["@subject"].Value = Subject;
                     cmd.Parameters["@body"].Value = htmlDocument;
+                    cmd.Parameters["@body_format"].Value = "HTML";
 
                     cmd.ExecuteNonQuery();
                 }
