@@ -137,11 +137,11 @@ namespace Sqlconsulting.DataCollector.Utils
                         //
                         if (!tableCreated)
                         {
-                            createTargetTable(cfg, item, collectedData);
+                            targetTable = createTargetTable(cfg, item, collectedData);
                             tableCreated = true;
                         }
 
-                        if (verbose) logger.logMessage("Writing to server");
+                        if (verbose) logger.logMessage("Writing to server... " + targetTable);
                         CollectorUtils.WriteDataTable(cfg.MDWInstance, cfg.MDWDatabase, targetTable, collectedData);
 
                         if (verbose) logger.logMessage("Deleting file");
