@@ -8,7 +8,7 @@
               <xs:element name="Name" type="xs:string" />
               <xs:element name="OutputTable" type="xs:string" />
               <xs:element name="Definition" type="xs:string" />
-              <xs:element name="Filter" type="xs:string" />
+              <xs:element name="Filter"  minOccurs="0" maxOccurs="1" type="xs:string" />
               <xs:element name="ColumnsList" type="xs:string"/>
             </xs:sequence>
           </xs:complexType>
@@ -16,14 +16,14 @@
         <xs:element name="Alert" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="Sender" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
-              <xs:element name="Recipient" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
-			        <xs:element name="Subject" type="xs:string"/>
-			        <xs:element name="Importance" type="xs:string"/>
-              <xs:element name="ColumnsList" type="xs:string"/>
-              <xs:element name="Filter" type="xs:string"/>
-              <xs:element name="Mode" type="xs:string"/><!-- GROUPED|ATOMIC -->
-              <xs:element name="Delay" type="xs:int"/>
+              <xs:element name="Sender" minOccurs="0" maxOccurs="1" type="xs:string" />
+              <xs:element name="Recipient" minOccurs="1" maxOccurs="unbounded" type="xs:string" />
+			        <xs:element name="Subject"  minOccurs="1" maxOccurs="1" type="xs:string" />
+			        <xs:element name="Importance"  minOccurs="0" maxOccurs="1" type="xs:string" />
+              <xs:element name="ColumnsList"  minOccurs="0" maxOccurs="1" type="xs:string" />
+              <xs:element name="Filter"  minOccurs="0" maxOccurs="1" type="xs:string" />
+              <xs:element name="Mode"  minOccurs="0" maxOccurs="1" type="xs:string" /><!-- GROUPED|ATOMIC -->
+              <xs:element name="Delay"  minOccurs="0" maxOccurs="1" type="xs:int"/>
             </xs:sequence>
             <xs:attribute name="Enabled" type="xs:boolean" use="required" />
             <xs:attribute name="WriteToWindowsLog" type="xs:boolean" use="optional" />
