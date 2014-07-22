@@ -79,16 +79,8 @@ namespace Sqlconsulting.DataCollector.Utils
             // Update Source Info
             //
             int source_id = updateDataSource(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, cfg.MachineName, cfg.InstanceName, cfg.DaysUntilExpiration);
+            int snapshot_id = -1;
 
-
-            if (verbose) logger.logMessage("Creating snapshot");
-            //
-            // Load the snapshot_id
-            //
-            int snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
-
-
-            
             foreach (CollectionItemConfig item in cfg.collectionItems)
             {
                 String collectorId = CollectorUtils.getCacheFilePrefix(SourceServerInstance, CollectionSetUid, ItemId) + "_" + item.Index; 
@@ -121,6 +113,17 @@ namespace Sqlconsulting.DataCollector.Utils
                         {
                             collectedData = (DataTable)fm.Deserialize(fs);
                             fs.Close();
+                        }
+
+
+
+                        //
+                        // Load the snapshot_id
+                        //
+                        if (snapshot_id < 0)
+                        {
+                            if (verbose) logger.logMessage("Creating snapshot");
+                            snapshot_id = createSnapshot(cfg.MDWInstance, cfg.MDWDatabase, CollectionSetUid, CollectorTypeUid, cfg.MachineName, cfg.InstanceName, LogId);
                         }
 
 
