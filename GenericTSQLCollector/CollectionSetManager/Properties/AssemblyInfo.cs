@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CollectionSetManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A generic T-SQL collector type to extend and simplify the features offered by the built-in generic T-SQL collector type in the SQL Server Data Collector.  More information can be found at http://extendedtsqlcollector.codeplex.com")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("sqlconsulting.it")]
 [assembly: AssemblyProduct("CollectionSetManager")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

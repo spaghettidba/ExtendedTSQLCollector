@@ -16,8 +16,28 @@ namespace Sqlconsulting.DataCollector.Utils
     public class CollectorUtils
     {
 
-       
+        /*
+         * Check a SQL Server connection 
+         */
+        public static void CheckConnection(
+            String ServerInstance
+        )
+        {
+            int ConnectionTimeout = 15;
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
 
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = ConnectionString;
+
+            try
+            {
+                conn.Open();
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
 
 
