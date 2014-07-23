@@ -185,34 +185,27 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
 
 
-            // 2. DELETE EXISTING COLLECTOR TYPE
+            // 2. CHECK EXISTING COLLECTOR TYPE
 
             conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
+
+            int collectorCount;
 
             try
             {
                 conn.Open();
 
                 tsql = @"
-                    IF EXISTS (SELECT * FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}')
-                    BEGIN TRY
-                        
-                        EXEC msdb.dbo.sp_syscollector_delete_collector_type 
-                            @collector_type_uid = '{1}', 
-                            @name = '{0}';
-                    END TRY
-                    BEGIN CATCH
-                        PRINT '' --IGNORE
-                    END CATCH;
+                    SELECT COUNT(*) FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}'
                 ";
-                tsql = String.Format(tsql, name, TSQLCollectionItemConfig.CollectorTypeUid.ToString());
+                tsql = String.Format(tsql, name);
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.CommandTimeout = QueryTimeout;
 
-                cmd.ExecuteNonQuery();
+                collectorCount = (int)cmd.ExecuteScalar();
             }
             finally
             {
@@ -221,7 +214,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             
 
 
-            // 3. CREATE COLLECTOR TYPE
+            // 3. CREATE/UPDATE COLLECTOR TYPE
 
             conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
@@ -230,7 +223,15 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
+                SqlCommand cmd = null;
+                if (collectorCount == 0)
+                {
+                    cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
+                }
+                else
+                {
+                    cmd = new SqlCommand("msdb.dbo.sp_syscollector_update_collector_type", conn);
+                }
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandTimeout = QueryTimeout;
 
@@ -242,10 +243,6 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.Parameters.AddWithValue("@upload_package_id", TSQLCollectorConfig.UploaderPackageId);
 
                 cmd.ExecuteNonQuery();
-            }
-            catch (SqlException)
-            {
-                //ignore: it means that the collector type is already installed
             }
             finally
             {
@@ -270,34 +267,27 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             formatter = Properties.Resources.XEReaderParamFormatter;
 
 
-            // 2. DELETE EXISTING COLLECTOR TYPE
+            // 2. CHECK EXISTING COLLECTOR TYPE
 
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
+
+            int collectorCount;
 
             try
             {
                 conn.Open();
 
                 tsql = @"
-                    IF EXISTS (SELECT * FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}')
-                    BEGIN TRY
-                        
-                        EXEC msdb.dbo.sp_syscollector_delete_collector_type 
-                            @collector_type_uid = '{1}', 
-                            @name = '{0}';
-                    END TRY
-                    BEGIN CATCH
-                        PRINT '' --IGNORE
-                    END CATCH;
+                   SELECT COUNT(*) FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}'
                 ";
-                tsql = String.Format(tsql, name, XEReaderCollectionItemConfig.CollectorTypeUid.ToString());
+                tsql = String.Format(tsql, name);
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.CommandTimeout = QueryTimeout;
 
-                cmd.ExecuteNonQuery();
+                collectorCount = (int)cmd.ExecuteScalar();
             }
             finally
             {
@@ -306,7 +296,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
 
 
-            // 3. CREATE COLLECTOR TYPE
+            // 3. CREATE/UPDATE COLLECTOR TYPE
 
             conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
@@ -315,7 +305,15 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
+                SqlCommand cmd = null;
+                if (collectorCount == 0)
+                {
+                    cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
+                }
+                else
+                {
+                    cmd = new SqlCommand("msdb.dbo.sp_syscollector_update_collector_type", conn);
+                }
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandTimeout = QueryTimeout;
 
@@ -327,10 +325,6 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 cmd.Parameters.AddWithValue("@upload_package_id", XEReaderCollectorConfig.UploaderPackageId);
 
                 cmd.ExecuteNonQuery();
-            }
-            catch (SqlException)
-            {
-                //ignore: it means that the collector type is already installed
             }
             finally
             {
