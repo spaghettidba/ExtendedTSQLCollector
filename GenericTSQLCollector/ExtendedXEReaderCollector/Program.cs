@@ -27,30 +27,30 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
         static void Main(string[] args)
         {
 
-            string mutex_id = "Global\\ExtendedXEReaderCollector";
+            var options = new Options();
+            if (!CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                return;
+            }
+
+            bool verbose = options.Verbose;
+            String SourceServerInstance = options.ServerInstance;
+
+
+            string mutex_id = "Global\\ExtendedXEReaderCollector\\" + SourceServerInstance;
+
             using (Mutex mutex = new Mutex(false, mutex_id))
             {
                 if (!mutex.WaitOne(0, false))
                 {
                     return;
                 }
-                // Do stuff
 
-
-                var options = new Options();
-                if (!CommandLine.Parser.Default.ParseArguments(args, options))
-                {
-                    return;
-                }
-
-                bool verbose = options.Verbose;
                 CollectorLogger logger = null;
 
                 try
                 {
-                    String SourceServerInstance = options.ServerInstance;
-
-
+                    
                     logger = new CollectorLogger(SourceServerInstance);
 
                     if (verbose) logger.logMessage("Starting");

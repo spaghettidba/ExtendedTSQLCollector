@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sqlconsulting.DataCollector.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,9 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 {
     public partial class Manager : Form
     {
+        public static String ServerName;
+
+        
         public Manager()
         {
             InitializeComponent();
@@ -24,8 +28,25 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
         private void button2_Click(object sender, EventArgs e)
         {
-            String serverName = textBox1.Text;
-            installCollectorType(serverName);
+            openMainForm();
+        }
+
+        private void openMainForm()
+        {
+            ServerName = textBox1.Text;
+            //installCollectorType(serverName);
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                CollectorUtils.CheckConnection(ServerName);
+                Cursor.Current = Cursors.Default;
+                (new Main()).Show();
+                Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void installCollectorType(String serverName)
@@ -55,8 +76,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         {
             if (e.KeyCode == Keys.Enter)
             {
-                String serverName = textBox1.Text;
-                installCollectorType(serverName);
+                openMainForm();
             }
         }
 
@@ -65,6 +85,11 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             this.textBox1.SelectAll();
             this.textBox1.Focus();
             this.textBox3.Text = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            (new AboutBox()).ShowDialog();
         }
 
 
