@@ -99,6 +99,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TablessControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,7 +112,7 @@
       <DependentUpon>Manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -144,6 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\1397849640_69471.ico" />
+    <None Include="Resources\DataCollection.ico" />
+    <None Include="Resources\folder.ico" />
+    <None Include="Resources\steps.ico" />
+    <None Include="Resources\server.ico" />
+    <None Include="Resources\package.ico" />
+    <None Include="Resources\jobs.ico" />
     <None Include="Resources\text3835.png" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
     public class CollectorTypeInstaller
     {
         private String ServerInstance;
-
+        private const int QueryTimeout = 600;
  
         private String installPath;
 
@@ -185,36 +185,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
 
 
-            // 2. CHECK EXISTING COLLECTOR TYPE
-
-            conn = new SqlConnection();
-            conn.ConnectionString = ConnectionString;
-
-            int collectorCount;
-
-            try
-            {
-                conn.Open();
-
-                tsql = @"
-                    SELECT COUNT(*) FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}'
-                ";
-                tsql = String.Format(tsql, name);
-
-                SqlCommand cmd = new SqlCommand(tsql, conn);
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandTimeout = QueryTimeout;
-
-                collectorCount = (int)cmd.ExecuteScalar();
-            }
-            finally
-            {
-                conn.Close();
-            }
-            
-
-
-            // 3. CREATE/UPDATE COLLECTOR TYPE
+            // CREATE/UPDATE COLLECTOR TYPE
 
             conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
@@ -224,7 +195,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 conn.Open();
 
                 SqlCommand cmd = null;
-                if (collectorCount == 0)
+                if (!CheckCollectorTypeInstallStatus(name))
                 {
                     cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
                 }
@@ -251,23 +222,13 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
         }
 
 
-
-        private void installXEReaderCollectorType()
+        public Boolean CheckCollectorTypeInstallStatus(String collectorTypeName)
         {
-            String name = "Extended XE Reader Collector Type";
             int ConnectionTimeout = 15;
             int QueryTimeout = 600;
             String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
 
-            String paramSchema;
-            String formatter;
             String tsql;
-
-            paramSchema = Properties.Resources.XEReaderParamSchema;
-            formatter = Properties.Resources.XEReaderParamFormatter;
-
-
-            // 2. CHECK EXISTING COLLECTOR TYPE
 
             SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
@@ -281,7 +242,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 tsql = @"
                    SELECT COUNT(*) FROM msdb.dbo.syscollector_collector_types WHERE name = '{0}'
                 ";
-                tsql = String.Format(tsql, name);
+                tsql = String.Format(tsql, collectorTypeName);
 
                 SqlCommand cmd = new SqlCommand(tsql, conn);
                 cmd.CommandType = System.Data.CommandType.Text;
@@ -293,12 +254,27 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
             {
                 conn.Close();
             }
+            return collectorCount > 0;
+        }
 
 
 
-            // 3. CREATE/UPDATE COLLECTOR TYPE
+        private void installXEReaderCollectorType()
+        {
+            String name = "Extended XE Reader Collector Type";
+            int ConnectionTimeout = 15;
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", ServerInstance, "msdb", ConnectionTimeout);
 
-            conn = new SqlConnection();
+            String paramSchema;
+            String formatter;
+            String tsql;
+
+            paramSchema = Properties.Resources.XEReaderParamSchema;
+            formatter = Properties.Resources.XEReaderParamFormatter;
+
+
+            // CREATE/UPDATE COLLECTOR TYPE
+            SqlConnection conn = new SqlConnection();
             conn.ConnectionString = ConnectionString;
 
             try
@@ -306,7 +282,7 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
                 conn.Open();
 
                 SqlCommand cmd = null;
-                if (collectorCount == 0)
+                if (!CheckCollectorTypeInstallStatus(name))
                 {
                     cmd = new SqlCommand("msdb.dbo.sp_syscollector_create_collector_type", conn);
                 }
