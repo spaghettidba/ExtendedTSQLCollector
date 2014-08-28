@@ -222,15 +222,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
         private void Main_Load(object sender, EventArgs e)
         {
-            CollectorTypeInstaller cti = new CollectorTypeInstaller(Manager.ServerName);
-            if (!cti.CheckCollectorTypeInstallStatus("Extended T-SQL Query Collector Type") || !cti.CheckCollectorTypeInstallStatus("Extended XE Reader Collector Type"))
-            {
-                DialogResult dialogResult = MessageBox.Show("The collector types are not installed on this server: install now?", "Install", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    installCollectorType(Manager.ServerName);
-                }
-            }
+           
         }
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
@@ -240,13 +232,19 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //TODO: Add code to prevent data loss when changing node
             if (treeView1.SelectedNode == tnRoot || treeView1.SelectedNode == tnCollectorTypes)
             {
                 tabs.SelectedIndex = 0;
+                checkInstallation();
             }
             else if (treeView1.SelectedNode.Parent == tnCollectorTypes)
             {
                 tabs.SelectedIndex = 1;
+                panel2.Controls.Clear();
+                CollectorTypeControl ctc = new CollectorTypeControl(new Guid(treeView1.SelectedNode.Tag.ToString()));
+                panel2.Controls.Add(ctc);
+                ctc.Dock = DockStyle.Fill;
             }
             else if (treeView1.SelectedNode == tnCollectionSets || treeView1.SelectedNode == tnCollectorLogs)
             {
@@ -264,6 +262,27 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             {
                 tabs.SelectedIndex = 4;
             }
+        }
+
+
+        private void checkInstallation()
+        {
+            CollectorTypeInstaller cti = new CollectorTypeInstaller(Manager.ServerName);
+            if (!cti.CheckCollectorTypeInstallStatus("Extended T-SQL Query Collector Type") || !cti.CheckCollectorTypeInstallStatus("Extended XE Reader Collector Type"))
+            {
+                label1.Text = "The extended collector types are not installed.";
+                buttonInstall.Text = "Install";
+            }
+            else
+            {
+                label1.Text = "The extended collector types are installed.";
+                buttonInstall.Text = "Update";
+            }
+        }
+
+        private void buttonInstall_Click(object sender, EventArgs e)
+        {
+            installCollectorType(Manager.ServerName);
         }
     }
 }

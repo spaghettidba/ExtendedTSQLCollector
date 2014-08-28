@@ -267,7 +267,6 @@ namespace Sqlconsulting.DataCollector.InstallCollectorType
 
             String paramSchema;
             String formatter;
-            String tsql;
 
             paramSchema = Properties.Resources.XEReaderParamSchema;
             formatter = Properties.Resources.XEReaderParamFormatter;
