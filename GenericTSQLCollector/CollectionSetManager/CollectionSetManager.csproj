@@ -85,12 +85,25 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="CollectionItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CollectionItemControl.Designer.cs">
+      <DependentUpon>CollectionItemControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionSetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CollectionSetControl.Designer.cs">
+      <DependentUpon>CollectionSetControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CollectorTypeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CollectorTypeControl.Designer.cs">
       <DependentUpon>CollectorTypeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComboboxItem.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,11 +118,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectPackageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectPackageDialog.Designer.cs">
+      <DependentUpon>SelectPackageDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TablessControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CollectionItemControl.resx">
+      <DependentUpon>CollectionItemControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CollectionSetControl.resx">
+      <DependentUpon>CollectionSetControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CollectorTypeControl.resx">
       <DependentUpon>CollectorTypeControl.cs</DependentUpon>
@@ -130,6 +155,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SelectPackageDialog.resx">
+      <DependentUpon>SelectPackageDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
