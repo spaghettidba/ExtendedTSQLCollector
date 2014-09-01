@@ -44,6 +44,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             {
                 cb.Items.Add(new ComboboxItem(dr[0], dr[1].ToString()));
             }
+            cb.SelectedIndex = 0;
         }
 
         private void FillCombo(ComboBox cb, String sql)

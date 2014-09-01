@@ -27,6 +27,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.Items.Add(new ComboboxItem(0, "Cached"));
             comboBox1.Items.Add(new ComboboxItem(1, "Non-Cached"));
+            comboBox1.SelectedIndex = 0;
 
             // Fill Combo for proxies
             FillCombo(comboBox2, "SELECT proxy_id, name FROM msdb.dbo.sysproxies", true);
@@ -40,6 +41,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             comboBox4.Items.Add(new ComboboxItem(0, "0"));
             comboBox4.Items.Add(new ComboboxItem(1, "1"));
             comboBox4.Items.Add(new ComboboxItem(2, "2"));
+            comboBox4.SelectedIndex = 0;
         }
 
 
@@ -62,6 +64,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             {
                 cb.Items.Add(new ComboboxItem(dr[0], dr[1].ToString()));
             }
+            cb.SelectedIndex = 0;
         }
 
         private void FillCombo(ComboBox cb, String sql)
@@ -79,6 +82,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     cb.SelectedIndex = index;
                 }
             }
+            
         }
 
 
@@ -174,6 +178,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     }
                     else
                     {
+                        cmd.Parameters["@collection_set_id"].Direction = ParameterDirection.Output;
                         cmd.Parameters["@name"].Value = textBox2.Text;
                     }
                     cmd.Parameters["@collection_mode"].Value = ((ComboboxItem)comboBox1.SelectedItem).Value;
