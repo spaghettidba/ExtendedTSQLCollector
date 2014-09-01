@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,8 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private TreeNode tnCollectorLogs;
 
         private TablessControl tabs = new TablessControl();
+
+        private ContextMenuStrip menuStrip;
 
         static ImageList _imageList;
         public static ImageList ImageList
@@ -52,6 +55,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         {
             InitializeComponent();
             PopulateTreeView();
+            
             splitContainer1.Panel2.Controls.Add(tabs);
             tabs.Dock = DockStyle.Fill;
             PopulateTabs(tabs);
@@ -127,11 +131,12 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
             treeView1.Nodes.Add(tnRoot);
             treeView1.ExpandAll();
-            foreach (TreeNode childNode in tnCollectionSets.Nodes)
-            {
-                childNode.Collapse();
-            }
 
+            menuStrip = new ContextMenuStrip();
+            this.treeView1.ContextMenuStrip = menuStrip;
+            menuStrip.Items.Add("Add");
+            menuStrip.Items.Add("Delete");
+            menuStrip.ItemClicked += new ToolStripItemClickedEventHandler(menuStrip_ItemClicked);
         }
 
         private TreeNode[] PopulateCollectionItems(int collection_set_id)
@@ -159,7 +164,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private TreeNode[] PopulateCollectionSets()
         {
            String sql = @"
-                SELECT name, description, is_system, collection_set_id
+                SELECT name, description, is_system, collection_set_uid, collection_set_id
                 FROM msdb.dbo.syscollector_collection_sets
                 ORDER BY is_system DESC, name
             ";
@@ -168,7 +173,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             foreach (DataRow dr in dt.Rows)
             {
                 TreeNode tn = new TreeNode(dr["name"].ToString(), PopulateCollectionItems(Int32.Parse(dr["collection_set_id"].ToString())));
-                tn.Tag = dr["collection_set_id"];
+                tn.Tag = dr["collection_set_uid"];
                 tn.ImageKey = "steps";
                 tn.SelectedImageKey = "steps";
                 nodes.Add(tn);
@@ -195,6 +200,25 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 nodes.Add(tn);
             }
             return nodes.ToArray();
+        }
+
+
+        public void RefreshTreeView()
+        {
+            String CurrentText = null;
+            if (treeView1.SelectedNode != null)
+            {
+                CurrentText = treeView1.SelectedNode.Text;
+            }
+            treeView1.Nodes.Clear();
+            PopulateTreeView();
+            if(CurrentText != null)
+                foreach (TreeNode tn in treeView1.Nodes)
+                {
+                    if(tn.Text.Equals(CurrentText)){
+                        treeView1.SelectedNode = tn;
+                    }
+                }
         }
 
 
@@ -242,7 +266,15 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             {
                 tabs.SelectedIndex = 1;
                 panel2.Controls.Clear();
-                CollectorTypeControl ctc = new CollectorTypeControl(new Guid(treeView1.SelectedNode.Tag.ToString()));
+                CollectorTypeControl ctc = null;
+                if (treeView1.SelectedNode.Tag != null)
+                {
+                    ctc = new CollectorTypeControl(new Guid(treeView1.SelectedNode.Tag.ToString()), this);
+                }
+                else
+                {
+                    ctc = new CollectorTypeControl(this);
+                }
                 panel2.Controls.Add(ctc);
                 ctc.Dock = DockStyle.Fill;
             }
@@ -253,6 +285,18 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             else if (treeView1.SelectedNode.Parent == tnCollectionSets)
             {
                 tabs.SelectedIndex = 3;
+                panel4.Controls.Clear();
+                CollectionSetControl csc = null;
+                if (treeView1.SelectedNode.Tag != null)
+                {
+                    csc = new CollectionSetControl(new Guid(treeView1.SelectedNode.Tag.ToString()), this);
+                }
+                else
+                {
+                    csc = new CollectionSetControl(this);
+                }
+                panel4.Controls.Add(csc);
+                csc.Dock = DockStyle.Fill;
             }
             else if (treeView1.SelectedNode.Parent == tnCollectorLogs)
             {
@@ -261,6 +305,19 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             else if (treeView1.SelectedNode.Parent.Parent == tnCollectionSets)
             {
                 tabs.SelectedIndex = 4;
+                panel5.Controls.Clear();
+                CollectionItemControl cic = null;
+                if (treeView1.SelectedNode.Tag != null)
+                {
+                    cic = new CollectionItemControl(Convert.ToInt32(treeView1.SelectedNode.Tag.ToString()), this);
+                }
+                else
+                {
+                    cic = new CollectionItemControl(this);
+                }
+                
+                panel5.Controls.Add(cic);
+                cic.Dock = DockStyle.Fill;
             }
         }
 
@@ -284,5 +341,181 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         {
             installCollectorType(Manager.ServerName);
         }
+
+
+   
+
+        void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            switch (e.ClickedItem.Text)
+            {
+                case "Add":
+                    TreeNode childNode = new TreeNode("Node " + treeView1.SelectedNode.Nodes.Count);
+                    treeView1.SelectedNode.Nodes.Add(childNode);
+
+                    if (treeView1.SelectedNode == tnCollectionSets)
+                    {
+                        childNode.ImageKey = "steps";
+                        childNode.SelectedImageKey = "steps";
+                    }
+                    else
+                    {
+                        if (treeView1.SelectedNode == tnCollectorTypes)
+                        {
+                            childNode.ImageKey = "DataCollection";
+                            childNode.SelectedImageKey = "DataCollection";
+                        }
+                        else
+                        {
+                            childNode.ImageKey = "package";
+                            childNode.SelectedImageKey = "package";
+                        }
+                    }
+                    treeView1.SelectedNode = childNode;
+
+                    break;
+                case "Delete":
+                    if (MessageBox.Show("Are you sure you want to delete this item?", "CollectionSetEditor", MessageBoxButtons.YesNo, MessageBoxIcon.Question).Equals(DialogResult.Yes))
+                    {
+                        if(deleteItem(treeView1.SelectedNode))
+                            treeView1.SelectedNode.Remove();
+                    }
+                    
+                    break;
+            }
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            foreach (ToolStripMenuItem tsmi in menuStrip.Items)
+            {
+                tsmi.Enabled = true;
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                // Select the clicked node
+                treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
+
+                if (treeView1.SelectedNode == tnRoot || treeView1.SelectedNode == tnCollectorLogs)
+                {
+                    foreach (ToolStripMenuItem tsmi in menuStrip.Items)
+                    {
+                        tsmi.Enabled = false;
+                    }
+                    return;
+                }
+
+                if (treeView1.SelectedNode == tnCollectionSets || treeView1.SelectedNode == tnCollectorTypes)
+                {
+                    foreach (ToolStripMenuItem tsmi in menuStrip.Items)
+                    {
+                        if(tsmi.Text.Equals("Delete"))
+                            tsmi.Enabled = false;
+                    }
+                    return;
+                }
+
+                if (treeView1.SelectedNode.Parent == tnCollectorTypes || treeView1.SelectedNode.Parent.Parent == tnCollectionSets)
+                {
+                    foreach (ToolStripMenuItem tsmi in menuStrip.Items)
+                    {
+                        if (tsmi.Text.Equals("Add"))
+                            tsmi.Enabled = false;
+                    }
+                    return;
+                }
+
+            }
+
+        }
+
+        private Boolean deleteItem(TreeNode selectedNode)
+        {
+            String sql;
+            int ConnectionTimeout = 15;
+            int QueryTimeout = 600;
+
+            String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", Manager.ServerName, "msdb", ConnectionTimeout);
+
+            try
+            {
+
+                if (selectedNode.Parent == tnCollectionSets)
+                {
+                    // delete collection set
+                    using (SqlConnection conn = new SqlConnection())
+                    {
+                        conn.ConnectionString = ConnectionString;
+                        conn.Open();
+
+                        sql = "dbo.sp_syscollector_delete_collection_set";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = QueryTimeout;
+                        SqlCommandBuilder.DeriveParameters(cmd);
+
+                        DataTable dt = CollectorUtils.GetDataTable(Manager.ServerName, "msdb", String.Format("SELECT collection_set_id FROM syscollector_collection_sets WHERE collection_set_uid = '{0}'",selectedNode.Tag));
+                        int collection_set_id = Convert.ToInt32(dt.Rows[0]["collection_set_id"]);
+
+                        cmd.Parameters["@collection_set_id"].Value = collection_set_id;
+                        cmd.ExecuteNonQuery();
+                    }
+                    return true;
+                }
+
+                if (selectedNode.Parent == tnCollectorTypes)
+                {
+                    // delete collector type
+                    using (SqlConnection conn = new SqlConnection())
+                    {
+                        conn.ConnectionString = ConnectionString;
+                        conn.Open();
+
+                        sql = "dbo.sp_syscollector_delete_collector_type";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = QueryTimeout;
+                        SqlCommandBuilder.DeriveParameters(cmd);
+
+                        cmd.Parameters["@collector_type_uid"].Value = new Guid(selectedNode.Tag.ToString());
+                        cmd.ExecuteNonQuery();
+                    }
+                    return true;
+                }
+
+                if (selectedNode.Parent.Parent == tnCollectionSets)
+                {
+                    // delete collection item
+                    using (SqlConnection conn = new SqlConnection())
+                    {
+                        conn.ConnectionString = ConnectionString;
+                        conn.Open();
+
+                        sql = "dbo.sp_syscollector_delete_collection_item";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = QueryTimeout;
+                        SqlCommandBuilder.DeriveParameters(cmd);
+
+                        cmd.Parameters["@collection_item_id"].Value = Convert.ToInt32(selectedNode.Tag.ToString());
+                        cmd.ExecuteNonQuery();
+                    }
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
+        }
+
+       
     }
 }
