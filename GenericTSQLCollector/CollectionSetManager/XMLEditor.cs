@@ -25,7 +25,10 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             this.Controls.Add(_textControl);
             _textControl.Dock = DockStyle.Fill;
             _textControl.Text = text;
-            _textControl.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("XML"); 
+            _textControl.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("XML");
+            _textControl.Document.FoldingManager.FoldingStrategy = new IndentFoldingStrategy();
+            _textControl.Document.FoldingManager.UpdateFoldings("", null);
+            _textControl.TextEditorProperties.EnableFolding = true;
         }
 
         private void XMLEditor_Close(object sender, FormClosedEventArgs e)

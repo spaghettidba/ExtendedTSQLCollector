@@ -93,6 +93,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.AcceptsReturn = true;
             this.textBox3.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox3.Location = new System.Drawing.Point(161, 73);
             this.textBox3.Multiline = true;
@@ -114,6 +115,7 @@
             // 
             // textBox4
             // 
+            this.textBox4.AcceptsReturn = true;
             this.textBox4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox4.Location = new System.Drawing.Point(161, 209);
             this.textBox4.Multiline = true;
@@ -122,6 +124,7 @@
             this.textBox4.Size = new System.Drawing.Size(424, 130);
             this.textBox4.TabIndex = 5;
             this.textBox4.WordWrap = false;
+            this.textBox4.DoubleClick += new System.EventHandler(this.ShowXMLEditor);
             // 
             // label5
             // 
