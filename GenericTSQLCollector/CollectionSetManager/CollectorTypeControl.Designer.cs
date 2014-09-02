@@ -87,9 +87,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(19, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 13);
+            this.label3.Size = new System.Drawing.Size(132, 26);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Parameter Schema";
+            this.label3.Text = "Parameter Schema\r\n(double click for xml editor)";
             // 
             // textBox3
             // 
@@ -101,15 +101,16 @@
             this.textBox3.Size = new System.Drawing.Size(424, 130);
             this.textBox3.TabIndex = 5;
             this.textBox3.WordWrap = false;
+            this.textBox3.DoubleClick += new System.EventHandler(this.ShowXMLEditor);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(19, 212);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 13);
+            this.label4.Size = new System.Drawing.Size(132, 26);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Parameter Formatter";
+            this.label4.Text = "Parameter Formatter\r\n(double click for xml editor)";
             // 
             // textBox4
             // 
