@@ -223,8 +223,6 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             int QueryTimeout = 600;
             String ConnectionString = String.Format("Server={0};Database={1};Integrated Security=True;Connect Timeout={2}", Manager.ServerName, "msdb", ConnectionTimeout);
 
-            Guid collection_set_uid = new Guid();
-
             using (SqlConnection conn = new SqlConnection())
             {
                 conn.ConnectionString = ConnectionString;

@@ -14,6 +14,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
     public partial class CollectionItemControl : UserControl
     {
         private Main _main;
+        private Guid _collectionSetUid;
 
         public CollectionItemControl(Main main)
         {
@@ -24,10 +25,22 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
         }
 
-
-        public CollectionItemControl(int collectionSetUid, Main main) : this(main)
+        public CollectionItemControl(Guid collectionSetUid, Main main) : this(main)
         {
-            fillValues(collectionSetUid);
+            _collectionSetUid = collectionSetUid;
+            String sql = @"
+                SELECT collection_set_id
+                FROM syscollector_collection_sets
+                WHERE collection_set_uid = '{0}'
+            ";
+            sql = String.Format(sql, _collectionSetUid);
+            int collectionSetId = Convert.ToInt32(CollectorUtils.GetScalar(Manager.ServerName, "msdb", sql));
+            textBox1.Text = collectionSetId.ToString();
+        }
+
+        public CollectionItemControl(int collectionItemId, Main main) : this(main)
+        {
+            fillValues(collectionItemId);
         }
 
 
@@ -90,7 +103,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private void btnSave_Click(object sender, EventArgs e)
         {
             String verb = "create";
-            if(textBox1.Text.Length==0)
+            if(textBox7.Text.Length==0)
             {
                 verb = "create";
             }
@@ -132,8 +145,11 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     }
                     else
                     {
+                        collection_set_id = Convert.ToInt32(textBox1.Text);
+                        cmd.Parameters["@collection_set_id"].Value = collection_set_id;
                         cmd.Parameters["@name"].Value = textBox2.Text;
                         cmd.Parameters["@collector_type_uid"].Value = ((ComboboxItem)comboBox1.SelectedItem).Value;
+                        cmd.Parameters["@collection_item_id"].Direction = ParameterDirection.Output;
                     }
                     
                     cmd.Parameters["@frequency"].Value = Convert.ToInt32(textBox3.Text);
@@ -144,7 +160,6 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
                     if (verb.Equals("create"))
                     {
-                        collection_set_id = Convert.ToInt32(cmd.Parameters["@collection_set_id"].Value.ToString());
                         collection_item_id = Convert.ToInt32(cmd.Parameters["@collection_set_id"].Value.ToString());
                     }
                 }

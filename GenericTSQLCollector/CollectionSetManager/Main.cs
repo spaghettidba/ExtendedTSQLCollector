@@ -313,7 +313,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 }
                 else
                 {
-                    cic = new CollectionItemControl(this);
+                    cic = new CollectionItemControl(new Guid(treeView1.SelectedNode.Parent.Tag.ToString()), this);
                 }
                 
                 panel5.Controls.Add(cic);

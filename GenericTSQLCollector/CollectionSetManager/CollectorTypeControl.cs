@@ -95,8 +95,10 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     cmd.Parameters["@name"].Value = textBox2.Text;
                     cmd.Parameters["@parameter_schema"].Value = textBox3.Text;
                     cmd.Parameters["@parameter_formatter"].Value = textBox4.Text;
-                    cmd.Parameters["@collection_package_id"].Value = new Guid(button1.Tag.ToString());
-                    cmd.Parameters["@upload_package_id"].Value = new Guid(button2.Tag.ToString());
+                    if (button1.Tag != null)
+                        cmd.Parameters["@collection_package_id"].Value = new Guid(button1.Tag.ToString());
+                    if (button2.Tag != null)
+                        cmd.Parameters["@upload_package_id"].Value = new Guid(button2.Tag.ToString());
 
 
                     cmd.ExecuteNonQuery();
