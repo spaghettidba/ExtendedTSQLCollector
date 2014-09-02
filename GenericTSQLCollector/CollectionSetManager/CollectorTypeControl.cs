@@ -144,5 +144,13 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 textBox6.Text = dialog.SelectedPackagePath;
             }
         }
+
+        private void ShowXMLEditor(object sender, EventArgs e)
+        {
+            TextBox origin = (TextBox)sender;
+            XMLEditor dialog = new XMLEditor(origin.Text);
+            dialog.ShowDialog(this);
+            origin.Text = dialog.ReturnValue;
+        }
     }
 }

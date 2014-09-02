@@ -89,6 +89,7 @@
             // 
             // textBox4
             // 
+            this.textBox4.AcceptsReturn = true;
             this.textBox4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox4.Location = new System.Drawing.Point(161, 155);
             this.textBox4.Multiline = true;
@@ -97,6 +98,7 @@
             this.textBox4.Size = new System.Drawing.Size(424, 130);
             this.textBox4.TabIndex = 5;
             this.textBox4.WordWrap = false;
+            this.textBox4.DoubleClick += new System.EventHandler(this.ShowXMLEditor);
             // 
             // btnSave
             // 
@@ -149,9 +151,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(20, 157);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(60, 13);
+            this.label10.Size = new System.Drawing.Size(132, 26);
             this.label10.TabIndex = 4;
-            this.label10.Text = "Parameters";
+            this.label10.Text = "Parameters\r\n(double click for xml editor)";
             // 
             // textBox3
             // 

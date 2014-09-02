@@ -178,5 +178,13 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             _main.RefreshTreeView();
         }
 
+        private void ShowXMLEditor(object sender, EventArgs e)
+        {
+            TextBox origin = (TextBox)sender;
+            XMLEditor dialog = new XMLEditor(origin.Text);
+            dialog.ShowDialog(this);
+            origin.Text = dialog.ReturnValue;
+        }
+
     }
 }
