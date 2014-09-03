@@ -319,7 +319,7 @@ namespace Sqlconsulting.DataCollector.Utils
 
                 returnValue = sw.ToString();
             }
-            catch (XmlException e)
+            catch (XmlException)
             {
                 returnValue = xml;
             }
