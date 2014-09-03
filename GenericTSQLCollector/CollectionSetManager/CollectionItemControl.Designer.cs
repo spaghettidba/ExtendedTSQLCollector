@@ -95,14 +95,14 @@
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox4.Size = new System.Drawing.Size(424, 130);
+            this.textBox4.Size = new System.Drawing.Size(424, 260);
             this.textBox4.TabIndex = 5;
             this.textBox4.WordWrap = false;
             this.textBox4.DoubleClick += new System.EventHandler(this.ShowXMLEditor);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(510, 291);
+            this.btnSave.Location = new System.Drawing.Point(510, 421);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -180,7 +180,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label1);
             this.Name = "CollectionItemControl";
-            this.Size = new System.Drawing.Size(606, 322);
+            this.Size = new System.Drawing.Size(606, 454);
             this.ResumeLayout(false);
             this.PerformLayout();
 

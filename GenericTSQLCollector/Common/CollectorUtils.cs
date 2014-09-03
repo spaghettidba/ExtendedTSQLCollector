@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.SqlServer.Management.Smo;
 using System.Collections.Specialized;
 using Microsoft.SqlServer.Management.Common;
+using System.Xml;
 
 
 namespace Sqlconsulting.DataCollector.Utils
@@ -300,6 +301,30 @@ namespace Sqlconsulting.DataCollector.Utils
                 results.Add(row["name"].ToString());
             }
             return results;
+        }
+
+
+        public static String FormatXMLDocument(String xml)
+        {
+            String returnValue = xml;
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xml);
+                StringWriter sw = new StringWriter();
+                XmlTextWriter writer = new XmlTextWriter(sw);
+                writer.Formatting = Formatting.Indented;
+                doc.Save(writer);
+                writer.Close();
+
+                returnValue = sw.ToString();
+            }
+            catch (XmlException e)
+            {
+                returnValue = xml;
+            }
+
+            return returnValue;
         }
 
     }

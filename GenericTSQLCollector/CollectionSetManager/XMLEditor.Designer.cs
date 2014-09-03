@@ -36,8 +36,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 632);
             this.Name = "XMLEditor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "XMLEditor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.XMLEditor_Close);
+            this.Load += new System.EventHandler(this.XMLEditor_Load);
             this.ResumeLayout(false);
 
         }
