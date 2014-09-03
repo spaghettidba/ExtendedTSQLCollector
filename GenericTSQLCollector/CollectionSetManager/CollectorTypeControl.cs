@@ -43,8 +43,8 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             {
                 textBox1.Text = dr["collector_type_uid"].ToString();
                 textBox2.Text = dr["name"].ToString();
-                textBox3.Text = dr["parameter_schema"].ToString();
-                textBox4.Text = dr["parameter_formatter"].ToString();
+                textBox3.Text = CollectorUtils.FormatXMLDocument(dr["parameter_schema"].ToString());
+                textBox4.Text = CollectorUtils.FormatXMLDocument(dr["parameter_formatter"].ToString());
                 textBox5.Text = dr["collection_package_path"].ToString();
                 button1.Tag = dr["collection_package_id"].ToString();
                 textBox6.Text = dr["upload_package_path"].ToString();

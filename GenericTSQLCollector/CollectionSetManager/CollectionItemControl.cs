@@ -95,7 +95,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 textBox2.Text = dr["name"].ToString();
                 ComboSetValue(comboBox1,(Guid)dr["collector_type_uid"]);
                 textBox3.Text = dr["frequency"].ToString();
-                textBox4.Text = dr["parameters"].ToString();
+                textBox4.Text = CollectorUtils.FormatXMLDocument(dr["parameters"].ToString());
             }
 
         }
