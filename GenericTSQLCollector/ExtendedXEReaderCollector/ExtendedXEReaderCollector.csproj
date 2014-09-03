@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -72,6 +72,7 @@
     <Reference Include="Microsoft.SqlServer.XEvent.Linq, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Tx.SqlServer.1.0.40516\lib\Net40\Microsoft.SqlServer.XEvent.Linq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SqlServer.XEvent.Targets">
       <HintPath>..\packages\Tx.SqlServer.1.0.40516\lib\Net40\Microsoft.SqlServer.XEvent.Targets.dll</HintPath>
