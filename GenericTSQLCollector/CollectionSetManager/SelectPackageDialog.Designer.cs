@@ -86,6 +86,7 @@
             this.MinimizeBox = false;
             this.Name = "SelectPackageDialog";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Package";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
