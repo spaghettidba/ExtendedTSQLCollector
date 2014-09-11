@@ -36,29 +36,27 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
             bool verbose = options.Verbose;
             String SourceServerInstance = options.ServerInstance;
 
+            CollectorLogger logger = new CollectorLogger(SourceServerInstance);
 
-            string mutex_id = "Global\\ExtendedXEReaderCollector\\" + SourceServerInstance;
+            string mutex_id = "Global\\ExtendedXEReaderCollector_" + SourceServerInstance.Replace("\\","_");
 
             using (Mutex mutex = new Mutex(false, mutex_id))
             {
                 if (!mutex.WaitOne(0, false))
                 {
+                    if (verbose) logger.logMessage("Shut down. Only one instance of this program is allowed.");
                     return;
                 }
-
-                CollectorLogger logger = null;
 
                 try
                 {
                     
-                    logger = new CollectorLogger(SourceServerInstance);
-
                     if (verbose) logger.logMessage("Starting");
 
                     // Instantiate a task that loads Collection Items from the database
                     Task.Factory.StartNew(() => loadXECollectionItems(SourceServerInstance, verbose));
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(10000);
 
                     while (runningTasks.Count > 0 || initializing)
                     {
@@ -68,10 +66,12 @@ namespace Sqlconsulting.DataCollector.ExtendedXEReaderCollector
                             {
                                 CollectionItemTask v = null;
                                 runningTasks.TryRemove(currentTask.GetKey(), out v);
+                                if (verbose) logger.logMessage("Task " + v.CollectionSetUid + " is completed.");
                             }
                         }
                         Thread.Sleep(100);
                     }
+                    if (verbose) logger.logMessage("Running tasks " + runningTasks.Count + ". Shutting down.");
 
                     if (verbose) logger.logMessage("Ending with success");
 
