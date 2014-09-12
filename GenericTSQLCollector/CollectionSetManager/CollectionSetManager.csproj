@@ -130,6 +130,12 @@
     <Compile Include="TablessControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TSQLParametersEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TSQLParametersEditor.Designer.cs">
+      <DependentUpon>TSQLParametersEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMLEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </Compile>
     <EmbeddedResource Include="SelectPackageDialog.resx">
       <DependentUpon>SelectPackageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TSQLParametersEditor.resx">
+      <DependentUpon>TSQLParametersEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XMLEditor.resx">
       <DependentUpon>XMLEditor.cs</DependentUpon>

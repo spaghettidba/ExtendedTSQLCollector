@@ -178,13 +178,28 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             _main.RefreshTreeView();
         }
 
-        private void ShowXMLEditor(object sender, EventArgs e)
+        private void ShowEditor(object sender, EventArgs e)
         {
             TextBox origin = (TextBox)sender;
-            XMLEditor dialog = new XMLEditor(origin.Text);
-            dialog.ShowDialog(this);
-            origin.Text = dialog.ReturnValue;
+
+            if (
+                    (comboBox1.SelectedItem.ToString().Equals("Generic T-SQL Query Collector Type"))
+                || (comboBox1.SelectedItem.ToString().Equals("Extended T-SQL Query Collector Type"))
+               )
+            {
+                TSQLParametersEditor editor = new TSQLParametersEditor(origin.Text);
+                editor.ShowDialog(this);
+                origin.Text = CollectorUtils.FormatXMLDocument(editor.ReturnValue);
+            }
+            else
+            {
+                XMLEditor dialog = new XMLEditor(origin.Text);
+                dialog.ShowDialog(this);
+                origin.Text = dialog.ReturnValue;
+            }
+
         }
+
 
     }
 }
