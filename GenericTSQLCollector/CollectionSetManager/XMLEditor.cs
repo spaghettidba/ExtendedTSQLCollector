@@ -20,17 +20,28 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
         private ICSharpCode.TextEditor.TextEditorControl _textControl;
 
 
-
-        public XMLEditor(String text)
+        public XMLEditor(String text, String type) 
         {
             InitializeComponent();
             _textControl = new ICSharpCode.TextEditor.TextEditorControl();
             this.Controls.Add(_textControl);
             _textControl.Dock = DockStyle.Fill;
 
-            _textControl.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("XML");
+            _textControl.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy(type);
 
-            _textControl.Text = CollectorUtils.FormatXMLDocument(text);
+            this.Text = type + " Editor";
+
+            if(type.Equals("XML"))
+                _textControl.Text = CollectorUtils.FormatXMLDocument(text);
+            else
+                _textControl.Text = text;
+        }
+
+
+        public XMLEditor(String text)
+            : this(text, "XML")
+        {
+           
         }
 
         private void XMLEditor_Close(object sender, FormClosedEventArgs e)

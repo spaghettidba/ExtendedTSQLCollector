@@ -98,7 +98,7 @@
             this.textBox4.Size = new System.Drawing.Size(424, 260);
             this.textBox4.TabIndex = 5;
             this.textBox4.WordWrap = false;
-            this.textBox4.DoubleClick += new System.EventHandler(this.ShowXMLEditor);
+             this.textBox4.DoubleClick += new System.EventHandler(this.ShowEditor);
             // 
             // btnSave
             // 
