@@ -139,7 +139,9 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     {
                         collection_item_id = Convert.ToInt32(textBox7.Text);
                         collection_set_id = Convert.ToInt32(textBox1.Text);
-                        //cmd.Parameters["@collection_set_id"].Value = collection_set_id;
+
+                        CollectorUtils.InvokeSqlCmd(Manager.ServerName, "msdb", "UPDATE syscollector_collection_items SET collector_type_uid = '" + ((ComboboxItem)comboBox1.SelectedItem).Value.ToString() + "' WHERE collection_item_id = " + collection_item_id);
+
                         cmd.Parameters["@collection_item_id"].Value = collection_item_id;
                         cmd.Parameters["@new_name"].Value = textBox2.Text;
                     }
@@ -160,8 +162,10 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
                     if (verb.Equals("create"))
                     {
-                        collection_item_id = Convert.ToInt32(cmd.Parameters["@collection_set_id"].Value.ToString());
+                        collection_item_id = Convert.ToInt32(cmd.Parameters["@collection_item_id"].Value.ToString());
                     }
+
+                    
                 }
                 catch (Exception ex)
                 {
@@ -198,6 +202,11 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 origin.Text = dialog.ReturnValue;
             }
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ShowEditor(textBox4, e);
         }
 
 

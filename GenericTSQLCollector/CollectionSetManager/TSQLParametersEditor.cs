@@ -113,7 +113,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
 
             foreach(DataGridViewRow row in dataGridView1.Rows)
             {
-                if (row.Cells[0].Value != null || row.Cells[1].Value != null)
+                if (!String.IsNullOrEmpty((String)row.Cells[0].Value) || !String.IsNullOrEmpty((String)row.Cells[1].Value))
                 ReturnValue += new XElement("Query",
                     new XElement("Value", row.Cells[1].Value),
                     new XElement("OutputTable", row.Cells[0].Value));

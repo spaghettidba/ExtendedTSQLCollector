@@ -39,8 +39,8 @@
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -91,18 +91,19 @@
             // 
             this.textBox4.AcceptsReturn = true;
             this.textBox4.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(161, 155);
+            this.textBox4.Location = new System.Drawing.Point(161, 205);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
             this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox4.Size = new System.Drawing.Size(424, 260);
+            this.textBox4.Size = new System.Drawing.Size(424, 28);
             this.textBox4.TabIndex = 5;
+            this.textBox4.Visible = false;
             this.textBox4.WordWrap = false;
-             this.textBox4.DoubleClick += new System.EventHandler(this.ShowEditor);
+            this.textBox4.DoubleClick += new System.EventHandler(this.ShowEditor);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(510, 421);
+            this.btnSave.Location = new System.Drawing.Point(510, 154);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 8;
@@ -146,15 +147,6 @@
             this.label9.TabIndex = 4;
             this.label9.Text = "Frequency";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 157);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(132, 26);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "Parameters\r\n(double click for xml editor)";
-            // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(161, 128);
@@ -162,15 +154,25 @@
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 10;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(404, 154);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Parameters...";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // CollectionItemControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox2);
@@ -199,7 +201,7 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button1;
     }
 }
