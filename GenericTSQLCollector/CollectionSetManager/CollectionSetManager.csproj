@@ -136,6 +136,12 @@
     <Compile Include="TSQLParametersEditor.Designer.cs">
       <DependentUpon>TSQLParametersEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="XEReaderParametersEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XEReaderParametersEditor.Designer.cs">
+      <DependentUpon>XEReaderParametersEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMLEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TSQLParametersEditor.resx">
       <DependentUpon>TSQLParametersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XEReaderParametersEditor.resx">
+      <DependentUpon>XEReaderParametersEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XMLEditor.resx">
       <DependentUpon>XMLEditor.cs</DependentUpon>

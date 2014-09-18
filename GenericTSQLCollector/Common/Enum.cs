@@ -9,7 +9,7 @@ namespace Sqlconsulting.DataCollector.Utils
     public enum ImportanceLevel
     {
         Low,
-        Regular,
+        Normal,
         High
     };
 
