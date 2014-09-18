@@ -136,6 +136,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             this.treeView1.ContextMenuStrip = menuStrip;
             menuStrip.Items.Add("Add");
             menuStrip.Items.Add("Delete");
+            menuStrip.Items.Add("Query");
             menuStrip.ItemClicked += new ToolStripItemClickedEventHandler(menuStrip_ItemClicked);
         }
 
@@ -382,6 +383,8 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     }
                     
                     break;
+                case "Query":
+                    break;
             }
         }
 
@@ -397,6 +400,12 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 // Select the clicked node
                 treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
 
+                foreach (ToolStripMenuItem tsmi in menuStrip.Items)
+                {
+                    if (tsmi.Text.Equals("Query"))
+                        tsmi.Enabled = false;
+                }
+
                 if (treeView1.SelectedNode == tnRoot || treeView1.SelectedNode == tnCollectorLogs)
                 {
                     foreach (ToolStripMenuItem tsmi in menuStrip.Items)
@@ -410,7 +419,7 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                 {
                     foreach (ToolStripMenuItem tsmi in menuStrip.Items)
                     {
-                        if(tsmi.Text.Equals("Delete"))
+                        if (tsmi.Text.Equals("Delete") || tsmi.Text.Equals("Query"))
                             tsmi.Enabled = false;
                     }
                     return;
@@ -422,6 +431,9 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     {
                         if (tsmi.Text.Equals("Add"))
                             tsmi.Enabled = false;
+                        if (tsmi.Text.Equals("Query") && treeView1.SelectedNode.Parent.Parent == tnCollectionSets)
+                            tsmi.Enabled = true;
+
                     }
                     return;
                 }

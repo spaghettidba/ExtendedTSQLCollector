@@ -197,9 +197,18 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
             }
             else
             {
-                XMLEditor dialog = new XMLEditor(origin.Text);
-                dialog.ShowDialog(this);
-                origin.Text = dialog.ReturnValue;
+                if (comboBox1.SelectedItem.ToString().Equals("Extended XE Reader Collector Type"))
+                {
+                    XEReaderParametersEditor editor = new XEReaderParametersEditor(origin.Text);
+                    editor.ShowDialog(this);
+                    origin.Text = CollectorUtils.FormatXMLDocument(editor.ReturnValue);
+                }
+                else
+                {
+                    XMLEditor dialog = new XMLEditor(origin.Text);
+                    dialog.ShowDialog(this);
+                    origin.Text = dialog.ReturnValue;
+                }
             }
 
         }
