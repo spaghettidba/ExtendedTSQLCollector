@@ -384,6 +384,10 @@ namespace Sqlconsulting.DataCollector.CollectionSetManager
                     
                     break;
                 case "Query":
+                    CollectionSetDataForm dialog = new CollectionSetDataForm((Int32)treeView1.SelectedNode.Tag);
+                    dialog.ShowDialog(this);
+
+
                     break;
             }
         }

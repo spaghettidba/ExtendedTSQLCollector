@@ -10,7 +10,7 @@
     <?define PlatformReleaseFolder = "Release" ?>
   <?endif ?>
   
-  <Product Id="*" Name="ExtendedTSQLCollector 1.7.0" Language="1033" Version="1.7.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
+  <Product Id="*" Name="ExtendedTSQLCollector 1.8.0" Language="1033" Version="1.8.0.0" Manufacturer="sqlconsulting.it" UpgradeCode="DC535433-811B-430E-A05D-B88DB7069F52">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MediaTemplate EmbedCab="yes" />
@@ -83,6 +83,7 @@
       <Component Id="cmp_16" Guid="*"><File Id="file_16" KeyPath="yes" Source="..\CollectionSetManager\bin\$(var.PlatformReleaseFolder)\ICSharpCode.TextEditor.dll" /></Component>
       <Component Id="cmp_17" Guid="*"><File Id="file_17" KeyPath="yes" Source="..\ExtendedXEReaderCollectorTrigger\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollectorTrigger.exe" /></Component>
       <Component Id="cmp_18" Guid="*"><File Id="file_18" KeyPath="yes" Source="..\ExtendedXEReaderCollectorTrigger\bin\$(var.PlatformReleaseFolder)\ExtendedXEReaderCollectorTrigger.exe.config" /></Component>
+      <Component Id="cmp_19" Guid="*"><File Id="file_19" KeyPath="yes" Source="..\UserControlLibrary\bin\$(var.PlatformReleaseFolder)\Andora.UserControlLibrary.dll" /></Component>
       
     </ComponentGroup>
     

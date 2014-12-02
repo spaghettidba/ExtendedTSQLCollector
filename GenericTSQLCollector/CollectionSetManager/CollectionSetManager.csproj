@@ -28,7 +28,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.7.0.0</ApplicationVersion>
+    <ApplicationVersion>1.8.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -71,6 +71,8 @@
     <Reference Include="ICSharpCode.TextEditor">
       <HintPath>..\packages\ICSharpCode.TextEditor.3.2.1.6466\lib\Net20\ICSharpCode.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -80,6 +82,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutBox.cs">
@@ -99,6 +103,12 @@
     </Compile>
     <Compile Include="CollectionSetControl.Designer.cs">
       <DependentUpon>CollectionSetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionSetDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CollectionSetDataForm.Designer.cs">
+      <DependentUpon>CollectionSetDataForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CollectorTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -157,6 +167,9 @@
     <EmbeddedResource Include="CollectionSetControl.resx">
       <DependentUpon>CollectionSetControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CollectionSetDataForm.resx">
+      <DependentUpon>CollectionSetDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CollectorTypeControl.resx">
       <DependentUpon>CollectorTypeControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -210,6 +223,10 @@
     <ProjectReference Include="..\InstallCollectorType\InstallCollectorType.csproj">
       <Project>{e56af20f-59b8-46cb-a108-84f2781d834e}</Project>
       <Name>InstallCollectorType</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserControlLibrary\UserControlLibrary.csproj">
+      <Project>{4b91ca32-97d6-4220-8913-ae67a0ab52cd}</Project>
+      <Name>UserControlLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
