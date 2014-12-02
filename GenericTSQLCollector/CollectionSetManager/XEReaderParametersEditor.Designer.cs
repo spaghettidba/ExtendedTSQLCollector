@@ -615,6 +615,8 @@
             this.ClientSize = new System.Drawing.Size(694, 505);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "XEReaderParametersEditor";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "XEReaderParametersEditor";
             this.Load += new System.EventHandler(this.XEReaderParametersEditor_Load);
             this.panel2.ResumeLayout(false);
