@@ -120,7 +120,7 @@ The created collection set will resemble this:
 
 The email messages received will look like this one:
 
-![](Using%20the%20XEReader%20Collector type_email.png)
+![](Using%20the%20XEReader%20Collector%20type_email.png)
 
 ## Known limitations
 

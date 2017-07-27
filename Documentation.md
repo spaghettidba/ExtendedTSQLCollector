@@ -21,7 +21,7 @@
 * A log file can be found at %ProgramFiles%\ExtendedTSQLCollector\Logs.
 * Future versions of the CollectionSet Manager will show the logs directly from the UI
 
-**Need help? **
+**Need help?**  
 Twitter @spaghettidba
 Email spaghettidba@sqlconsulting.it
 

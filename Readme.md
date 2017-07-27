@@ -1,5 +1,5 @@
 # Extended T-SQL Collector
-_ Custom collector types to extend and simplify the features offered by the built-in SQL Server Data Collector and read data from Extended Events and/or queries. _
+_Custom collector types to extend and simplify the features offered by the built-in SQL Server Data Collector and read data from Extended Events and/or queries._
 
 **Extended T-SQL Collector = Extended Events + Data Collector**
 
@@ -17,38 +17,11 @@ The Collection Set Manager utility lets you manage:
 * edit collection items
 * edit collector types
 
-Here are some screenshots of the GUI:
+Collection sets and collection items can also be created via script. You can find examples in the [documentation](Documentation.md).
 
-**Connection:**  
-![](Home_Connect.png)
+# Screenshots
 
-**Collector Type Editor:**  
-![](Home_CollectorTypeEditor.png)
-
-**Collection Set Editor:**  
-![](Home_CollectionSetEditor.png)
-
-**Collection Item Editor:**  
-![](Home_CollectionItemEditor.png)
-
-**TSQL Parameters Editor:**  
-![](Home_ParametersEditor.png)
-
-**XEReader Parameters Editor:**  
-![](Home_XEReaderParametersEditor_1.png)
-![](Home_XEReaderParametersEditor_2.png)
-
-**SQL Editor:**  
-![](Home_SQLEditor.png)
-
-**XML Editor for Collector Type Parameter Schema and Formatter and for Collection Items parameters:**  
-![](Home_XMLEditor.png)
-
-**Browse the collected data:**  
-![](Home_XEDataForm.png)
-
-Collection sets and collection items can also be created via script. You can find examples in the documentation.
-
+You can see what the GUI looks like by visiting the [Screenshots](Screenshots.md) page
 
 # Features
 
