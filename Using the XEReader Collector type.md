@@ -20,7 +20,7 @@ The parameters found in the XML schema are described below:
 	* <Mode> - It can be "Atomic" or "Grouped" - In the first case, alerts are sent as soon as the event is received, in the latter alerts are grouped and sent in a single message with frequency equal to the collection frequency specified in the Delay parameter
 	* <Delay> - Specifies the number of seconds to wait before grouping and sending alerts in Grouped mode.
 
-{code:sql}
+```sql
 -- Enable editing advanced configuration options
 EXEC sp_configure 'advanced', 1
 RECONFIGURE 
@@ -112,15 +112,15 @@ EXEC dbo.sp_syscollector_create_collection_item
     @collection_item_id = @collection_item_id OUTPUT;
 
 GO 
-{code:sql}
+```
 
 The created collection set will resemble this:
 
-![](Using the XEReader Collector type_XEReaderCollectionSet.png)
+![](Using%20the%20XEReader%20Collector%20type_XEReaderCollectionSet.png)
 
 The email messages received will look like this one:
 
-![](Using the XEReader Collector type_email.png)
+![](Using%20the%20XEReader%20Collector type_email.png)
 
 ## Known limitations
 

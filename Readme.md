@@ -19,32 +19,32 @@ The Collection Set Manager utility lets you manage:
 
 Here are some screenshots of the GUI:
 
-**Connection:**
+**Connection:**  
 ![](Home_Connect.png)
 
-**Collector Type Editor:**
+**Collector Type Editor:**  
 ![](Home_CollectorTypeEditor.png)
 
-**Collection Set Editor:**
+**Collection Set Editor:**  
 ![](Home_CollectionSetEditor.png)
 
-**Collection Item Editor:**
+**Collection Item Editor:**  
 ![](Home_CollectionItemEditor.png)
 
-**TSQL Parameters Editor:**
+**TSQL Parameters Editor:**  
 ![](Home_ParametersEditor.png)
 
-**XEReader Parameters Editor:**
+**XEReader Parameters Editor:**  
 ![](Home_XEReaderParametersEditor_1.png)
 ![](Home_XEReaderParametersEditor_2.png)
 
-**SQL Editor:**
+**SQL Editor:**  
 ![](Home_SQLEditor.png)
 
-**XML Editor for Collector Type Parameter Schema and Formatter and for Collection Items parameters:**
+**XML Editor for Collector Type Parameter Schema and Formatter and for Collection Items parameters:**  
 ![](Home_XMLEditor.png)
 
-**Browse the collected data:**
+**Browse the collected data:**  
 ![](Home_XEDataForm.png)
 
 Collection sets and collection items can also be created via script. You can find examples in the documentation.
@@ -59,3 +59,8 @@ Collection sets and collection items can also be created via script. You can fin
 # Requirements
 
 * SSIS - the target machine must have SSIS installed, as some collection packages require tasks not included in the Database Engine installation
+
+
+# Documentation
+
+The complete description of the collector types and sample code to create custom collection sets can be found in the [documentation](Documentation.md)

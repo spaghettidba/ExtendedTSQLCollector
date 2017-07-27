@@ -3,7 +3,7 @@
 Here is an example of the usage of the ExtendedTSQLCollcector Collector Type.
 The XML schema of the parameters is the same exact schema used by the Generic T-SQL Query Collector Type included in SQL Server.
 
-{code:sql}
+```sql
 USE msdb;
 GO
 -----------------------------------------------------------------------------
@@ -59,12 +59,11 @@ EXEC dbo.sp_syscollector_create_collection_item
     @collection_item_id = @collection_item_id OUTPUT;
 
 GO 
-
-{code:sql}
+```
 
 After running the script, you will find a custom collection set definded like this:
 
-![](Using the TSQL Collector type_collectionset.png)
+![](Using%20the%20TSQL%20Collector%20type_collectionset.png)
 
 # Warning
 
