@@ -1,0 +1,22 @@
+﻿td {
+    border: solid black 1px;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:1px;
+    padding-bottom:1px;
+    font-size:11pt;
+    font-family:calibri;
+}
+th {
+    border: solid black 1px;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:1px;
+    padding-bottom:1px;
+    font-size:11pt;
+    font-family:calibri;
+    font-weight:bold;
+    color:white;
+    background-color:#0080FF;
+}
+
