@@ -17,11 +17,11 @@ The Collection Set Manager utility lets you manage:
 * edit collection items
 * edit collector types
 
-Collection sets and collection items can also be created via script. You can find examples in the [documentation](Documentation.md).
+Collection sets and collection items can also be created via script. You can find examples in the [documentation](Documentation/Documentation.md).
 
 # Screenshots
 
-You can see what the GUI looks like by visiting the [Screenshots](Screenshots.md) page
+You can see what the GUI looks like by visiting the [Screenshots](Documentation/Screenshots.md) page
 
 # Features
 
@@ -36,4 +36,4 @@ You can see what the GUI looks like by visiting the [Screenshots](Screenshots.md
 
 # Documentation
 
-The complete description of the collector types and sample code to create custom collection sets can be found in the [documentation](Documentation.md)
+The complete description of the collector types and sample code to create custom collection sets can be found in the [documentation](Documentation/Documentation.md)
