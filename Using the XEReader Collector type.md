@@ -3,22 +3,22 @@
 Here is an example of how to use the ExtendedXEReader Collector Type.
 The parameters found in the XML schema are described below:
 
-* \<Session\> - is the top container describing the interaction between the collector and the XE session
-	* \<Name\> - Name of the Extended Events session to attach to
-	* \<OutputTable\> - Name of the output table to create in MDW
-	* \<Definition\> - XE Session definition. Insert here the CREATE SESSION statement
-	* \<Filter\> - Filter to apply to the events collected.
-	* \<ColumnsList\> - Comma separated list of the columns to collect from the session
-* \<Alert\> - this is the container of the alerts fired by the collector
+* `<Session>` - is the top container describing the interaction between the collector and the XE session
+	* `<Name>` - Name of the Extended Events session to attach to
+	* `<OutputTable>` - Name of the output table to create in MDW
+	* `<Definition>` - XE Session definition. Insert here the CREATE SESSION statement
+	* `<Filter>` - Filter to apply to the events collected.
+	* `<ColumnsList>` - Comma separated list of the columns to collect from the session
+* `<Alert>` - this is the container of the alerts fired by the collector
 	* Attributes: Enabled="true/false" WriteToERRORLOG="true/false" WriteToWindowsLog="true/false"
-	* \<Sender\> - Sender address. In this implementation it is the name of a dbmail profile.
-	* \<Recipient\> - Target recipient for the alert.
-	* \<Subject\> - Subject of the emails
-	* \<Importance\> - Email importance
-	* \<ColumnsList\> - Comma separated list of the columns to include in the email message
-	* \<Filter\> - Filter to apply to the alerts. It can be a different filter, to reduce the number of messages sent
-	* \<Mode\> - It can be "Atomic" or "Grouped" - In the first case, alerts are sent as soon as the event is received, in the latter alerts are grouped and sent in a single message with frequency equal to the collection frequency specified in the Delay parameter
-	* \<Delay\> - Specifies the number of seconds to wait before grouping and sending alerts in Grouped mode.
+	* `<Sender>` - Sender address. In this implementation it is the name of a dbmail profile.
+	* `<Recipient>` - Target recipient for the alert.
+	* `<Subject>` - Subject of the emails
+	* `<Importance>` - Email importance
+	* `<ColumnsList>` - Comma separated list of the columns to include in the email message
+	* `<Filter>` - Filter to apply to the alerts. It can be a different filter, to reduce the number of messages sent
+	* `<Mode>` - It can be "Atomic" or "Grouped" - In the first case, alerts are sent as soon as the event is received, in the latter alerts are grouped and sent in a single message with frequency equal to the collection frequency specified in the Delay parameter
+	* `<Delay>` - Specifies the number of seconds to wait before grouping and sending alerts in Grouped mode.
 
 ```sql
 -- Enable editing advanced configuration options
@@ -70,11 +70,11 @@ EXEC dbo.sp_syscollector_create_collection_set
 DECLARE @parameters xml;
 DECLARE @collection_item_id INT;
 SELECT @parameters = convert(xml, N'
-\<ns:ExtendedXEReaderCollector xmlns:ns="DataCollectorType"\>
-    \<Session\>
-        \<Name\>blocked_processes\</Name\>
-        \<OutputTable\>blocked_processes_table\</OutputTable\>
-		\<Definition\>
+<ns:ExtendedXEReaderCollector xmlns:ns="DataCollectorType">
+    <Session>
+        <Name>blocked_processes</Name>
+        <OutputTable>blocked_processes_table</OutputTable>
+		<Definition>
 		CREATE EVENT SESSION [blocked_processes](blocked_processes) ON SERVER ADD EVENT sqlserver.blocked_process_report
 		WITH (
 			MAX_MEMORY = 2048 KB
@@ -85,21 +85,21 @@ SELECT @parameters = convert(xml, N'
 			,TRACK_CAUSALITY = OFF
 			,STARTUP_STATE = ON
 			)
-		\</Definition\>
-		\<Filter\>duration \<= 30000000\</Filter\>
-		\<ColumnsList\>blocked_process\</ColumnsList\>
-    \</Session\>
-	\<Alert Enabled="true" WriteToERRORLOG="true" WriteToWindowsLog="false"\>
-		\<Sender\>MailProfile\</Sender\>
-		\<Recipient\>DbAdmins@mycompany.com\</Recipient\>
-		\<Subject\>Blocked process detected\</Subject\>
-		\<Importance\>High\</Importance\>
-		\<ColumnsList\>blocked_process\</ColumnsList\>
-		\<Filter\>duration \<= 30000000\</Filter\>
-		\<Mode\>Atomic\</Mode\>
-        \<Delay\>60\</Delay\>
-	\</Alert\>
-\</ns:ExtendedXEReaderCollector\>
+		</Definition>
+		<Filter>duration <= 30000000</Filter>
+		<ColumnsList>blocked_process</ColumnsList>
+    </Session>
+	<Alert Enabled="true" WriteToERRORLOG="true" WriteToWindowsLog="false">
+		<Sender>MailProfile</Sender>
+		<Recipient>DbAdmins@mycompany.com</Recipient>
+		<Subject>Blocked process detected</Subject>
+		<Importance>High</Importance>
+		<ColumnsList>blocked_process</ColumnsList>
+		<Filter>duration <= 30000000</Filter>
+		<Mode>Atomic</Mode>
+        <Delay>60</Delay>
+	</Alert>
+</ns:ExtendedXEReaderCollector>
 ');
 
 RAISERROR ('Creating collection item "Blocked Process Reports"...',0, 1) WITH NOWAIT;
