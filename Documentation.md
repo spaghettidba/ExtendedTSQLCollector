@@ -11,8 +11,8 @@
 **Usage**
 
 * Create a collection item using one of the collector types provided
-	* [Using the TSQL Collector type](Using-the-TSQL-Collector-type)
-	* [Using the XEReader Collector type](Using-the-XEReader-Collector-type)
+	* [Using the TSQL Collector type](Using the TSQL Collector type.md)
+	* [Using the XEReader Collector type](Using-the-XEReader-Collector-type.md)
 * Start the collection set from SSMS or from the CollectionSet Manager
 	* The target table in the MDW database is created automatically whenever possible. 
 * Review the collected data in the MDW database
