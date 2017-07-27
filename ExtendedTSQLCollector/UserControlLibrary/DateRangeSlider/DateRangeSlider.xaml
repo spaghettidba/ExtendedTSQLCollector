@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="Andora.UserControlLibrary.DateRangeSlider"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Andora.UserControlLibrary"
+    xmlns:converters="clr-namespace:Andora.UserControlLibrary.Converters"
+    x:Name="root">
+<!--
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+ * IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, 
+ * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+    Sample Usage:
+    
+        <userControls:DateRangeSlider x:Name="dateRangeSlider1" 
+                            LowerValue="02/01/2011 8:00 AM"
+                            UpperValue="10/31/2011 8:30 PM"
+                            Minimum="01/01/2011 12:00 AM"
+                            Maximum="12/31/2011 11:59:59 PM"
+                            Grid.ColumnSpan="2" Grid.Column="0"
+                            Grid.Row="0" 
+                            IsUpperSliderEnabled="{Binding ElementName=chkDisableUpperSlider, Path=IsChecked, Converter={StaticResource ResourceKey=negationConverter}, Mode=TwoWay}"
+                            IsLowerSliderEnabled="{Binding ElementName=chkDisableLowerSlider, Path=IsChecked, Converter={StaticResource ResourceKey=negationConverter}, Mode=TwoWay}"
+                            IsUpperValueLockedToMax="{Binding ElementName=chkLockUpperSliderToMax, Path=IsChecked, Mode=TwoWay}"
+                            IsLowerValueLockedToMin="{Binding ElementName=chkLockLowerSliderToMin, Path=IsChecked, Mode=TwoWay}"
+                            SmallChange="0:0:30:0.000"
+                            LargeChange="0:1:0:0.000"/>
+    -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeDoubleConverter x:Key="dtdConverter" />
+            <converters:TimeSpanToDoubleConverter x:Key="timespanToDoubleConverter" />
+
+            <ControlTemplate x:Key="simpleSlider" TargetType="{x:Type Slider}">
+                <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Rectangle x:Name="PART_SelectionRange"/>
+
+                        <Track x:Name="PART_Track" Grid.Row="1">
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb" Style="{StaticResource ResourceKey=HorizontalSliderThumbStyle}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SliderResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Center" Background="Transparent">
+        <Border BorderThickness="0,1,0,0" BorderBrush="DarkGray" VerticalAlignment="Bottom" Height="1" HorizontalAlignment="Stretch"
+                Margin="0,0,0,10"/>
+
+        <Slider x:Name="LowerSlider" VerticalAlignment="Top" IsEnabled="{Binding ElementName=root, Path=IsLowerSliderEnabled, Mode=TwoWay}"
+                Minimum="{Binding ElementName=root, Path=Minimum, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Maximum="{Binding ElementName=root, Path=Maximum, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Value="{Binding ElementName=root, Path=LowerValue, Mode=OneWay, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Template="{StaticResource simpleSlider}"
+                Margin="0,0,10,0" 
+                SmallChange="{Binding ElementName=root, Path=SmallChange, Converter={StaticResource ResourceKey=timespanToDoubleConverter}}" 
+                LargeChange="{Binding ElementName=root, Path=LargeChange, Converter={StaticResource ResourceKey=timespanToDoubleConverter}}" 
+                />
+
+        <Slider x:Name="UpperSlider" IsEnabled="{Binding ElementName=root, Path=IsUpperSliderEnabled, Mode=TwoWay}"
+                Minimum="{Binding ElementName=root, Path=Minimum, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Maximum="{Binding ElementName=root, Path=Maximum, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Value="{Binding ElementName=root, Path=UpperValue, Mode=OneWay, Converter={StaticResource ResourceKey=dtdConverter}}"
+                Template="{StaticResource simpleSlider}" 
+                Margin="10,0,0,0"
+                SmallChange="{Binding ElementName=root, Path=SmallChange, Converter={StaticResource ResourceKey=timespanToDoubleConverter}}" 
+                LargeChange="{Binding ElementName=root, Path=LargeChange, Converter={StaticResource ResourceKey=timespanToDoubleConverter}}" 
+                />
+    </Grid>
+</UserControl>
