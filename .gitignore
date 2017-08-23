@@ -2,3 +2,4 @@ bin/
 obj/
 packages/
 *.suo
+/ExtendedTSQLCollector/.vs/ExtendedTSQLCollector/v15/sqlite3/storage.ide
